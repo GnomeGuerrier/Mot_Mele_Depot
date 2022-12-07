@@ -10,7 +10,7 @@ namespace Mot_Mele
 {
     class Joueur
     {
-        //CLASSE FINIE SELON L'ENONCE, TEST PUSH2
+        //CLASSE FINIE SELON L'ENONCE, TEST PUSH3
         private string nom;
         private string[] motTrouve;
         private int score;
