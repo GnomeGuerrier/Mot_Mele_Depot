@@ -34,12 +34,12 @@ namespace Mot_Mele
             {
                 Console.Write(t+" ");
             }
+            
 
 
 
 
-
-            Console.WriteLine("Bonjour, voulez vous recommencer un nouveau jeu? oui/non");
+           /* Console.WriteLine("Bonjour, voulez vous recommencer un nouveau jeu? oui/non");
             if (Console.ReadLine() == "OUI") Recommencer();
             else
             {
@@ -58,7 +58,7 @@ namespace Mot_Mele
                 Console.WriteLine("Parfait tout est prêt,voici les règles du jeu :\n blaaaaaaablabla");
 
             
-            }
+            }*/
 
 
 

@@ -14,7 +14,9 @@ namespace Mot_Mele
         private int difficulte;
         private int nbmot;
         private int taille;
-        private string[,] grille;
+        
+        private string[,] grilleVide;
+        private string[,] grilleFinie;
         private List<string> motAjoute;
         
         public Plateau(Dictionnaire dico,int difficulte,int taille,int nbmot)
@@ -22,17 +24,21 @@ namespace Mot_Mele
             this.dico = dico;
             this.difficulte=difficulte;
             this.nbmot = nbmot;
+            this.taille = taille;
             this.motAjoute = new List<string>();
-            this.grille = genererGrille(taille);
-            afficherGrille(grille);                                                                                                         //Affiche une première fois la grille vide
-            remplirGrille(grille,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
-           
+            this.grilleVide = GenererGrille(this.taille);
+            AfficherGrille(grilleVide);                                                                                                         //Affiche une première fois la grille vide
+            this.grilleFinie = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
+            RemplirGrilleRandom(this.grilleFinie);
+            
+            AfficherGrille(this.grilleFinie);
+
         }
         public List<string> GMotAjoute
         {
             get { return this.motAjoute; }
         }
-         string[,] remplirGrille(string[,] grille, Dictionnaire dico, int nombreMots, int difficulte)                 //Fonction pour remplir la grille avec les mots du dictionnaire en fonction de la difficulté
+         string[,] RemplirGrille(string[,] grille, Dictionnaire dico, int nombreMots, int difficulte)                 //Fonction pour remplir la grille avec les mots du dictionnaire en fonction de la difficulté
         {
             string mot = MotAleatoire(dico, grille);                            //On initialise un premier mot choisi aléatoirement
             int x = NombreAleatoire(0, grille.GetLength(0));            //On prend un x aléatoire dans la grille                Notez que les coordonnées de la grille
@@ -539,7 +545,7 @@ namespace Mot_Mele
                 mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau mot
                
                 Console.WriteLine("------------------");
-                afficherGrille(grille);
+                AfficherGrille(grille);
                 orientation += 1;                                               //On change l'orientation
                 switch (difficulte)
                 {
@@ -595,18 +601,13 @@ namespace Mot_Mele
         }
 
 
-
-
-
-
-
-        static int NombreAleatoire(int min, int max)        //Fonction qui retourne un entier aléatoire entre min et max
+         int NombreAleatoire(int min, int max)        //Fonction qui retourne un entier aléatoire entre min et max
         {
             Random rand = new Random();
             int n = rand.Next(min, max);
             return n;
         }
-        static string MotAleatoire(Dictionnaire dico, string[,] grille)           //Foncton qui retourne un mot aléatoire du dictionnaire donné en paramètre
+         string MotAleatoire(Dictionnaire dico, string[,] grille)           //Foncton qui retourne un mot aléatoire du dictionnaire donné en paramètre
         {
             Random rand = new Random();
             int n;
@@ -618,7 +619,7 @@ namespace Mot_Mele
             return dico.GDicoList[n];
 
         }
-        public string[,] genererGrille(int tailleGrille)                    //Fonction générant une grille vide de taille 'tailleGrille'
+        public string[,] GenererGrille(int tailleGrille)                    //Fonction générant une grille vide de taille 'tailleGrille'
         {
             string[,] grille = new string[tailleGrille, tailleGrille];       //Initialisation de la grille
             for (int i = 0; i < tailleGrille; i++)                            //On boucle pour la remplir d'espaces, qui seront traités comme du vide par le reste du code
@@ -630,7 +631,7 @@ namespace Mot_Mele
             }
             return grille;                                                  //On retourne la grille
         }
-        static void afficherGrille(string[,] grille)                        //Fonction pour afficher une grille
+         void AfficherGrille(string[,] grille)                        //Fonction pour afficher une grille
         {
 
             for (int i = 0; i < grille.GetLength(0); i++)                      //On boucle de sorte à afficher les éléments X de la grille tel que: 
@@ -642,6 +643,27 @@ namespace Mot_Mele
                 }
                 Console.WriteLine();
             }
+        }
+         void RemplirGrilleRandom(string[,] grille)
+        {
+            for(int i = 0; i < grille.GetLength(0); i++)
+            {
+                for (int j = 0; j < grille.GetLength(1); j++)
+                {
+                    if(grille[i,j]==" ")
+                    {
+                        grille[i, j] = LettreAleatoire();
+                    }
+                }
+            }
+        }
+        public string LettreAleatoire()
+        {
+            string r;
+            Random rnd = new Random();
+            int ascii_index = rnd.Next(65, 91); //ASCII character codes 65-90
+            r  = Convert.ToString(Convert.ToChar(ascii_index));
+            return r;
         }
     }
     
