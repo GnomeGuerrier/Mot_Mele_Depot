@@ -39,8 +39,8 @@ namespace Mot_Mele
 
 
 
-           /* Console.WriteLine("Bonjour, voulez vous recommencer un nouveau jeu? oui/non");
-            if (Console.ReadLine() == "OUI") Recommencer();
+            Console.WriteLine("Bonjour, voulez vous reprendre un  jeu? oui/non");
+            if (Console.ReadLine() == "OUI") Reprendre();
             else
             {
                 Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
@@ -55,10 +55,10 @@ namespace Mot_Mele
                     if (langage != "français" && langage != "anglais") Console.WriteLine("Langue non supportée,veuillez en saisir une autre");
                 } while (langage != "français" && langage != "anglais");
                 Dictionnaire dico = new Dictionnaire(langage);
-                Console.WriteLine("Parfait tout est prêt,voici les règles du jeu :\n blaaaaaaablabla");
+                Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nblaaaaaaablabla");
 
             
-            }*/
+            }
 
 
 
@@ -95,7 +95,7 @@ namespace Mot_Mele
 
             File.WriteAllText("test.csv", r);
         }
-        public static void Recommencer()
+        public static void Reprendre()
         {
             try
             {
