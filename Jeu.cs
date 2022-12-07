@@ -30,10 +30,6 @@ namespace Mot_Mele
             //else Console.WriteLine("non");
             //Enregister(j1, j2, dictionnaire);
             //Recommencer();
-            foreach(string t in plateau.GMotAjoute)
-            {
-                Console.Write(t+" ");
-            }
             
 
 

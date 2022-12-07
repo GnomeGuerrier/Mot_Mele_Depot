@@ -17,7 +17,15 @@ namespace Mot_Mele
         
         private string[,] grilleVide;
         private string[,] grilleFinie;
-        private List<string> motAjoute;
+        public struct PropMot
+        {
+            public string mot;
+            public int orientation;
+            public int posX;
+            public int posY;
+        }
+
+        private List<PropMot> listeMot;
         
         public Plateau(Dictionnaire dico,int difficulte,int taille,int nbmot)
         {
@@ -25,19 +33,22 @@ namespace Mot_Mele
             this.difficulte=difficulte;
             this.nbmot = nbmot;
             this.taille = taille;
-            this.motAjoute = new List<string>();
             this.grilleVide = GenererGrille(this.taille);
+            this.listeMot = new List<PropMot>();
             AfficherGrille(grilleVide);                                                                                                         //Affiche une première fois la grille vide
             this.grilleFinie = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
             RemplirGrilleRandom(this.grilleFinie);
             
             AfficherGrille(this.grilleFinie);
+            AfficherListePropMot();
 
         }
-        public List<string> GMotAjoute
+
+        public List<PropMot> GListeMot
         {
-            get { return this.motAjoute; }
+            get { return this.listeMot; }
         }
+
          string[,] RemplirGrille(string[,] grille, Dictionnaire dico, int nombreMots, int difficulte)                 //Fonction pour remplir la grille avec les mots du dictionnaire en fonction de la difficulté
         {
             string mot = MotAleatoire(dico, grille);                            //On initialise un premier mot choisi aléatoirement
@@ -58,6 +69,7 @@ namespace Mot_Mele
             for (int k = 0; k < nombreMots; k++)                         //Boucle de remplissage de mots, tourant 'nombreMots' fois
             {
                 int n = 0;                                                      //On initialise le compteur n, qui compte combien de mots on été testé.
+                PropMot motAjoute = new PropMot();
                 switch (orientation)                                            //En fonction de l'orientation on a 4 cas différents, mais similaires dans la structure
                 {
                     case 1:                                                     //Pour l'orientation "Haut/Bas"
@@ -541,7 +553,11 @@ namespace Mot_Mele
                         break;
                 }
                 Console.WriteLine(mot);
-                this.motAjoute.Add( mot);
+                motAjoute.mot = mot;
+                motAjoute.orientation = orientation;
+                motAjoute.posX = x;
+                motAjoute.posY = y;
+                this.listeMot.Add(motAjoute);
                 //Une fois le mot placé
                 mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau mot
                
@@ -665,6 +681,29 @@ namespace Mot_Mele
             int ascii_index = rnd.Next(65, 91); //ASCII character codes 65-90
             r  = Convert.ToString(Convert.ToChar(ascii_index));
             return r;
+        }
+
+        public void AfficherListePropMot()
+        {
+            foreach(PropMot p in listeMot)
+            {
+                Console.WriteLine(p.mot + "\n" + p.orientation + "\n" + p.posX + "\n" + p.posY + "\n--------------");
+            }
+        }
+        public bool checkMot(string[] data)
+        {
+            //Data : data[0] mot | data[1] orientation | data[2] posX | data[3] posY
+            bool verif = false;
+
+            foreach(PropMot p in listeMot)
+            {
+                if(p.mot == data[0] && p.orientation == Convert.ToInt32(data[1]) && p.posX == Convert.ToInt32(data[2]) && p.posY == Convert.ToInt32(data[3]))
+                {
+                    verif = true;
+                }
+            }
+
+            return verif;
         }
     }
     
