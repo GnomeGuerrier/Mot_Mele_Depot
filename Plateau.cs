@@ -537,6 +537,7 @@ namespace Mot_Mele
                         break;
 
                     default:
+                        Console.WriteLine("Default case in first switch");
                         break;
                 }
                 Console.WriteLine(mot);

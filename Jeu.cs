@@ -25,7 +25,7 @@ namespace Mot_Mele
             Dictionnaire dictionnaire = new Dictionnaire("français");
             //Console.WriteLine(dictionnaire.toString());
             int taille = 10;int nbmot = 17;
-            Plateau plateau = new Plateau(dictionnaire, 12,taille,nbmot);
+            Plateau plateau = new Plateau(dictionnaire, 5,taille,nbmot);
             //if (dictionnaire.RechDichoRecursif("HELLO")) Console.WriteLine("oui");
             //else Console.WriteLine("non");
             //Enregister(j1, j2, dictionnaire);
