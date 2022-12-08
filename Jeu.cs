@@ -12,13 +12,7 @@ namespace Mot_Mele
 {
     class Jeu
     {
-        public struct PropMot
-        {
-            public string mot;
-            public int orientation;
-            public int posX;
-            public int posY;
-        }
+       
         static void Main(string[] args)
         {
             /*Joueur j1 = new Joueur("eliott");
@@ -39,131 +33,177 @@ namespace Mot_Mele
             //else Console.WriteLine("non");
             //Enregister(j1, j2, dictionnaire);
             //Recommencer();
+            
 
 
-            #region initialisationDuJeu
+
+
+            
+           
             int taille = 10; int nbmot = 17;
-            Stopwatch timer = new Stopwatch();
-            Console.WriteLine("Joueur 1 à toi!");
-            timer.Start();
-            if ((timer.ElapsedMilliseconds / 1000) > 5) Console.WriteLine("5 sec");
+            
+           
             Console.WriteLine("Bonjour, voulez vous reprendre un  jeu? oui/non");
             if (Console.ReadLine() == "OUI") Reprendre();
             else
             {
-                Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
-                Joueur j1 = new Joueur(Console.ReadLine());
-                Console.WriteLine("veuillez donner le nom du deuxième joueur");
-                Joueur j2 = new Joueur(Console.ReadLine());
-                Console.WriteLine("Parfait! Quel dictionnaire voulez vous utiliser? français/anglais");
-                string langage = "";
-                do
+                typeJeu:
+                Console.WriteLine("Voulez vous jouez avec des grilles générée avant(écrire générée) ou aléatorement(écrire aléatoirement)?");
+                string typeJeu = Console.ReadLine();
+                if(typeJeu!="générée"&&typeJeu!= "aléatoirement")
                 {
-                    langage = Console.ReadLine();
-                    if (langage != "français" && langage != "anglais") Console.WriteLine("Langue non supportée,veuillez en saisir une autre");
-                } while (langage != "français" && langage != "anglais");
-
-                Dictionnaire dico = new Dictionnaire(langage);
-
-                Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nblaaaaaaablabla");
-                Console.WriteLine("Pour commencer, quelle difficultée voulez vous?");
-                int difficulte = -1;
-                do
-                {
-                    if(int.TryParse(Console.ReadLine(), out difficulte)){
-                        if (difficulte >= 0 && difficulte <= 5) break;
-                        else Console.WriteLine("Veuillez sélectionner une difficultée entre 1 et 5");
-                    }
-                    else Console.WriteLine("Veuillez donner un chiffre");
-                } while (difficulte <= 0 || difficulte > 5);
-                #endregion
-
-
-
-                Plateau plateau = new Plateau( dico,difficulte, taille, nbmot);
-                List <string> listMotATrouver= plateau.GMotATrouver;
-                Stopwatch swJ1= new Stopwatch();
-                Stopwatch swJ2 = new Stopwatch();
-                Console.WriteLine(j1.GNom+" a toi de jouer\nLes mots à trouver sont :");
-                foreach(string m in listMotATrouver)
-                {
-                    Console.Write(m + " ");
+                    Console.WriteLine("Veuillez choisir un tye de jeu valide");
+                    goto typeJeu;
                 }
-                Console.WriteLine();
-                swJ1.Start();
-                string motDonne,directionDonne;
-                string posXDonne, posYDonne;
-                string[] dataDonne=new string[4];
-                bool reussi = false;
-                do
+                if (typeJeu == "générée")
                 {
-                    if (listMotATrouver.Count == 0)
+                    Dictionnaire dico = new Dictionnaire("français");
+                    Plateau plateau = new Plateau(dico, "CasSimple.csv");
+                    Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
+                    Joueur j1 = new Joueur(Console.ReadLine());
+                    Console.WriteLine("veuillez donner le nom du deuxième joueur");
+                    Joueur j2 = new Joueur(Console.ReadLine());
+                    Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nblaaaaaaablabla");
+                    List<string> listMotATrouver = plateau.GMotATrouver;
+                    Stopwatch swJ1 = new Stopwatch();
+                    Stopwatch swJ2 = new Stopwatch();
+                    plateau.AfficherGrille();
+                    Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                    foreach (string m in listMotATrouver)
                     {
-                        Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
-                        reussi = true;
+                        Console.Write(m + " ");
                     }
-                    Console.WriteLine("Donnez le mot que vous voulez trouver");
-                    motDonne = Console.ReadLine().ToUpper();
+                    Console.WriteLine();
+                    swJ1.Start();
+                    string motDonne, directionDonne;
+                    string posXDonne, posYDonne;
+                    string[] dataDonne = new string[4];
+                    bool reussi = false;
+                }
+                else
+                {
+                    #region initialisationDuJeuComplex
+                    Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
+                    Joueur j1 = new Joueur(Console.ReadLine());
+                    Console.WriteLine("veuillez donner le nom du deuxième joueur");
+                    Joueur j2 = new Joueur(Console.ReadLine());
+                    Console.WriteLine("Parfait! Quel dictionnaire voulez vous utiliser? français/anglais");
+                    string langage = "";
+                    do
+                    {
+                        langage = Console.ReadLine();
+                        if (langage != "français" && langage != "anglais") Console.WriteLine("Langue non supportée,veuillez en saisir une autre");
+                    } while (langage != "français" && langage != "anglais");
+
+                    Dictionnaire dico = new Dictionnaire(langage);
+
+                    Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nblaaaaaaablabla");
+                    Console.WriteLine("Pour commencer, quelle difficultée voulez vous?");
+                    int difficulte = -1;
+                    do
+                    {
+                        if (int.TryParse(Console.ReadLine(), out difficulte))
+                        {
+                            if (difficulte >= 0 && difficulte <= 5) break;
+                            else Console.WriteLine("Veuillez sélectionner une difficultée entre 1 et 5");
+                        }
+                        else Console.WriteLine("Veuillez donner un chiffre");
+                    } while (difficulte <= 0 || difficulte > 5);
                     
-                    Direction:
-                    Console.WriteLine("Puis la direction(Nord,Sud,Est,Ouest,Nord_Est,Nord_Ouest,Sud_Est,Sud_Ouest)");// A VERIFIER AVEC HUGO
-                    directionDonne = Console.ReadLine();
-                    if (directionDonne == "Nord") directionDonne = "1";
-                    else if (directionDonne == "Sud") directionDonne = "2";
-                    else if (directionDonne == "Est") directionDonne = "4";
-                    else if (directionDonne == "Ouest") directionDonne = "3";
-                    else if (directionDonne == "Nord_Est") directionDonne = "6";
-                    else if  (directionDonne == "Nord_Ouest") directionDonne = "5";
-                    else if (directionDonne == "Sud_Est") directionDonne = "8";
-                    else if (directionDonne == "Sud_Ouest") directionDonne = "7";
-                    else
+
+
+
+                    Plateau plateau = new Plateau(dico, difficulte, taille, nbmot);
+                    List<string> listMotATrouver = plateau.GMotATrouver;
+                    #endregion
+                    Stopwatch swJ1 = new Stopwatch();
+                    Stopwatch swJ2 = new Stopwatch();
+                    Console.WriteLine();
+                    swJ1.Start();
+                    string motDonne, directionDonne;
+                    string posXDonne, posYDonne;
+                    string[] dataDonne = new string[4];
+                    bool reussi = false;
+                    do
                     {
-                        Console.WriteLine("La direction donnée n'est pas bonne, veuillez la ressaisir");
-                        goto Direction;
-                    }
-                    posX:
-                    Console.WriteLine("Et enfin la position X de la première lettre du mot");
-                    
-                    posXDonne = (Console.ReadLine());
-                    if (!int.TryParse(posXDonne, out int n))
-                    {
-                        Console.WriteLine("La coordonnée donnée n'est pas un nombre");
-                        goto posX;
-                    }
-                    posY:
-                    Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                    posYDonne =(Console.ReadLine());
-                    if (!int.TryParse(posYDonne, out int nn))
-                    {
-                        Console.WriteLine("La coordonnée donnée n'est pas un nombre");
-                        goto posY;
-                    }
-                    dataDonne[0] = motDonne;
-                    dataDonne[1] = directionDonne;
-                    dataDonne[2] = posXDonne;
-                    dataDonne[3] = posYDonne;
-                    
-                    if (!dico.RechDichoRecursif(motDonne))
-                    {
-                        Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
-                        goto Fin;
-                    }
-                    else if (plateau.Test_Plateau(dataDonne)&&listMotATrouver.Contains(motDonne))
-                    {
-                        Console.WriteLine("Bien joué, tu as bien trouvé le mot "+motDonne);
-                        listMotATrouver.Remove(motDonne);
-                    }
-                    else if (listMotATrouver.Contains(motDonne))
-                    {
-                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                        if (listMotATrouver.Count == 0)
+                        {
+                            Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                            reussi = true;
+                        }
+                        plateau.AfficherGrille();
+                        Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
                         
-                    }
+                        foreach (string m in listMotATrouver)
+                        {
+                            Console.Write(m + " ");
+                        }
+                        Console.WriteLine();
+                        Console.WriteLine("Donnez le mot que vous voulez trouver");
+                        motDonne = Console.ReadLine().ToUpper();
+
+                    Direction:
+                        Console.WriteLine("Puis la direction(Nord,Sud,Est,Ouest,Nord_Est,Nord_Ouest,Sud_Est,Sud_Ouest)");// A VERIFIER AVEC HUGO
+                        directionDonne = Console.ReadLine();
+                        if (directionDonne == "Nord") directionDonne = "1";
+                        else if (directionDonne == "Sud") directionDonne = "2";
+                        else if (directionDonne == "Est") directionDonne = "4";
+                        else if (directionDonne == "Ouest") directionDonne = "3";
+                        else if (directionDonne == "Nord_Est") directionDonne = "6";
+                        else if (directionDonne == "Nord_Ouest") directionDonne = "5";
+                        else if (directionDonne == "Sud_Est") directionDonne = "8";
+                        else if (directionDonne == "Sud_Ouest") directionDonne = "7";
+                        else
+                        {
+                            Console.WriteLine("La direction donnée n'est pas bonne, veuillez la ressaisir");
+                            goto Direction;
+                        }
+                    posX:
+                        Console.WriteLine("Et enfin la position X de la première lettre du mot");
+
+                        posXDonne = (Console.ReadLine());
+                        if (!int.TryParse(posXDonne, out int n))
+                        {
+                            Console.WriteLine("La coordonnée donnée n'est pas un nombre");
+                            goto posX;
+                        }
+                    posY:
+                        Console.WriteLine("Et la postion Y de la première lettre du mot ");
+                        posYDonne = (Console.ReadLine());
+                        if (!int.TryParse(posYDonne, out int nn))
+                        {
+                            Console.WriteLine("La coordonnée donnée n'est pas un nombre");
+                            goto posY;
+                        }
+                        dataDonne[0] = motDonne;
+                        dataDonne[1] = directionDonne;
+                        dataDonne[2] = posXDonne;
+                        dataDonne[3] = posYDonne;
+
+                        if (!dico.RechDichoRecursif(motDonne))
+                        {
+                            Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
+                            goto Fin;
+                        }
+                        else if (plateau.Test_Plateau(dataDonne) && listMotATrouver.Contains(motDonne))
+                        {
+                            Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
+                            listMotATrouver.Remove(motDonne);
+                        }
+                        else if (listMotATrouver.Contains(motDonne))
+                        {
+                            Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!"); //DONNE TJRS CE RESULTAT
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+
+                        }
                     Fin:;
-                } while (swJ1.ElapsedMilliseconds / 1000 != 600 || reussi == true) ;
+                    } while (swJ1.ElapsedMilliseconds / 1000 <= 600 || reussi == true); //Crhonomètre et condition de victoire
+                    Console.WriteLine("Tour terminé!");
+
+                }
             }
 
 

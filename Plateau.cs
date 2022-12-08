@@ -16,8 +16,12 @@ namespace Mot_Mele
         private int nbmot;
         private int taille;
         
+        private List<string> lettreSimple = new List<string>();
         private string[,] grilleVide;
         private string[,] grilleFinie;
+        
+        private string[,] grilleRemplie;
+        private List<string> infoSimple = new List<string>();
         public struct PropMot
         {
             public string mot;
@@ -27,9 +31,47 @@ namespace Mot_Mele
         }
 
         private List<PropMot> listeMot;
-        
+        public Plateau(Dictionnaire dico,string path)
+        {
+            this.dico = dico;
+            
+            
+            string[] fichier= File.ReadAllLines(path);
+            string[] lettreSimpleTab ;
+            foreach (string mot in fichier[0].Split(";"))
+            {
+                this.infoSimple.Add(mot);                           //permet d'avoir les infos de difficultée,colonne,ligne et nb de mots à trouver
+            }
+            this.grilleRemplie = new string[Convert.ToInt32(infoSimple[1]), Convert.ToInt32(infoSimple[2])];
+            foreach (string mot in fichier[1].Split(";"))
+            {
+                this.motATrouver.Add(mot);                      //construit la list des mots à trouver
+            }
+            for(int i = 2; i < fichier.Length; i++)
+            {
+                lettreSimpleTab=new string[fichier[i].Split(";").Length];
+                lettreSimpleTab = fichier[i].Split(";");
+                for(int k = 0; k < lettreSimpleTab.Length; k++)
+                {
+                    lettreSimple.Add(lettreSimpleTab[k]);               //list avec toutes les lettres
+                }
+                this.lettreSimple = this.lettreSimple.Where(s => !string.IsNullOrWhiteSpace(s)).ToList(); //permet de retirer tous les espaces et lettres vides
+                
+
+            }
+            int count = 0;
+            for (int l = 0; l < Convert.ToInt32(infoSimple[1]); l++)
+            {
+                for (int o = 0; o < Convert.ToInt32(infoSimple[2]); o++)
+                {
+                    this.grilleRemplie[l, o] = lettreSimple[count];         //remplit la grille avec toutes les lettres
+                    count++;
+                }
+            }
+        }
         public Plateau(Dictionnaire dico,int difficulte,int taille,int nbmot)
         {
+            
             this.dico = dico;
             this.difficulte=difficulte;
             this.nbmot = nbmot;
@@ -40,7 +82,7 @@ namespace Mot_Mele
             this.grilleFinie = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
             RemplirGrilleRandom(this.grilleFinie);
             
-            AfficherGrille(this.grilleFinie);
+            
             //AfficherListePropMot();
 
         }
@@ -623,6 +665,7 @@ namespace Mot_Mele
             {
                 this.motATrouver.Add(a.mot);
             }
+            this.grilleRemplie = grille;
                 return grille;                                                      //A la fin de la boucle de remplissge des mots, on retourne la grille
          }
 
@@ -657,15 +700,15 @@ namespace Mot_Mele
             }
             return grille;                                                  //On retourne la grille
         }
-         void AfficherGrille(string[,] grille)                        //Fonction pour afficher une grille
+         public void AfficherGrille()                        //Fonction pour afficher une grille
         {
 
-            for (int i = 0; i < grille.GetLength(0); i++)                      //On boucle de sorte à afficher les éléments X de la grille tel que: 
+            for (int i = 0; i < this.grilleRemplie.GetLength(0); i++)                      //On boucle de sorte à afficher les éléments X de la grille tel que: 
             {                                                                   // |X|X|X|X....|X|X|
                 Console.Write("|");                                             // |X|X|X|X....|X|X|
-                for (int j = 0; j < grille.GetLength(1); j++)                      // ...
+                for (int j = 0; j < this.grilleRemplie.GetLength(1); j++)                      // ...
                 {                                                               // ...
-                    Console.Write(grille[i, j] + "|");                          // |X|X|X|X....|X|X|
+                    Console.Write(this.grilleRemplie[i, j] + "|");                          // |X|X|X|X....|X|X|
                 }
                 Console.WriteLine();
             }
