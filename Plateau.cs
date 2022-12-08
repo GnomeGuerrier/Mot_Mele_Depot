@@ -10,6 +10,7 @@ namespace Mot_Mele
 {
     class Plateau
     {
+        private List<string> motATrouver = new List<string>();
         private Dictionnaire dico;
         private int difficulte;
         private int nbmot;
@@ -35,18 +36,22 @@ namespace Mot_Mele
             this.taille = taille;
             this.grilleVide = GenererGrille(this.taille);
             this.listeMot = new List<PropMot>();
-            AfficherGrille(grilleVide);                                                                                                         //Affiche une première fois la grille vide
+           // AfficherGrille(grilleVide);                                                                                                         //Affiche une première fois la grille vide
             this.grilleFinie = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
             RemplirGrilleRandom(this.grilleFinie);
             
             AfficherGrille(this.grilleFinie);
-            AfficherListePropMot();
+            //AfficherListePropMot();
 
         }
-
-        public List<PropMot> GListeMot
+        
+        public List<PropMot> GListeMotPropMot
         {
             get { return this.listeMot; }
+        }
+        public List<string> GMotATrouver
+        {
+            get { return motATrouver; }
         }
 
          string[,] RemplirGrille(string[,] grille, Dictionnaire dico, int nombreMots, int difficulte)                 //Fonction pour remplir la grille avec les mots du dictionnaire en fonction de la difficulté
@@ -552,7 +557,7 @@ namespace Mot_Mele
                         Console.WriteLine("Default case in first switch");
                         break;
                 }
-                Console.WriteLine(mot);
+                //Console.WriteLine(mot);
                 motAjoute.mot = mot;
                 motAjoute.orientation = orientation;
                 motAjoute.posX = x;
@@ -561,8 +566,8 @@ namespace Mot_Mele
                 //Une fois le mot placé
                 mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau mot
                
-                Console.WriteLine("------------------");
-                AfficherGrille(grille);
+                //Console.WriteLine("------------------");
+                //AfficherGrille(grille);
                 orientation += 1;                                               //On change l'orientation
                 switch (difficulte)
                 {
@@ -613,9 +618,13 @@ namespace Mot_Mele
                 y = NombreAleatoire(0, grille.GetLength(1));
 
             }
-
-            return grille;                                                      //A la fin de la boucle de remplissge des mots, on retourne la grille
-        }
+            
+            foreach (PropMot a in listeMot)
+            {
+                this.motATrouver.Add(a.mot);
+            }
+                return grille;                                                      //A la fin de la boucle de remplissge des mots, on retourne la grille
+         }
 
 
          int NombreAleatoire(int min, int max)        //Fonction qui retourne un entier aléatoire entre min et max
@@ -690,7 +699,7 @@ namespace Mot_Mele
                 Console.WriteLine(p.mot + "\n" + p.orientation + "\n" + p.posX + "\n" + p.posY + "\n--------------");
             }
         }
-        public bool checkMot(string[] data)
+        public bool Test_Plateau(string[] data)
         {
             //Data : data[0] mot | data[1] orientation | data[2] posX | data[3] posY
             bool verif = false;
