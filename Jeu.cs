@@ -40,22 +40,22 @@ namespace Mot_Mele
 
             
            
-            int taille = 10; int nbmot = 17;
+            int taille = 10; int nbmot = 10;
             
            
-            Console.WriteLine("Bonjour, voulez vous reprendre un  jeu? oui/non");
-            if (Console.ReadLine() == "OUI") Reprendre();
+            Console.WriteLine("Bonjour, voulez vous commencer une nouvelle partie [N] ou reprendre un jeu [R] ?");
+            if (Console.ReadLine() == "R") Reprendre();
             else
             {
                 typeJeu:
-                Console.WriteLine("Voulez vous jouez avec des grilles générée avant(écrire générée) ou aléatorement(écrire aléatoirement)?");
+                Console.WriteLine("Voulez vous jouez avec des grilles générée avant [G] ou aléatorement [A] ?");
                 string typeJeu = Console.ReadLine();
-                if(typeJeu!="générée"&&typeJeu!= "aléatoirement")
+                if(typeJeu!="G"&&typeJeu!= "A")
                 {
                     Console.WriteLine("Veuillez choisir un tye de jeu valide");
                     goto typeJeu;
                 }
-                if (typeJeu == "générée")
+                if (typeJeu == "G")
                 {
                     Dictionnaire dico = new Dictionnaire("français");
                     Plateau plateau = new Plateau(dico, "CasSimple.csv");
@@ -130,6 +130,7 @@ namespace Mot_Mele
                         {
                             Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                             reussi = true;
+                            goto Fin;
                         }
                         plateau.AfficherGrille();
                         Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
@@ -143,16 +144,16 @@ namespace Mot_Mele
                         motDonne = Console.ReadLine().ToUpper();
 
                     Direction:
-                        Console.WriteLine("Puis la direction(Nord,Sud,Est,Ouest,Nord_Est,Nord_Ouest,Sud_Est,Sud_Ouest)");// A VERIFIER AVEC HUGO
+                        Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                         directionDonne = Console.ReadLine();
-                        if (directionDonne == "Nord") directionDonne = "1";
-                        else if (directionDonne == "Sud") directionDonne = "2";
-                        else if (directionDonne == "Est") directionDonne = "4";
-                        else if (directionDonne == "Ouest") directionDonne = "3";
-                        else if (directionDonne == "Nord_Est") directionDonne = "6";
-                        else if (directionDonne == "Nord_Ouest") directionDonne = "5";
-                        else if (directionDonne == "Sud_Est") directionDonne = "8";
-                        else if (directionDonne == "Sud_Ouest") directionDonne = "7";
+                        if (directionDonne == "S") directionDonne = "1";
+                        else if (directionDonne == "N") directionDonne = "2";
+                        else if (directionDonne == "O") directionDonne = "4";
+                        else if (directionDonne == "E") directionDonne = "3";
+                        else if (directionDonne == "NE") directionDonne = "6";
+                        else if (directionDonne == "NO") directionDonne = "8";
+                        else if (directionDonne == "SE") directionDonne = "5";
+                        else if (directionDonne == "SO") directionDonne = "7";
                         else
                         {
                             Console.WriteLine("La direction donnée n'est pas bonne, veuillez la ressaisir");

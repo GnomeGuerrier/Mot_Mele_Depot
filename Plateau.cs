@@ -702,16 +702,22 @@ namespace Mot_Mele
         }
          public void AfficherGrille()                        //Fonction pour afficher une grille
         {
-
+            Console.Write(" ");
+            for(int i = 0; i <this.grilleRemplie.GetLength(0); i++)
+            {
+                Console.Write(" " + i);
+            }
+            Console.Write("  Y \n");
             for (int i = 0; i < this.grilleRemplie.GetLength(0); i++)                      //On boucle de sorte à afficher les éléments X de la grille tel que: 
             {                                                                   // |X|X|X|X....|X|X|
-                Console.Write("|");                                             // |X|X|X|X....|X|X|
+                Console.Write(i+"|");                                             // |X|X|X|X....|X|X|
                 for (int j = 0; j < this.grilleRemplie.GetLength(1); j++)                      // ...
                 {                                                               // ...
                     Console.Write(this.grilleRemplie[i, j] + "|");                          // |X|X|X|X....|X|X|
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine("X");
         }
          void RemplirGrilleRandom(string[,] grille)
         {
