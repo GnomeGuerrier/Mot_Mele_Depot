@@ -763,6 +763,156 @@ namespace Mot_Mele
 
             return verif;
         }
+
+        bool VerifData(string[,] grille, string[] data)
+        {
+            bool verif = true;
+            if(data == null || data[0] == null || data[0] == "" || data[1] == null || data[1] == "" || data[2] == null || data[2] == "" || data[3] == null || data[3] == "")
+            {
+                verif = false;
+            }
+            else
+            {
+                int x = Convert.ToInt32(data[2]);
+                int y = Convert.ToInt32(data[3]);
+                switch (data[1])
+                {
+                    case "1":
+                        for(int i = 0; i < data[0].Length; i++)
+                        {
+                            if(x+i < grille.GetLength(0))
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x + i, y])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }
+                        }
+                        break;
+                    case "2":
+                        for(int i = 0; i< data[0].Length; i++)
+                        {
+                            if(x-i >= 0)
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x - i, y])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }                          
+                        }
+                        break;
+                    case "3":
+                        for (int i = 0; i < data[0].Length; i++)
+                        {
+                            if(y+i < grille.GetLength(1))
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x, y + i])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }                            
+                        }
+                        break;
+                    case "4":
+                        for (int i = 0; i < data[0].Length; i++)
+                        {
+                            if(y-i >= 0)
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x, y - i])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }  
+                        }
+                        break;
+                    case "5":
+                        for (int i = 0; i < data[0].Length; i++)
+                        {
+                            if(x+i < grille.GetLength(0) && y+i < grille.GetLength(1))
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x + i, y + i])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }                           
+                        }
+                        break;
+                    case "6":
+                        for (int i = 0; i < data[0].Length; i++)
+                        {
+                            if(x-i >= 0 && y + i < grille.GetLength(1))
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x - i, y + i])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }                          
+                        }
+                        break;
+                    case "7":
+                        for (int i = 0; i < data[0].Length; i++)
+                        {
+                            if(x+i < grille.GetLength(0) && y -i >= 0)
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x + i, y - i])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }                            
+                        }
+                        break;
+                    case "8":
+                        for (int i = 0; i < data[0].Length; i++)
+                        {
+                            if(x-i >= 0 && y -i >= 0)
+                            {
+                                if (Convert.ToString(data[0][i]) != grille[x - i, y - i])
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
+                            {
+                                verif = false;
+                            }                           
+                        }
+                        break;
+                    default:
+                        verif = false;
+                        break;
+                }
+            }
+            return verif;
+        }
+
     }
     
 }
