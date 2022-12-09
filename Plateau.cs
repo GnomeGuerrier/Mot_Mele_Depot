@@ -18,10 +18,12 @@ namespace Mot_Mele
         
         private List<string> lettreSimple = new List<string>();
         private string[,] grilleVide;
-        private string[,] grilleFinie;
+        private string[,] grilleFinieMotSansLettre;
         
         private string[,] grilleRemplie;
         private List<string> infoSimple = new List<string>();
+        private List<PropMot> listeMot;
+        private PropMot motAjoute;
         public struct PropMot
         {
             public string mot;
@@ -30,7 +32,7 @@ namespace Mot_Mele
             public int posY;
         }
 
-        private List<PropMot> listeMot;
+        
         public Plateau(Dictionnaire dico,string path)
         {
             this.dico = dico;
@@ -79,8 +81,8 @@ namespace Mot_Mele
             this.grilleVide = GenererGrille(this.taille);
             this.listeMot = new List<PropMot>();
            // AfficherGrille(grilleVide);                                                                                                         //Affiche une première fois la grille vide
-            this.grilleFinie = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
-            RemplirGrilleRandom(this.grilleFinie);
+            this.grilleFinieMotSansLettre = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
+            RemplirGrilleRandom(this.grilleFinieMotSansLettre);
             
             
             //AfficherListePropMot();
@@ -116,7 +118,7 @@ namespace Mot_Mele
             for (int k = 0; k < nombreMots; k++)                         //Boucle de remplissage de mots, tourant 'nombreMots' fois
             {
                 int n = 0;                                                      //On initialise le compteur n, qui compte combien de mots on été testé.
-                PropMot motAjoute = new PropMot();
+                this.motAjoute = new PropMot();
                 switch (orientation)                                            //En fonction de l'orientation on a 4 cas différents, mais similaires dans la structure
                 {
                     case 1:                                                     //Pour l'orientation "Haut/Bas"
@@ -600,11 +602,11 @@ namespace Mot_Mele
                         break;
                 }
                 //Console.WriteLine(mot);
-                motAjoute.mot = mot;
-                motAjoute.orientation = orientation;
-                motAjoute.posX = x;
-                motAjoute.posY = y;
-                this.listeMot.Add(motAjoute);
+               this. motAjoute.mot = mot;
+                this.motAjoute.orientation = orientation;
+                this.motAjoute.posX = x;
+                this.motAjoute.posY = y;
+                this.listeMot.Add(this.motAjoute);
                 //Une fois le mot placé
                 mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau mot
                
@@ -661,7 +663,7 @@ namespace Mot_Mele
 
             }
             
-            foreach (PropMot a in listeMot)
+            foreach (PropMot a in this.listeMot)
             {
                 this.motATrouver.Add(a.mot);
             }
@@ -743,7 +745,7 @@ namespace Mot_Mele
 
         public void AfficherListePropMot()
         {
-            foreach(PropMot p in listeMot)
+            foreach(PropMot p in this.listeMot)
             {
                 Console.WriteLine(p.mot + "\n" + p.orientation + "\n" + p.posX + "\n" + p.posY + "\n--------------");
             }
@@ -753,7 +755,7 @@ namespace Mot_Mele
             //Data : data[0] mot | data[1] orientation | data[2] posX | data[3] posY
             bool verif = false;
 
-            foreach(PropMot p in listeMot)
+            foreach(PropMot p in this.listeMot)
             {
                 if(p.mot == data[0] && p.orientation == Convert.ToInt32(data[1]) && p.posX == Convert.ToInt32(data[2]) && p.posY == Convert.ToInt32(data[3]))
                 {
@@ -764,9 +766,10 @@ namespace Mot_Mele
             return verif;
         }
 
-        bool VerifData(string[,] grille, string[] data)
+        public bool VerifData(string[] data)
         {
             bool verif = true;
+            string[,] grille = this.grilleRemplie;
             if(data == null || data[0] == null || data[0] == "" || data[1] == null || data[1] == "" || data[2] == null || data[2] == "" || data[3] == null || data[3] == "")
             {
                 verif = false;
