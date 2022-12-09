@@ -31,6 +31,7 @@ namespace Mot_Mele
             public int posX;
             public int posY;
         }
+        
 
         
         public Plateau(Dictionnaire dico,string path)
@@ -93,12 +94,28 @@ namespace Mot_Mele
         {
             get { return this.listeMot; }
         }
+        public string[,] GGrilleRemplie
+        {
+            get { return this.grilleRemplie; }
+        }
         public List<string> GMotATrouver
         {
             get { return motATrouver; }
         }
+        public int GDifficulte
+        {
+            get { return this.difficulte; }
+        }
+        public int GGetLength0
+        {
+            get { return this.grilleRemplie.GetLength(0); }
+        }
+        public int GGetLength1
+        {
+            get { return this.grilleRemplie.GetLength(1); }
+        }
 
-         string[,] RemplirGrille(string[,] grille, Dictionnaire dico, int nombreMots, int difficulte)                 //Fonction pour remplir la grille avec les mots du dictionnaire en fonction de la difficulté
+        string[,] RemplirGrille(string[,] grille, Dictionnaire dico, int nombreMots, int difficulte)                 //Fonction pour remplir la grille avec les mots du dictionnaire en fonction de la difficulté
         {
             string mot = MotAleatoire(dico, grille);                            //On initialise un premier mot choisi aléatoirement
             int x = NombreAleatoire(0, grille.GetLength(0));            //On prend un x aléatoire dans la grille                Notez que les coordonnées de la grille

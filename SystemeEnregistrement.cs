@@ -16,15 +16,27 @@ namespace Mot_Mele
         private Dictionnaire dico;
         private Joueur j1, j2;
         private Plateau plateau;
-        private string path;
-        private string modifPath;
+        private string path="PlateauEnregistré";
+        
+        private DateTime temps;
+        private List<string> rendu;
+        private string[,] grille;
          public SystemeEnregistrement(Plateau plateau)
+         {
+           // rendu = ;
+         }
+
+        public void EnregistrerTableau()
         {
+            rendu[0] = plateau.GDifficulte + ";" + plateau.GGetLength0 + ";" + plateau.GGetLength1+";"+plateau.GMotATrouver.Count;
+            foreach(string a in plateau.GGrilleRemplie)
+            {
 
+            }
+
+            File.WriteAllLines(path + temps + ".csv", rendu);
         }
-
-
-        public static void Reprendre()
+        public  void ReprendreJeu()
         {
             try
             {
@@ -56,7 +68,7 @@ namespace Mot_Mele
                 Console.WriteLine("FILE NOT FOUND, CHECK L'EMPLECEMENT, ou le jeu n'as pas été enregistré");
             }
         }
-        public static void Enregister(Joueur j1, Joueur j2, Dictionnaire dico)
+        public  void EnregisterJeu(Joueur j1, Joueur j2, Dictionnaire dico)
         {
             string r = j1.GNom + " ";
             if (j1.GMotTrouve != null)

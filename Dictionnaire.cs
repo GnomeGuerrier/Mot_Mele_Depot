@@ -14,7 +14,7 @@ namespace Mot_Mele
         private string[] dico;//tableau pour la création de la list
         private List<string> dicoList; // variable de list dictionnaire, à utiliser pour accéder à la liste de tout les mots, séparé et en MAJUSCULE
         private string path;//chemin du fichier
-        
+        private int Imaxliste;
 
         public Dictionnaire(string Langage)
         {
@@ -71,7 +71,9 @@ namespace Mot_Mele
                             }
                         }
                     }
+                    Imaxliste = dicoList.Count();
                 }
+                  
                 catch(Exception f)
                 {
                     Console.WriteLine(f);
@@ -117,28 +119,38 @@ namespace Mot_Mele
         /// </summary>
         /// <param name="mot">mot à checker EN MAJUSCULE</param>
         /// <returns></returns>
-       public bool RechDichoRecursif(string mot)
+        /// 
+        
+       public bool RechDichoRecursif(string mot/*, int Imaxliste, int Iminliste = 0*/)
         {
-            bool r = false;
-            /*for (int i = 0; i < dico.Length; i++)
+             bool r = false;
+
+             if (this.dicoList.Contains(mot)) r = true;
+             return r;
+            /*dicoList.Sort();
+
+
+
+            ///recherche du mot dans la liste en récursif
+            if (dicoList[(Iminliste + Imaxliste) / 2].CompareTo(mot) > 0 && Convert.ToDouble(Math.Abs(Iminliste - Imaxliste)) / 2 >= 1)
             {
-                string[] toutLesMots = dico[i].Split(" ");//sépare en catégorie de mots
-                if (toutLesMots.Length > 1)
-                {
-                    for (int j = 0; j < toutLesMots.Length;j++)//sépare mot par mot
-                    {
-                        string[] motParMot = toutLesMots[j].Split(" ");
-                        for(int l = 0; l < motParMot.Length; l++)//check tout les mots pour les vérifier
-                        {
-                            
-                            if (motParMot[l] == mot+" "|| motParMot[l] == mot||motParMot[l] == " "+mot + " "|| motParMot[l] == " "+mot + " ") r = true;
-                            
-                        }
-                    }
-                }
+                return RechDichoRecursif(mot, Iminliste, (Iminliste + Imaxliste) / 2);
+            }
+             if (dicoList[(Iminliste + Imaxliste) / 2].CompareTo(mot) < 0 && Convert.ToDouble(Math.Abs(Iminliste - Imaxliste)) / 2 >= 1)
+            {
+                return RechDichoRecursif(mot, (Iminliste + Imaxliste) / 2, Imaxliste);
+            }
+             if (dicoList[(Iminliste + Imaxliste) / 2].CompareTo(mot) == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }*/
-            if (this.dicoList.Contains(mot)) r = true;
-            return r;
+
+
+
 
         }
     }
