@@ -7,6 +7,7 @@ using System.IO;
 using System.Timers;
 using System.Threading;
 using System.Diagnostics;
+using System.Data;
 
 namespace Mot_Mele
 {
@@ -17,28 +18,135 @@ namespace Mot_Mele
         private Joueur j1, j2;
         private Plateau plateau;
         private string path="PlateauEnregistré";
-        
-        private DateTime temps;
-        private List<string> rendu;
+        private List<string> motATrouver = new List<string>();
+        private DateTime temps=DateTime.Now;
+        private int aQuiTour;
+        private List<string> rendu=new List<string>();
         private string[,] grille;
-         public SystemeEnregistrement(Plateau plateau)
+         public SystemeEnregistrement(Plateau plateau)//Enregistre le tableau donné 
          {
            // rendu = ;
+           this.plateau = plateau;
+           this.motATrouver = plateau.GMotATrouver;
+            this.grille = plateau.GGrilleRemplie;
+            
          }
+        public SystemeEnregistrement(Plateau plateau, Joueur j1, Joueur j2, Dictionnaire dico,int aQuiTour)
+        {
+            this.dico= dico;
+            this.j1 = j1;
+            this.j2 = j2;
+            this.plateau = plateau;
+            this.motATrouver = plateau.GMotATrouver;
+            this.grille = plateau.GGrilleRemplie;
+            this.aQuiTour= aQuiTour;
+           
+        }
 
+
+
+
+
+          /// <summary>
+          /// Permet d'enregistrer tout les tableaux générées aléatoirement
+          /// </summary>
         public void EnregistrerTableau()
         {
-            rendu[0] = plateau.GDifficulte + ";" + plateau.GGetLength0 + ";" + plateau.GGetLength1+";"+plateau.GMotATrouver.Count;
-            foreach(string a in plateau.GGrilleRemplie)
+            this.rendu.Clear();
+            this.rendu.Add( this.plateau.GDifficulte + ";" + this.plateau.GGetLength0 + ";" + this.plateau.GGetLength1+";"+this.plateau.GMotATrouver.Count);
+            string mots="";
+            string ligne = "";
+            foreach(string i in this.motATrouver)
             {
+                mots += i + ";";
+            }
+            this.rendu.Add(mots);
+            for (int i = 0; i < this.grille.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.grille.GetLength(1); j++)
+                {
+                    ligne += this.grille[i, j]+";";
 
+                }
+                this.rendu.Add(ligne);
+                ligne = "";
             }
 
-            File.WriteAllLines(path + temps + ".csv", rendu);
+            
+            File.WriteAllLines(path +"_"+ temps.Day + "_" + temps.Month + "_" + temps.Year + "_" + temps.Hour + "_" +"_"+temps.Minute+"_"+temps.Second+ ".csv", this.rendu); //Enregistre le tableau avec comme syntaxe PlateauEnregistreJour_Mois_Anne_Heure_Minute_Seconde
         }
-        public  void ReprendreJeu()
+       
+        public  void EnregisterJeu(Joueur j1, Joueur j2, Dictionnaire dico)
         {
-            try
+            /*string r = j1.GNom + " ";
+            if (j1.GMotTrouve != null)
+            {
+                foreach (string mot in j1.GMotTrouve)
+                {
+                    r += mot + " ";
+                }
+            }
+
+            else r += "null ";
+
+            r += j1.GScore + "\n";
+
+            r += j2.GNom + " ";
+            if (j2.GMotTrouve != null)
+            {
+                foreach (string mot in j2.GMotTrouve)
+                {
+                    r += mot + " ";
+                }
+            }
+            else r += "null";
+            r += j2.GScore + "\n";
+
+            r += dico.GLangage + "\n";
+            //continuer ici pour l'enregistrement
+
+            File.WriteAllText("test.csv", r);*/
+            this.rendu.Clear();
+
+            string r = j1.GNom + ";";       //enregistrement J1
+            if (j1.GMotTrouve != null)
+            {
+                foreach (string mot in j1.GMotTrouve)
+                {
+                    r += mot + ";";
+                }
+            }
+
+            else r += "null;";
+            r += j1.GScore + ";";
+            this.rendu.Add(r);
+            r = "";
+            r += j2.GNom + ";";     //enregistrement J2
+            if (j2.GMotTrouve != null)
+            {
+                foreach (string mot in j2.GMotTrouve)
+                {
+                    r += mot + ";";
+                }
+            }
+            else r += "null";
+            r += j2.GScore + ";";
+            this.rendu.Add(r);
+            r = "";
+            r += dico.GLangage + ";";
+            this.rendu.Add(r);
+            r = "";
+            r = Convert.ToString(this.aQuiTour);
+            this.rendu.Add(r);
+            r = "";
+
+            
+
+            File.WriteAllLines("JeuEnregistre.csv", this.rendu);
+        }
+        public void ReprendreJeu()
+        {
+            /*try
             {
                 string[] infos = File.ReadAllLines("test.csv");
                 //Recup et création info Joueur1
@@ -66,38 +174,39 @@ namespace Mot_Mele
             catch (FileNotFoundException)
             {
                 Console.WriteLine("FILE NOT FOUND, CHECK L'EMPLECEMENT, ou le jeu n'as pas été enregistré");
-            }
-        }
-        public  void EnregisterJeu(Joueur j1, Joueur j2, Dictionnaire dico)
-        {
-            string r = j1.GNom + " ";
-            if (j1.GMotTrouve != null)
+            }*/
+            try
             {
-                foreach (string mot in j1.GMotTrouve)
+                string[] infos = File.ReadAllLines("JeuEnregistre.csv");
+                //Recup et création info Joueur1
+                string[] decoupeJ1 = infos[0].Split(";");
+                Joueur j1 = new Joueur(decoupeJ1[0]);
+                for (int i = 1; i < decoupeJ1.Length - 1; i++)
                 {
-                    r += mot + " ";
+                    j1.Add_Mot(decoupeJ1[i]);
                 }
+                j1.Add_Score(Convert.ToInt32(decoupeJ1[decoupeJ1.Length - 1]));
+                Console.WriteLine(j1.ToString());
+                //Recup et création info Joueur2
+                string[] decoupeJ2 = infos[1].Split(";");
+                Joueur j2 = new Joueur(decoupeJ2[0]);
+                for (int i = 1; i < decoupeJ2.Length - 1; i++)
+                {
+                    j2.Add_Mot(decoupeJ2[i]);
+                }
+                j2.Add_Score(Convert.ToInt32(decoupeJ2[decoupeJ2.Length - 1]));
+                Console.WriteLine(j2.ToString());
+                //création dico
+                Dictionnaire dictionnaire = new Dictionnaire(infos[2]);
+                //Savoir à qui est le tour
+                this.aQuiTour=Convert.ToInt32(infos[3]);
             }
-
-            else r += "null ";
-
-            r += j1.GScore + "\n";
-
-            r += j2.GNom + " ";
-            if (j2.GMotTrouve != null)
+            catch(Exception ex)
             {
-                foreach (string mot in j2.GMotTrouve)
-                {
-                    r += mot + " ";
-                }
+                Console.WriteLine("ex");
             }
-            else r += "null";
-            r += j2.GScore + "\n";
 
-            r += dico.GLangage + "\n";
-            //continuer ici pour l'enregistrement
 
-            File.WriteAllText("test.csv", r);
         }
     }
 }
