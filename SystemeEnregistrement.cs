@@ -76,7 +76,7 @@ namespace Mot_Mele
             File.WriteAllLines(path +"_"+ temps.Day + "_" + temps.Month + "_" + temps.Year + "_" + temps.Hour + "_" +"_"+temps.Minute+"_"+temps.Second+ ".csv", this.rendu); //Enregistre le tableau avec comme syntaxe PlateauEnregistreJour_Mois_Anne_Heure_Minute_Seconde
         }
        
-        public  void EnregisterJeu(Joueur j1, Joueur j2, Dictionnaire dico)
+        public  void EnregisterJeu(Joueur j1, Joueur j2, Dictionnaire dico,int difficulte,string typeJeu)
         {
             /*string r = j1.GNom + " ";
             if (j1.GMotTrouve != null)
@@ -133,80 +133,19 @@ namespace Mot_Mele
             r += j2.GScore + ";";
             this.rendu.Add(r);
             r = "";
-            r += dico.GLangage + ";";
+            r += dico.GLangage ;//enregistrement dico
             this.rendu.Add(r);
             r = "";
-            r = Convert.ToString(this.aQuiTour);
+            r = Convert.ToString(this.aQuiTour);//enregistrement du prochain joueur à jouer
             this.rendu.Add(r);
             r = "";
-
-            
-
+            r = Convert.ToString(difficulte+1);//on fait plus 1 pour ajouter la difficultée non comptée lors de l'enregistrement
+            this.rendu.Add(r);
+            r = "";
+            this.rendu.Add(typeJeu);
             File.WriteAllLines("JeuEnregistre.csv", this.rendu);
+            rendu.Add(typeJeu);
         }
-        public void ReprendreJeu()
-        {
-            /*try
-            {
-                string[] infos = File.ReadAllLines("test.csv");
-                //Recup et création info Joueur1
-                string[] decoupeJ1 = infos[0].Split(" ");
-                Joueur j1 = new Joueur(decoupeJ1[0]);
-                for (int i = 1; i < decoupeJ1.Length - 1; i++)
-                {
-                    j1.Add_Mot(decoupeJ1[i]);
-                }
-                j1.Add_Score(Convert.ToInt32(decoupeJ1[decoupeJ1.Length - 1]));
-                Console.WriteLine(j1.ToString());
-                //Recup et création info Joueur2
-                string[] decoupeJ2 = infos[1].Split(" ");
-                Joueur j2 = new Joueur(decoupeJ2[0]);
-                for (int i = 1; i < decoupeJ2.Length - 1; i++)
-                {
-                    j2.Add_Mot(decoupeJ2[i]);
-                }
-                j2.Add_Score(Convert.ToInt32(decoupeJ2[decoupeJ2.Length - 1]));
-                Console.WriteLine(j2.ToString());
-                //création dico
-                Dictionnaire dictionnaire = new Dictionnaire(infos[2]);
-                //continuer ici
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("FILE NOT FOUND, CHECK L'EMPLECEMENT, ou le jeu n'as pas été enregistré");
-            }*/
-            try
-            {
-                string[] infos = File.ReadAllLines("JeuEnregistre.csv");
-                //Recup et création info Joueur1
-                string[] decoupeJ1 = infos[0].Split(";");
-                Joueur j1 = new Joueur(decoupeJ1[0]);
-                for (int i = 1; i < decoupeJ1.Length - 1; i++)
-                {
-                    j1.Add_Mot(decoupeJ1[i]);
-                }
-                j1.Add_Score(Convert.ToInt32(decoupeJ1[decoupeJ1.Length - 1]));
-                Console.WriteLine(j1.ToString());
-                //Recup et création info Joueur2
-                string[] decoupeJ2 = infos[1].Split(";");
-                Joueur j2 = new Joueur(decoupeJ2[0]);
-                for (int i = 1; i < decoupeJ2.Length - 1; i++)
-                {
-                    j2.Add_Mot(decoupeJ2[i]);
-                }
-                j2.Add_Score(Convert.ToInt32(decoupeJ2[decoupeJ2.Length - 1]));
-                Console.WriteLine(j2.ToString());
-                //création dico
-                Dictionnaire dictionnaire = new Dictionnaire(infos[2]);
-                //Savoir à qui est le tour
-                this.aQuiTour=Convert.ToInt32(infos[3]);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("ex");
-            }
-
-
-        }
+        
     }
 }
