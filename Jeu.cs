@@ -16,6 +16,7 @@ namespace Mot_Mele
         static void Main(string[] args)
         {
             
+           
             int taille = 5; 
             int nbmot = 1;
             int difficulte = 1;
@@ -36,8 +37,10 @@ namespace Mot_Mele
             {
             DebutJeu:
                 Console.WriteLine("Bonjour, voulez vous commencer une nouvelle partie [N] ou reprendre un jeu [R] ?");
+                Console.ForegroundColor = ConsoleColor.Red;
                 if (Console.ReadLine() == "R")
                 {
+                    Console.ResetColor();
                     if (!File.Exists("JeuEnregistre.csv"))
                     {
                         Console.WriteLine("Vous n'avez pas encore enregistré de jeu");
@@ -99,20 +102,26 @@ namespace Mot_Mele
                                         j1.Add_Score(100);
                                         goto FinJ1;
                                     }
-                                    plateau.AfficherGrille();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                
+                                    plateau.AfficherGrille();Console.ResetColor();
                                     Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
-                                    foreach (string m in listMotATrouver)
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                               
+                                foreach (string m in listMotATrouver)
                                     {
                                         Console.Write(m + " ");
-                                    }
+                                    } Console.ResetColor();
                                     Console.WriteLine();
                                     Console.WriteLine("Donnez le mot que vous voulez trouver");
-                                    motDonne = Console.ReadLine().ToUpper();
-
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                motDonne = Console.ReadLine().ToUpper();
+                                Console.ResetColor();
                                 Direction:
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
+                                    Console.ForegroundColor = ConsoleColor.Red;
                                     directionDonne = Console.ReadLine();
+                                     Console.ResetColor();
                                     if (directionDonne == "S") directionDonne = "1";
                                     else if (directionDonne == "N") directionDonne = "2";
                                     else if (directionDonne == "O") directionDonne = "4";
@@ -126,10 +135,12 @@ namespace Mot_Mele
                                         Console.WriteLine("La direction donnée n'est pas bonne, veuillez la ressaisir");
                                         goto Direction;
                                     }
-                                posX:
-                                    Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
+                            posX:
+                                Console.WriteLine("Et enfin la position X de la première lettre du mot");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
                                     posXDonne = (Console.ReadLine());
+                                    Console.ResetColor();
                                     if (!int.TryParse(posXDonne, out int n))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -137,7 +148,9 @@ namespace Mot_Mele
                                     }
                                 posY:
                                     Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                    posYDonne = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posYDonne = (Console.ReadLine());Console.ResetColor();
                                     if (!int.TryParse(posYDonne, out int nn))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -171,7 +184,9 @@ namespace Mot_Mele
                                     }
                                 FinJ1:;
                                 } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
-                                Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            
+                            Console.WriteLine("Tour terminé!");Console.ResetColor();
                                 swJ1.Stop();
                                 swJ1.Reset();
                                 
@@ -205,18 +220,21 @@ namespace Mot_Mele
                                     }
                                     plateau2.AfficherGrille();
                                     Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
-                                    foreach (string m in listMotATrouver2)
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                
+                                foreach (string m in listMotATrouver2)
                                     {
                                         Console.Write(m + " ");
-                                    }
+                                    }Console.ResetColor();
                                     Console.WriteLine();
                                     Console.WriteLine("Donnez le mot que vous voulez trouver");
                                     motDonne2 = Console.ReadLine().ToUpper();
 
                                 Direction:
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
-                                    directionDonne2 = Console.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                directionDonne2 = Console.ReadLine();Console.ResetColor();
                                     if (directionDonne2 == "S") directionDonne2 = "1";
                                     else if (directionDonne2 == "N") directionDonne2 = "2";
                                     else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -232,8 +250,9 @@ namespace Mot_Mele
                                     }
                                 posX:
                                     Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
-                                    posXDonne2 = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                posXDonne2 = (Console.ReadLine()); Console.ResetColor();
                                     if (!int.TryParse(posXDonne2, out int n))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -241,7 +260,9 @@ namespace Mot_Mele
                                     }
                                 posY:
                                     Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                    posYDonne2 = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posYDonne2 = (Console.ReadLine());Console.ResetColor();
                                     if (!int.TryParse(posYDonne2, out int nn))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -275,15 +296,21 @@ namespace Mot_Mele
                                     }
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
-                                Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                           
+                            Console.WriteLine("Tour terminé!"); Console.ResetColor();
                                 swJ2.Stop();
                                 swJ2.Reset();
                                 Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");//enregistrement de la partie
-                                if (Console.ReadLine() == "Y")
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            
+                            if (Console.ReadLine() == "Y")
                                 {
+                                    Console.ResetColor();
                                     sysEnregistrementJ2.EnregisterJeu(j1, j2, dico, difficulte, "G");
                                     goto FinComplete;
                                 }
+                            Console.ResetColor();
                                 Console.Clear();
                                 #endregion
 
@@ -336,20 +363,27 @@ namespace Mot_Mele
                                         j1.Add_Score(100);
                                         goto FinJ1;
                                     }
-                                    plateau.AfficherGrille();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                
+                                    plateau.AfficherGrille();Console.ResetColor();
                                     Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
-                                    foreach (string m in listMotATrouver)
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                
+                                foreach (string m in listMotATrouver)
                                     {
                                         Console.Write(m + " ");
-                                    }
+                                    }Console.ResetColor();
                                     Console.WriteLine();
                                     Console.WriteLine("Donnez le mot que vous voulez trouver");
-                                    motDonne = Console.ReadLine().ToUpper();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                motDonne = Console.ReadLine().ToUpper();Console.ResetColor();
 
                                 Direction:
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
-                                    directionDonne = Console.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                directionDonne = Console.ReadLine(); Console.ResetColor();
                                     if (directionDonne == "S") directionDonne = "1";
                                     else if (directionDonne == "N") directionDonne = "2";
                                     else if (directionDonne == "O") directionDonne = "4";
@@ -365,8 +399,9 @@ namespace Mot_Mele
                                     }
                                 posX:
                                     Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
-                                    posXDonne = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posXDonne = (Console.ReadLine());Console.ResetColor();
                                     if (!int.TryParse(posXDonne, out int n))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -374,7 +409,9 @@ namespace Mot_Mele
                                     }
                                 posY:
                                     Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                    posYDonne = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                posYDonne = (Console.ReadLine()); Console.ResetColor();
                                     if (!int.TryParse(posYDonne, out int nn))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -408,7 +445,9 @@ namespace Mot_Mele
                                     }
                                 FinJ1:;
                                 } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
-                                Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            
+                            Console.WriteLine("Tour terminé!");Console.ResetColor();
                                 swJ1.Stop();
                                 swJ1.Reset();
                                 
@@ -440,18 +479,23 @@ namespace Mot_Mele
                                     }
                                     plateau2.AfficherGrille();
                                     Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
-                                    foreach (string m in listMotATrouver2)
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                
+                                foreach (string m in listMotATrouver2)
                                     {
                                         Console.Write(m + " ");
-                                    }
+                                    }Console.ResetColor();
                                     Console.WriteLine();
                                     Console.WriteLine("Donnez le mot que vous voulez trouver");
-                                    motDonne2 = Console.ReadLine().ToUpper();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                motDonne2 = Console.ReadLine().ToUpper();Console.ResetColor();
 
                                 Direction:
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
-                                    directionDonne2 = Console.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                directionDonne2 = Console.ReadLine(); Console.ResetColor();
                                     if (directionDonne2 == "S") directionDonne2 = "1";
                                     else if (directionDonne2 == "N") directionDonne2 = "2";
                                     else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -467,8 +511,9 @@ namespace Mot_Mele
                                     }
                                 posX:
                                     Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
-                                    posXDonne2 = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posXDonne2 = (Console.ReadLine());Console.ResetColor();
                                     if (!int.TryParse(posXDonne2, out int n))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -510,15 +555,21 @@ namespace Mot_Mele
                                     }
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
-                                Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                          
+                            Console.WriteLine("Tour terminé!");  Console.ResetColor();
                                 swJ2.Stop();
                                 swJ2.Reset();
                                 Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");
-                                if (Console.ReadLine() == "Y")
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            
+                            if (Console.ReadLine() == "Y")
                                 {
+                                Console.ResetColor();
                                     sysEnregistrementJ2.EnregisterJeu(j1, j2, dico, difficulte, "A");
                                     goto FinComplete;
                                 }
+                            Console.ResetColor();
                                 Console.Clear();
                                 #endregion
 
@@ -552,11 +603,14 @@ namespace Mot_Mele
 
                     
                 }
-                else
+                else   //Partie non récupérée
                 {
+                    Console.ResetColor();
                 typeJeu:
                     Console.WriteLine("Voulez vous jouez avec des grilles générée avant [G] ou aléatorement [A] ?");
-                    string typeJeu = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    
+                    string typeJeu = Console.ReadLine();Console.ResetColor();
                     if (typeJeu != "G" && typeJeu != "A")
                     {
                         Console.WriteLine("Veuillez choisir un type de jeu valide");
@@ -568,10 +622,14 @@ namespace Mot_Mele
                         Dictionnaire dico = new Dictionnaire("français");
                         string entree;
                         Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
-                        entree = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        
+                        entree = Console.ReadLine();Console.ResetColor();
                         Joueur j1 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
                         Console.WriteLine("veuillez donner le nom du deuxième joueur");
-                        entree = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        
+                        entree = Console.ReadLine();Console.ResetColor();
                         Joueur j2 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
                         Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nblaaaaaaablabla\nne pas oublier la regles des points");
 
@@ -603,20 +661,27 @@ namespace Mot_Mele
                                     j1.Add_Score(100);
                                     goto FinJ1;
                                 }
-                                plateau.AfficherGrille();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                
+                                plateau.AfficherGrille();Console.ResetColor();
                                 Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
+                                Console.ForegroundColor = ConsoleColor.Blue;
                                 foreach (string m in listMotATrouver)
                                 {
                                     Console.Write(m + " ");
                                 }
+                                Console.ResetColor();
                                 Console.WriteLine();
                                 Console.WriteLine("Donnez le mot que vous voulez trouver");
-                                motDonne = Console.ReadLine().ToUpper();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                motDonne = Console.ReadLine().ToUpper();Console.ResetColor();
 
                             Direction:
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
-                                directionDonne = Console.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                directionDonne = Console.ReadLine();Console.ResetColor();
                                 if (directionDonne == "S") directionDonne = "1";
                                 else if (directionDonne == "N") directionDonne = "2";
                                 else if (directionDonne == "O") directionDonne = "4";
@@ -632,8 +697,9 @@ namespace Mot_Mele
                                 }
                             posX:
                                 Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
-                                posXDonne = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                posXDonne = (Console.ReadLine()); Console.ResetColor();
                                 if (!int.TryParse(posXDonne, out int n))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -641,7 +707,9 @@ namespace Mot_Mele
                                 }
                             posY:
                                 Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                posYDonne = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posYDonne = (Console.ReadLine());Console.ResetColor();
                                 if (!int.TryParse(posYDonne, out int nn))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -675,7 +743,9 @@ namespace Mot_Mele
                                 }
                             FinJ1:;
                             } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
-                            Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            
+                            Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ1.Stop();
                             swJ1.Reset();
                             
@@ -709,18 +779,23 @@ namespace Mot_Mele
                                 }
                                 plateau2.AfficherGrille();
                                 Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                
                                 foreach (string m in listMotATrouver2)
                                 {
                                     Console.Write(m + " ");
-                                }
+                                }Console.ResetColor();
                                 Console.WriteLine();
                                 Console.WriteLine("Donnez le mot que vous voulez trouver");
-                                motDonne2 = Console.ReadLine().ToUpper();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                motDonne2 = Console.ReadLine().ToUpper();Console.ResetColor();
 
                             Direction:
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
-                                directionDonne2 = Console.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                directionDonne2 = Console.ReadLine();Console.ResetColor();
                                 if (directionDonne2 == "S") directionDonne2 = "1";
                                 else if (directionDonne2 == "N") directionDonne2 = "2";
                                 else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -736,8 +811,9 @@ namespace Mot_Mele
                                 }
                             posX:
                                 Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
-                                posXDonne2 = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posXDonne2 = (Console.ReadLine());Console.ResetColor();
                                 if (!int.TryParse(posXDonne2, out int n))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -745,7 +821,9 @@ namespace Mot_Mele
                                 }
                             posY:
                                 Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                posYDonne2 = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                posYDonne2 = (Console.ReadLine()); Console.ResetColor();
                                 if (!int.TryParse(posYDonne2, out int nn))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -779,18 +857,23 @@ namespace Mot_Mele
                                 }
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
-                            Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                           
+                            Console.WriteLine("Tour terminé!"); Console.ResetColor();
                             swJ2.Stop();
                             swJ2.Reset();
                             Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");//enregistrement de la partie
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            
                             if (Console.ReadLine() == "Y")
                             {
+
                                 sysEnregistrementJ2.EnregisterJeu(j1, j2, dico, difficulte, "G");
                                 goto FinComplete;
                             }
                             Console.Clear();
                             #endregion
-
+                            Console.ResetColor();
                             difficulte++;
                         } while (difficulte <= 5);
                         #region FinJeu
@@ -817,16 +900,22 @@ namespace Mot_Mele
                         #region initialisationDuJeuComplex
                         string entree;
                         Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
-                        entree = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        
+                        entree = Console.ReadLine();Console.ResetColor();
                         Joueur j1 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
                         Console.WriteLine("veuillez donner le nom du deuxième joueur");
-                        entree = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        
+                        entree = Console.ReadLine();Console.ResetColor();
                         Joueur j2 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
                         Console.WriteLine("Parfait! Quel dictionnaire voulez vous utiliser? français/anglais");
                         string langage = "";
                         do
                         {
-                            langage = Console.ReadLine();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            
+                            langage = Console.ReadLine();Console.ResetColor();
                             if (langage != "français" && langage != "anglais") Console.WriteLine("Langue non supportée,veuillez en saisir une autre");
                         } while (langage != "français" && langage != "anglais");
 
@@ -861,20 +950,28 @@ namespace Mot_Mele
                                     j1.Add_Score(100);
                                     goto FinJ1;
                                 }
-                                plateau.AfficherGrille();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                
+                                plateau.AfficherGrille();Console.ResetColor();
                                 Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                
                                 foreach (string m in listMotATrouver)
                                 {
                                     Console.Write(m + " ");
-                                }
+                                }Console.ResetColor();
                                 Console.WriteLine();
+                                
+                                
                                 Console.WriteLine("Donnez le mot que vous voulez trouver");
-                                motDonne = Console.ReadLine().ToUpper();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                motDonne = Console.ReadLine().ToUpper();Console.ResetColor();
 
                             Direction:
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
-                                directionDonne = Console.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                directionDonne = Console.ReadLine(); Console.ResetColor();
                                 if (directionDonne == "S") directionDonne = "1";
                                 else if (directionDonne == "N") directionDonne = "2";
                                 else if (directionDonne == "O") directionDonne = "4";
@@ -890,8 +987,9 @@ namespace Mot_Mele
                                 }
                             posX:
                                 Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
-                                posXDonne = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posXDonne = (Console.ReadLine());Console.ResetColor();Console.ResetColor();
                                 if (!int.TryParse(posXDonne, out int n))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -899,7 +997,9 @@ namespace Mot_Mele
                                 }
                             posY:
                                 Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                posYDonne = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posYDonne = (Console.ReadLine());Console.ResetColor();
                                 if (!int.TryParse(posYDonne, out int nn))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -933,7 +1033,9 @@ namespace Mot_Mele
                                 }
                             FinJ1:;
                             } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
-                            Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            
+                            Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ1.Stop();
                             swJ1.Reset();
                            
@@ -965,18 +1067,23 @@ namespace Mot_Mele
                                 }
                                 plateau2.AfficherGrille();
                                 Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
-
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                
                                 foreach (string m in listMotATrouver2)
                                 {
                                     Console.Write(m + " ");
-                                }
+                                }Console.ResetColor();
                                 Console.WriteLine();
                                 Console.WriteLine("Donnez le mot que vous voulez trouver");
-                                motDonne2 = Console.ReadLine().ToUpper();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                motDonne2 = Console.ReadLine().ToUpper(); Console.ResetColor();
 
                             Direction:
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
-                                directionDonne2 = Console.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                directionDonne2 = Console.ReadLine(); Console.ResetColor();
                                 if (directionDonne2 == "S") directionDonne2 = "1";
                                 else if (directionDonne2 == "N") directionDonne2 = "2";
                                 else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -992,8 +1099,9 @@ namespace Mot_Mele
                                 }
                             posX:
                                 Console.WriteLine("Et enfin la position X de la première lettre du mot");
-
-                                posXDonne2 = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                               
+                                posXDonne2 = (Console.ReadLine()); Console.ResetColor();
                                 if (!int.TryParse(posXDonne2, out int n))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -1001,7 +1109,9 @@ namespace Mot_Mele
                                 }
                             posY:
                                 Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                posYDonne2 = (Console.ReadLine());
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                
+                                posYDonne2 = (Console.ReadLine());Console.ResetColor();
                                 if (!int.TryParse(posYDonne2, out int nn))
                                 {
                                     Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -1035,18 +1145,23 @@ namespace Mot_Mele
                                 }
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
-                            Console.WriteLine("Tour terminé!");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            
+                            Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ2.Stop();
                             swJ2.Reset();
                             Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            
                             if (Console.ReadLine() == "Y")
                             {
+                                Console.ResetColor();
                                 sysEnregistrementJ2.EnregisterJeu(j1, j2, dico, difficulte, "A");
                                 goto FinComplete;
                             }
                             Console.Clear();
                             #endregion
-
+                            Console.ResetColor();
                             difficulte++;
                         } while (difficulte <= 5);
                         #region FinJeu
@@ -1069,7 +1184,9 @@ namespace Mot_Mele
                     }
                 }
                 Console.WriteLine("Voulez vous recommencer une partie [Y]/[N] ?");
-                string r = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                
+                string r = Console.ReadLine();Console.ResetColor();
                 r.ToUpper();
                 if (r == "N") recommencerJeu = false;
                 else
@@ -1079,8 +1196,9 @@ namespace Mot_Mele
                     goto DebutJeu;
                 }
             } while (recommencerJeu);
-            FinComplete:
-            Console.WriteLine("Merci d'avoir joué ce jeu crée par Hugo Bonnell et Eliott Coutaz, au plaisir de vous revoir jouer!!!!");
+        FinComplete:
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Merci d'avoir joué ce jeu crée par Hugo Bonnell et Eliott Coutaz, au plaisir de vous revoir jouer!!!!");Console.ResetColor();
             
         }
         
