@@ -15,9 +15,9 @@ namespace Mot_Mele
         
         static void Main(string[] args)
         {
-            
-           
-            int taille = 9; //28
+
+
+            int taille = 9;
             int nbmot = 18;
             int difficulte = 3;
             int tempsTimer = 600;
@@ -80,7 +80,7 @@ namespace Mot_Mele
                             #region TourJ1
 
                             TourJ1Simple:
-                                Plateau plateau = new Plateau(dico, "CasSimple.csv");
+                                Plateau plateau = new Plateau(dico, "CasJ1" + difficulte + ".csv");
                                 List<string> listMotATrouver = plateau.GMotATrouver;
                                 Stopwatch swJ1 = new Stopwatch();
                                 Console.WriteLine();
@@ -160,7 +160,7 @@ namespace Mot_Mele
                                     dataDonne[2] = posXDonne;
                                     dataDonne[3] = posYDonne;
 
-                                    if (!dico.RechDichoRecursif(motDonne))
+                                    if (!dico.RechDichoRecursif(motDonne,0,plateau.GDicoListCount))
                                     {
                                         Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                         goto FinJ1;
@@ -199,7 +199,7 @@ namespace Mot_Mele
                             #region TourJ2
                             TourJ2Simple:
                                 //TOUR JOUEUR 2
-                                Plateau plateau2 = new Plateau(dico, "CasSimple.csv");
+                                Plateau plateau2 = new Plateau(dico, "CasJ2" + difficulte + ".csv");
                                 List<string> listMotATrouver2 = plateau2.GMotATrouver;
                                 Stopwatch swJ2 = new Stopwatch();
                                 SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau, j1, j2, dico, 0);
@@ -275,7 +275,7 @@ namespace Mot_Mele
                                     dataDonne2[2] = posXDonne2;
                                     dataDonne2[3] = posYDonne2;
 
-                                    if (!dico.RechDichoRecursif(motDonne2))
+                                    if (!dico.RechDichoRecursif(motDonne2, 0, plateau.GDicoListCount))
                                     {
                                         Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                         goto FinJ2;
@@ -434,7 +434,7 @@ namespace Mot_Mele
                                     dataDonne[2] = posXDonne;
                                     dataDonne[3] = posYDonne;
 
-                                    if (!dico.RechDichoRecursif(motDonne))
+                                    if (!dico.RechDichoRecursif(motDonne, 0, plateau.GDicoListCount))
                                     {
                                         Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                         goto FinJ1;
@@ -548,7 +548,7 @@ namespace Mot_Mele
                                     dataDonne2[2] = posXDonne2;
                                     dataDonne2[3] = posYDonne2;
 
-                                    if (!dico.RechDichoRecursif(motDonne2))
+                                    if (!dico.RechDichoRecursif(motDonne2, 0, plateau.GDicoListCount))
                                     {
                                         Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                         goto FinJ2;
@@ -667,7 +667,7 @@ namespace Mot_Mele
                         #region TourJ1
 
                         TourJ1Simple:
-                            Plateau plateau = new Plateau(dico, "CasSimple.csv");
+                            Plateau plateau = new Plateau(dico, "CasJ1"+difficulte+".csv");
                             List<string> listMotATrouver = plateau.GMotATrouver;
                             Stopwatch swJ1 = new Stopwatch();
                             Console.WriteLine();
@@ -747,7 +747,7 @@ namespace Mot_Mele
                                 dataDonne[2] = posXDonne;
                                 dataDonne[3] = posYDonne;
 
-                                if (!dico.RechDichoRecursif(motDonne))
+                                if (!dico.RechDichoRecursif(motDonne, 0, plateau.GDicoListCount))
                                 {
                                     Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                     goto FinJ1;
@@ -785,7 +785,7 @@ namespace Mot_Mele
                             #region TourJ2
 
                             //TOUR JOUEUR 2
-                            Plateau plateau2 = new Plateau(dico, "CasSimple.csv");
+                            Plateau plateau2 = new Plateau(dico, "CasJ2" + difficulte + ".csv");
                             List<string> listMotATrouver2 = plateau2.GMotATrouver;
                             Stopwatch swJ2 = new Stopwatch();
                             SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau, j1, j2, dico, 0);
@@ -806,7 +806,8 @@ namespace Mot_Mele
                                     j2.Add_Score(20);
                                     goto FinJ2;
                                 }
-                                plateau2.AfficherGrille();
+                                Console.ForegroundColor= ConsoleColor.Green;
+                                plateau2.AfficherGrille();Console.ResetColor();
                                 Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
@@ -863,7 +864,7 @@ namespace Mot_Mele
                                 dataDonne2[2] = posXDonne2;
                                 dataDonne2[3] = posYDonne2;
 
-                                if (!dico.RechDichoRecursif(motDonne2))
+                                if (!dico.RechDichoRecursif(motDonne2, 0, plateau.GDicoListCount))
                                 {
                                     Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                     goto FinJ2;
@@ -1051,7 +1052,7 @@ namespace Mot_Mele
                                 dataDonne[2] = posXDonne;
                                 dataDonne[3] = posYDonne;
 
-                                if (!dico.RechDichoRecursif(motDonne))
+                                if (!dico.RechDichoRecursif(motDonne, 0, plateau.GDicoListCount))
                                 {
                                     Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                     goto FinJ1;
@@ -1166,7 +1167,7 @@ namespace Mot_Mele
                                 dataDonne2[2] = posXDonne2;
                                 dataDonne2[3] = posYDonne2;
 
-                                if (!dico.RechDichoRecursif(motDonne2))
+                                if (!dico.RechDichoRecursif(motDonne2, 0, plateau.GDicoListCount))
                                 {
                                     Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                     goto FinJ2;

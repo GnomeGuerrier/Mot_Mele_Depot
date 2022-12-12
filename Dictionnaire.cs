@@ -8,7 +8,7 @@ using System.Timers;
 
 namespace Mot_Mele
 {
-    class Dictionnaire
+    public class Dictionnaire
     {
         private string Langage;             // Langue du dictionnaire
         private string[] dico;              // Tableau pour la création de la liste
@@ -42,6 +42,7 @@ namespace Mot_Mele
                         }
                     }
                     this.Imaxliste = this.dicoList.Count();
+                    this.dicoList.Sort();
                 }
                 catch (Exception f)                                                     // En cas d'erreur, pour savoir où déboguer
                 {
@@ -73,14 +74,17 @@ namespace Mot_Mele
                         }
                     }
                     this.Imaxliste = this.dicoList.Count();
+                    this.dicoList.Sort();
+
                 }
                 catch (Exception f)                                                     // En cas d'erreur, pour savoir où déboguer
                 {
                     Console.WriteLine(f);
                 }
-
+                
             }
-            else Console.WriteLine("Langage non existant");                             // Si le langage n'existe pas
+            else Console.WriteLine("Langage non existant");  
+                                                                    // Si le langage n'existe pas
         }
         public string GLangage                      // Déclaration de fonctions get, pour accéder à certaines variables hors de la classe
         {
@@ -117,37 +121,41 @@ namespace Mot_Mele
         /// <param name="mot">mot à checker EN MAJUSCULE</param>
         /// <returns></returns>
         /// 
-        /*public bool RechDichoRecursif(string mot, int Imin = 0, int b = -2, int mot_taille = 0)
+        
+        public bool RechDichoRecursif(string mot, int Imin, int IFin)
         {
-
-            int milieu = (Imin + b) / 2;
-            if (b == -2)
-            {
-                mot = mot.ToUpper();
-                mot_taille = mot.Length ;
-                return RechDichoRecursif(mot, Imin, this.dico[mot_taille].Length - 1, mot_taille);
-            }
-            else if ((Imin + 1 == b || b < 0) && (Imin != 0 && b != this.dico[mot_taille].Length - 1)) { return false; }
-            else if (this.dico[mot_taille][milieu].CompareTo(mot) < 0)
-            {
-                return RechDichoRecursif(mot, milieu, b, mot_taille);
-            }
-            else if (this.dico[mot_taille][milieu].CompareTo(mot) > 0)
-            {
-                return RechDichoRecursif(mot, Imin, milieu, mot_taille);
-            }
-            else
-            {
-                return true;
-            }
-        }*/
-       public bool RechDichoRecursif(string mot)
-        {
-             bool r = false;
-
-             if (this.dicoList.Contains(mot)) r = true;
-             return r;
             
+            if (mot != null && mot != "" && mot != " ")
+            {
+                int mid = (IFin + Imin) / 2;
+
+                if (this.dicoList[mid] != mot)
+                {
+                    if (IFin - Imin <= 1)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        if (string.Compare(this.dicoList[mid], mot) < 0)
+                        {
+                            return RechDichoRecursif(mot, mid, IFin);
+                        }
+                        else
+                        {
+                            return RechDichoRecursif(mot, Imin, mid);
+                        }
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else return false;
+
+
+
         }
     }
 }

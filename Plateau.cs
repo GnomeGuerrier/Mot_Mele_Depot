@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Timers;
+using System.Collections;
 
 namespace Mot_Mele
 {
@@ -15,6 +16,7 @@ namespace Mot_Mele
         private int difficulte;
         private int nbmot;
         private int taille;
+        private string mot;
         
         private List<string> lettreSimple = new List<string>();
         private string[,] grilleVide;
@@ -50,7 +52,8 @@ namespace Mot_Mele
             {
                 this.motATrouver.Add(mot);                      //construit la list des mots à trouver
             }
-            for(int i = 2; i < fichier.Length; i++)
+            this.motATrouver = this.motATrouver.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
+            for (int i = 2; i < fichier.Length; i++)
             {
                 lettreSimpleTab=new string[fichier[i].Split(";").Length];
                 lettreSimpleTab = fichier[i].Split(";");
@@ -106,6 +109,10 @@ namespace Mot_Mele
         {
             get { return this.difficulte; }
         }
+        public int GDicoListCount
+        {
+            get { return this.dico.GDicoList.Count(); }
+        }
         public int GGetLength0
         {
             get { return this.grilleRemplie.GetLength(0); }
@@ -117,7 +124,7 @@ namespace Mot_Mele
 
         string[,] RemplirGrille(string[,] grille, Dictionnaire dico, int nombreMots, int difficulte)                 //Fonction pour remplir la grille avec les mots du dictionnaire en fonction de la difficulté
         {
-            string mot = MotAleatoire(dico, grille);                            //On initialise un premier mot choisi aléatoirement
+             this.mot = MotAleatoire(dico, grille);                            //On initialise un premier mot choisi aléatoirement
             int x = NombreAleatoire(0, grille.GetLength(0));            //On prend un x aléatoire dans la grille                Notez que les coordonnées de la grille
             int y = NombreAleatoire(0, grille.GetLength(1));            //On prend un y aléatoire dans la grille                se notent ( y , x )
             bool verif = true;                                          //On initialise la variable verification à true (utile et expliqué plus tard)     
@@ -139,20 +146,20 @@ namespace Mot_Mele
                 switch (orientation)                                            //En fonction de l'orientation on a 4 cas différents, mais similaires dans la structure
                 {
                     case 1:                                                     //Pour l'orientation "Haut/Bas"
-                        if (grille.GetLength(0) - x <= mot.Length)              //On vérifie que le mot a l'espace nécessaire pour rentrer entre les coordonnées d'origine et le bord du plateau
+                        if (grille.GetLength(0) - x <= this.mot.Length)              //On vérifie que le mot a l'espace nécessaire pour rentrer entre les coordonnées d'origine et le bord du plateau
                         {                                                           //Si c'est le cas, rien ne change
-                            x = grille.GetLength(0) - mot.Length - 1;               //Sinon on décale le x originel pour que le mot puisse entrer dans le tableau
+                            x = grille.GetLength(0) - this.mot.Length - 1;               //Sinon on décale le x originel pour que le mot puisse entrer dans le tableau
                         }
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)                                                                        //Pour i entre 0 et la longueur du mot choisi
+                            for (int i = 0; i < this.mot.Length; i++)                                                                        //Pour i entre 0 et la longueur du mot choisi
                             {
                                 if (x + i < grille.GetLength(0) && y < grille.GetLength(1))                                               //DEBUG -> si sortie de matrice, on change de mot et on recommence
                                 {
-                                    if (grille[x + i, y] != " " && Convert.ToString(mot[i]) != grille[x + i, y] && n <= dico.GDicoList.Count)    //Grace à la boucle for(int i ...) on défile à travers toutes les cases que le mot va occuper
+                                    if (grille[x + i, y] != " " && Convert.ToString(this.mot[i]) != grille[x + i, y] && n <= dico.GDicoList.Count)    //Grace à la boucle for(int i ...) on défile à travers toutes les cases que le mot va occuper
                                     {                                                                                                   //Si une case n'est NI égale à un espace, NI à la lettre correspondante à la position et que la variable compteur n est inferieure à la longueur du dictionnaire alors
-                                        mot = MotAleatoire(dico, grille);                                                                           //On change de mot
+                                        this.mot = MotAleatoire(dico, grille);                                                                           //On change de mot
                                         verif = false;                                                                                      //Verification à false pour rester dans le do while
                                         n++;                                                                                                //On augmente le compteur de mots testés sur cette position
                                         break;                                                                                              //On sort de la boucle for pour la recommencer à 0 avec le nouveau mot
@@ -163,7 +170,7 @@ namespace Mot_Mele
                                         y = NombreAleatoire(0, grille.GetLength(1));
                                         if (grille.GetLength(0) - x < mot.Length)                                                           //On décale la coordonnée x si le mot ne rentre pas dans la grille
                                         {
-                                            x = grille.GetLength(0) - mot.Length;
+                                            x = grille.GetLength(0) - this.mot.Length;
                                         }
                                         n = 0;                                                                                              //On remet le nombre de mots testés sur la nouvelle position à 0
                                     }
@@ -177,12 +184,12 @@ namespace Mot_Mele
                                 {
                                                 
                                     verif = false;                                  //La vérification est false pour rester dans la boucle do/while
-                                    mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                    this.mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                                 }
                             }
-                            if(mot != null && mot.Length >= 1)
+                            if(this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -190,32 +197,32 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                             
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)                                        //Après avoir vérifié que le mot pouvait entrer sur des coordonnées données pour une direction donnée
+                        for (int l = 0; l < this.mot.Length; l++)                                        //Après avoir vérifié que le mot pouvait entrer sur des coordonnées données pour une direction donnée
                         {
-                            grille[x + l, y] = Convert.ToString(mot[l]);                            //On remplit la grille
+                            grille[x + l, y] = Convert.ToString(this.mot[l]);                            //On remplit la grille
                         }
 
                         break;                                                      //Fin du cas "orientation 1"
                     case 2:                                                         //Les autres cas sont les mêmes, change uniquement les coordonnées modifiées pour correspondre à la bonne orientation du mot
-                        if (x - mot.Length <= 0)
+                        if (x - this.mot.Length <= 0)
                         {
-                            x = mot.Length - 1;
+                            x = this.mot.Length - 1;
                         }
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)
+                            for (int i = 0; i < this.mot.Length; i++)
                             {
                                 if (x - i >= 0 && y < grille.GetLength(1))
                                 {
-                                    if (grille[x - i, y] != " " && Convert.ToString(mot[i]) != grille[x - i, y] && n <= dico.GDicoList.Count)
+                                    if (grille[x - i, y] != " " && Convert.ToString(this.mot[i]) != grille[x - i, y] && n <= dico.GDicoList.Count)
                                     {
-                                        mot = MotAleatoire(dico, grille);
+                                        this.mot = MotAleatoire(dico, grille);
                                         verif = false;
                                         n++;
                                         break;
@@ -224,9 +231,9 @@ namespace Mot_Mele
                                     {
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
-                                        if (x - mot.Length <= 0)
+                                        if (x - this.mot.Length <= 0)
                                         {
-                                            x = mot.Length - 1;
+                                            x = this.mot.Length - 1;
                                         }
                                         n = 0;
                                     }
@@ -241,12 +248,12 @@ namespace Mot_Mele
                                 {
                                     
                                     verif = false;
-                                    mot = MotAleatoire(dico, grille);
+                                    this.mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (mot != null && mot.Length >= 1)
+                            if (this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -254,31 +261,31 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)
+                        for (int l = 0; l < this.mot.Length; l++)
                         {
-                            grille[x - l, y] = Convert.ToString(mot[l]);
+                            grille[x - l, y] = Convert.ToString(this.mot[l]);
                         }
 
                         break;
                     case 3:
-                        if (grille.GetLength(1) - y <= mot.Length)
+                        if (grille.GetLength(1) - y <= this.mot.Length)
                         {
-                            y = grille.GetLength(1) - mot.Length - 1;
+                            y = grille.GetLength(1) - this.mot.Length - 1;
                         }
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)
+                            for (int i = 0; i < this.mot.Length; i++)
                             {
                                 if (x < grille.GetLength(0) && y + i < grille.GetLength(1))
                                 {
-                                    if (grille[x, y + i] != " " && Convert.ToString(mot[i]) != grille[x, y + i] && n <= dico.GDicoList.Count)
+                                    if (grille[x, y + i] != " " && Convert.ToString(this.mot[i]) != grille[x, y + i] && n <= dico.GDicoList.Count)
                                     {
-                                        mot = MotAleatoire(dico, grille);
+                                        this.mot = MotAleatoire(dico, grille);
                                         verif = false;
                                         n++;
                                         break;
@@ -287,9 +294,9 @@ namespace Mot_Mele
                                     {
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
-                                        if (grille.GetLength(1) - y < mot.Length)
+                                        if (grille.GetLength(1) - y < this.mot.Length)
                                         {
-                                            y = grille.GetLength(1) - mot.Length;
+                                            y = grille.GetLength(1) - this.mot.Length;
                                         }
                                         n = 0;
                                     }
@@ -304,12 +311,12 @@ namespace Mot_Mele
                                 {
                                     
                                     verif = false;
-                                    mot = MotAleatoire(dico, grille);
+                                    this.mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (mot != null && mot.Length >= 1)
+                            if (this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -317,31 +324,31 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)
+                        for (int l = 0; l < this.mot.Length; l++)
                         {
-                            grille[x, y + l] = Convert.ToString(mot[l]);
+                            grille[x, y + l] = Convert.ToString(this.mot[l]);
                         }
 
                         break;
                     case 4:
-                        if (y - mot.Length <= 0)
+                        if (y - this.mot.Length <= 0)
                         {
-                            y = mot.Length - 1;
+                            y = this.mot.Length - 1;
                         }
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)
+                            for (int i = 0; i < this.mot.Length; i++)
                             {
                                 if (x < grille.GetLength(0) && y - i >= 0)
                                 {
-                                    if (grille[x, y - i] != " " && Convert.ToString(mot[i]) != grille[x, y - i] && n <= dico.GDicoList.Count)
+                                    if (grille[x, y - i] != " " && Convert.ToString(this.mot[i]) != grille[x, y - i] && n <= dico.GDicoList.Count)
                                     {
-                                        mot = MotAleatoire(dico, grille);
+                                        this.mot = MotAleatoire(dico, grille);
                                         verif = false;
                                         n++;
                                         break;
@@ -350,9 +357,9 @@ namespace Mot_Mele
                                     {
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
-                                        if (y - mot.Length <= 0)
+                                        if (y - this.mot.Length <= 0)
                                         {
-                                            y = mot.Length - 1;
+                                            y = this.mot.Length - 1;
                                         }
                                         n = 0;
                                     }
@@ -367,12 +374,12 @@ namespace Mot_Mele
                                 {
                                     
                                     verif = false;
-                                    mot = MotAleatoire(dico, grille);
+                                    this.mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (mot != null && mot.Length >= 1)
+                            if (this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -380,36 +387,36 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de this.mot aléatoirement
                             }
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)
+                        for (int l = 0; l < this.mot.Length; l++)
                         {
-                            grille[x, y - l] = Convert.ToString(mot[l]);
+                            grille[x, y - l] = Convert.ToString(this.mot[l]);
                         }
 
                         break;
 
                     case 5:
-                        if (grille.GetLength(1) - y <= mot.Length)
+                        if (grille.GetLength(1) - y <= this.mot.Length)
                         {
-                            y = grille.GetLength(1) - mot.Length - 1;
+                            y = grille.GetLength(1) - this.mot.Length - 1;
                         }
-                        if (grille.GetLength(0) - x <= mot.Length)
+                        if (grille.GetLength(0) - x <= this.mot.Length)
                         {
-                            x = grille.GetLength(0) - mot.Length - 1;
+                            x = grille.GetLength(0) - this.mot.Length - 1;
                         }
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)
+                            for (int i = 0; i < this.mot.Length; i++)
                             {
                                 if (x + i < grille.GetLength(0) && y + i < grille.GetLength(1))
                                 {
-                                    if (grille[x + i, y + i] != " " && Convert.ToString(mot[i]) != grille[x + i, y + i] && n <= dico.GDicoList.Count)
+                                    if (grille[x + i, y + i] != " " && Convert.ToString(this.mot[i]) != grille[x + i, y + i] && n <= dico.GDicoList.Count)
                                     {
-                                        mot = MotAleatoire(dico, grille);
+                                        this.mot = MotAleatoire(dico, grille);
                                         verif = false;
                                         n++;
                                         break;
@@ -418,13 +425,13 @@ namespace Mot_Mele
                                     {
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
-                                        if (grille.GetLength(1) - y <= mot.Length)
+                                        if (grille.GetLength(1) - y <= this.mot.Length)
                                         {
-                                            y = grille.GetLength(1) - mot.Length - 1;
+                                            y = grille.GetLength(1) - this.mot.Length - 1;
                                         }
-                                        if (grille.GetLength(0) - x <= mot.Length)
+                                        if (grille.GetLength(0) - x <= this.mot.Length)
                                         {
-                                            x = grille.GetLength(0) - mot.Length - 1;
+                                            x = grille.GetLength(0) - this.mot.Length - 1;
                                         }
                                         verif = false;
                                         n = 0;
@@ -439,13 +446,13 @@ namespace Mot_Mele
                                 {
                                     
                                     verif = false;
-                                    mot = MotAleatoire(dico, grille);
+                                    this.mot = MotAleatoire(dico, grille);
                                 }
                             }
 
-                            if (mot != null && mot.Length >= 1)
+                            if (this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -453,35 +460,35 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de this.mot aléatoirement
                             }
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)
+                        for (int l = 0; l < this.mot.Length; l++)
                         {
-                            grille[x + l, y + l] = Convert.ToString(mot[l]);
+                            grille[x + l, y + l] = Convert.ToString(this.mot[l]);
                         }
 
                         break;
                     case 6:
-                        if (grille.GetLength(1) - y <= mot.Length)
+                        if (grille.GetLength(1) - y <= this.mot.Length)
                         {
-                            y = grille.GetLength(1) - mot.Length - 1;
+                            y = grille.GetLength(1) - this.mot.Length - 1;
                         }
-                        if (x - mot.Length <= 0)
+                        if (x - this.mot.Length <= 0)
                         {
-                            x = mot.Length - 1;
+                            x = this.mot.Length - 1;
                         }
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)
+                            for (int i = 0; i < this.mot.Length; i++)
                             {
                                 if (x - i >= 0 && y + i < grille.GetLength(1))
                                 {
-                                    if (grille[x - i, y + i] != " " && Convert.ToString(mot[i]) != grille[x - i, y + i] && n <= dico.GDicoList.Count)
+                                    if (grille[x - i, y + i] != " " && Convert.ToString(this.mot[i]) != grille[x - i, y + i] && n <= dico.GDicoList.Count)
                                     {
-                                        mot = MotAleatoire(dico, grille);
+                                        this.mot = MotAleatoire(dico, grille);
                                         verif = false;
                                         n++;
                                         break;
@@ -490,13 +497,13 @@ namespace Mot_Mele
                                     {
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
-                                        if (grille.GetLength(1) - y <= mot.Length)
+                                        if (grille.GetLength(1) - y <= this.mot.Length)
                                         {
-                                            y = grille.GetLength(1) - mot.Length - 1;
+                                            y = grille.GetLength(1) - this.mot.Length - 1;
                                         }
-                                        if (x - mot.Length <= 0)
+                                        if (x - this.mot.Length <= 0)
                                         {
-                                            x = mot.Length - 1;
+                                            x = this.mot.Length - 1;
                                         }
                                         verif = false;
                                         n = 0;
@@ -511,12 +518,12 @@ namespace Mot_Mele
                                 {
                                    
                                     verif = false;
-                                    mot = MotAleatoire(dico, grille);
+                                    this.mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (mot != null && mot.Length >= 1)
+                            if (this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -524,36 +531,36 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de this.mot aléatoirement
                             }
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)
+                        for (int l = 0; l < this.mot.Length; l++)
                         {
-                            grille[x - l, y + l] = Convert.ToString(mot[l]);
+                            grille[x - l, y + l] = Convert.ToString(this.mot[l]);
                         }
 
                         break;
 
                     case 7:
-                        if (y - mot.Length <= 0)
+                        if (y - this.mot.Length <= 0)
                         {
-                            y = mot.Length - 1;
+                            y = this.mot.Length - 1;
                         }
-                        if (grille.GetLength(0) - x <= mot.Length)
+                        if (grille.GetLength(0) - x <= this.mot.Length)
                         {
-                            x = grille.GetLength(0) - mot.Length - 1;
+                            x = grille.GetLength(0) - this.mot.Length - 1;
                         }
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)
+                            for (int i = 0; i < this.mot.Length; i++)
                             {
                                 if (x + i < grille.GetLength(0) && y - i >= 0)
                                 {
-                                    if (grille[x + i, y - i] != " " && Convert.ToString(mot[i]) != grille[x + i, y - i] && n <= dico.GDicoList.Count)
+                                    if (grille[x + i, y - i] != " " && Convert.ToString(this.mot[i]) != grille[x + i, y - i] && n <= dico.GDicoList.Count)
                                     {
-                                        mot = MotAleatoire(dico, grille);
+                                        this.mot = MotAleatoire(dico, grille);
                                         verif = false;
                                         n++;
                                         break;
@@ -562,13 +569,13 @@ namespace Mot_Mele
                                     {
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
-                                        if (y - mot.Length <= 0)
+                                        if (y - this.mot.Length <= 0)
                                         {
-                                            y = mot.Length - 1;
+                                            y = this.mot.Length - 1;
                                         }
-                                        if (grille.GetLength(0) - x <= mot.Length)
+                                        if (grille.GetLength(0) - x <= this.mot.Length)
                                         {
-                                            x = grille.GetLength(0) - mot.Length - 1;
+                                            x = grille.GetLength(0) - this.mot.Length - 1;
                                         }
                                         verif = false;
                                         n = 0;
@@ -583,12 +590,12 @@ namespace Mot_Mele
                                 {
                                    
                                     verif = false;
-                                    mot = MotAleatoire(dico, grille);
+                                    this.mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (mot != null && mot.Length >= 1)
+                            if (this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -596,36 +603,36 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de this.mot aléatoirement
                             }
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)
+                        for (int l = 0; l < this.mot.Length; l++)
                         {
-                            grille[x + l, y - l] = Convert.ToString(mot[l]);
+                            grille[x + l, y - l] = Convert.ToString(this.mot[l]);
                         }
 
                         break;
                     case 8:
-                        if (x - mot.Length - 1 <= 0)
+                        if (x - this.mot.Length - 1 <= 0)
                         {
-                            x = mot.Length;
+                            x = this.mot.Length;
                         }
-                        if (y - mot.Length - 1 <= 0)
+                        if (y - this.mot.Length - 1 <= 0)
                         {
-                            y = mot.Length;
+                            y = this.mot.Length;
                         }
 
 
                         do
                         {
-                            for (int i = 0; i < mot.Length; i++)
+                            for (int i = 0; i < this.mot.Length; i++)
                             {
                                 if (x - i >= 0 && y - i >= 0)
                                 {
-                                    if (grille[x - i, y - i] != " " && Convert.ToString(mot[i]) != grille[x - i, y - i] && n <= dico.GDicoList.Count)
+                                    if (grille[x - i, y - i] != " " && Convert.ToString(this.mot[i]) != grille[x - i, y - i] && n <= dico.GDicoList.Count)
                                     {
-                                        mot = MotAleatoire(dico, grille);
+                                        this.mot = MotAleatoire(dico, grille);
                                         verif = false;
                                         n++;
                                         break;
@@ -634,13 +641,13 @@ namespace Mot_Mele
                                     {
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
-                                        if (x - mot.Length - 1 <= 0)
+                                        if (x - this.mot.Length - 1 <= 0)
                                         {
-                                            x = mot.Length;
+                                            x = this.mot.Length;
                                         }
-                                        if (y - mot.Length - 1 <= 0)
+                                        if (y - this.mot.Length - 1 <= 0)
                                         {
-                                            y = mot.Length;
+                                            y = this.mot.Length;
                                         }
                                         verif = false;
                                         n = 0;
@@ -654,13 +661,13 @@ namespace Mot_Mele
                                 {
                                   
                                     verif = false;
-                                    mot = MotAleatoire(dico, grille);
+                                    this.mot = MotAleatoire(dico, grille);
                                 }
 
                             }
-                            if (mot != null && mot.Length >= 1)
+                            if (this.mot != null && this.mot.Length >= 1)
                             {
-                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
                                     verif = false;
                                 }
@@ -668,13 +675,13 @@ namespace Mot_Mele
                             else
                             {
                                 verif = false;
-                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
+                                this.mot = MotAleatoire(dico, grille);                       //On change de this.mot aléatoirement
                             }
                         } while (verif == false);
 
-                        for (int l = 0; l < mot.Length; l++)
+                        for (int l = 0; l < this.mot.Length; l++)
                         {
-                            grille[x - l, y - l] = Convert.ToString(mot[l]);
+                            grille[x - l, y - l] = Convert.ToString(this.mot[l]);
                         }
 
                         break;
@@ -683,14 +690,14 @@ namespace Mot_Mele
                         Console.WriteLine("Default case in first switch");
                         break;
                 }
-                //Console.WriteLine(mot);
-               this. motAjoute.mot = mot;
+                //Console.WriteLine(this.mot);
+               this. motAjoute.mot = this.mot;
                 this.motAjoute.orientation = orientation;
                 this.motAjoute.posX = x;
                 this.motAjoute.posY = y;
                 this.listeMot.Add(this.motAjoute);
-                //Une fois le mot placé
-                mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau mot
+                //Une fois le this.mot placé
+                this.mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau this.mot
 
                 //Console.WriteLine("------------------");
                 //AfficherGrille(grille);
@@ -761,15 +768,31 @@ namespace Mot_Mele
             int n = rand.Next(min, max);
             return n;
         }
-         string MotAleatoire(Dictionnaire dico, string[,] grille)           //Foncton qui retourne un mot aléatoire du dictionnaire donné en paramètre
+        string MotAleatoire(Dictionnaire dico, string[,] grille)           //Foncton qui retourne un mot aléatoire du dictionnaire donné en paramètre
         {
+
+        //n'est pas dedans
+        MotAleatoire:
             Random rand = new Random();
             int n;
+            string reee;
             do
             {
                 n = rand.Next(0, dico.GDicoList.Count);
-            } while (dico.GDicoList[n].Length >= grille.GetLength(0));
+                reee = dico.GDicoList[n];
 
+            } while (dico.GDicoList[n].Length >= grille.GetLength(0));
+            if (this.listeMot != null)  //si la liste est vide, il n'est pas dedans
+            { 
+                for (int i = 0; i < this.listeMot.Count; i++)
+                {
+                    if (reee == this.listeMot[i].mot)
+                    {
+                       
+                        goto MotAleatoire;
+                    }
+                }
+            }
             return dico.GDicoList[n];
 
         }
