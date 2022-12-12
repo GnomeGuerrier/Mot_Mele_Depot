@@ -626,10 +626,11 @@ namespace Mot_Mele
                 this.listeMot.Add(this.motAjoute);
                 //Une fois le mot placé
                 mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau mot
-               
+
                 //Console.WriteLine("------------------");
                 //AfficherGrille(grille);
-                orientation += 1;                                               //On change l'orientation
+                Random RAND = new Random();
+                orientation = RAND.Next(1,9);                                               //On change l'orientation
                 switch (difficulte)
                 {
                     case 1:
