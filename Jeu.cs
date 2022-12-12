@@ -18,9 +18,9 @@ namespace Mot_Mele
             
            
             int taille = 5; 
-            int nbmot = 1;
+            int nbmot = 3;
             int difficulte = 1;
-            int tempsTimer = 600;
+            int tempsTimer = 30;
             bool recommencerJeu = true;
             int aQuiTour = 0;
             string ouAller;
@@ -189,7 +189,8 @@ namespace Mot_Mele
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                                 swJ1.Stop();
                                 swJ1.Reset();
-                                
+                                Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                                Console.ReadKey();  
                                 Console.Clear();
 
 
@@ -311,7 +312,9 @@ namespace Mot_Mele
                                     goto FinComplete;
                                 }
                             Console.ResetColor();
-                                Console.Clear();
+                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.ReadKey();
+                            Console.Clear();
                                 #endregion
 
                                 difficulte++;
@@ -450,8 +453,9 @@ namespace Mot_Mele
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                                 swJ1.Stop();
                                 swJ1.Reset();
-                                
-                                Console.Clear();
+                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.ReadKey();
+                            Console.Clear();
                                 #endregion TourJ1
                                 #region TourJ2
                                 //TOUR JOUEUR 2
@@ -570,7 +574,9 @@ namespace Mot_Mele
                                     goto FinComplete;
                                 }
                             Console.ResetColor();
-                                Console.Clear();
+                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.ReadKey();
+                            Console.Clear();
                                 #endregion
 
                                 difficulte++;
@@ -748,7 +754,8 @@ namespace Mot_Mele
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ1.Stop();
                             swJ1.Reset();
-                            
+                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.ReadKey();
                             Console.Clear();
 
 
@@ -871,9 +878,12 @@ namespace Mot_Mele
                                 sysEnregistrementJ2.EnregisterJeu(j1, j2, dico, difficulte, "G");
                                 goto FinComplete;
                             }
+                            Console.ResetColor();
+                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.ReadKey();
                             Console.Clear();
                             #endregion
-                            Console.ResetColor();
+                            
                             difficulte++;
                         } while (difficulte <= 5);
                         #region FinJeu
@@ -1038,7 +1048,8 @@ namespace Mot_Mele
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ1.Stop();
                             swJ1.Reset();
-                           
+                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.ReadKey();
                             Console.Clear();
                             #endregion TourJ1
                             #region TourJ2
@@ -1159,9 +1170,12 @@ namespace Mot_Mele
                                 sysEnregistrementJ2.EnregisterJeu(j1, j2, dico, difficulte, "A");
                                 goto FinComplete;
                             }
+                            Console.ResetColor();
+                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.ReadKey();
                             Console.Clear();
                             #endregion
-                            Console.ResetColor();
+                            
                             difficulte++;
                         } while (difficulte <= 5);
                         #region FinJeu
