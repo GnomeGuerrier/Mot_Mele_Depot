@@ -17,16 +17,15 @@ namespace Mot_Mele
         {
             
            
-            int taille = 5; 
-            int nbmot = 3;
+            int taille = 7; 
+            int nbmot = 8;
             int difficulte = 1;
-            int tempsTimer = 30;
+            int tempsTimer = 600;
             bool recommencerJeu = true;
-            int aQuiTour = 0;
-            string ouAller;
-           /* Dictionnaire dico = new Dictionnaire("français");
-            Plateau plateau = new Plateau(dico, 1, 5, 2);
-            plateau.AfficherGrille();*/
+            
+            int tempsJ1 = 0;
+            int tempsJ2 = 0;
+
             
           
 
@@ -68,7 +67,7 @@ namespace Mot_Mele
                         //création dico
                         Dictionnaire dico = new Dictionnaire(infos[2]);
                         //Savoir à qui est le tour
-                        aQuiTour = Convert.ToInt32(infos[3]);
+                        
                         difficulte = Convert.ToInt32(infos[4]);//connaitre la difficulte où ils etaient
                         string typeJeuReprendre = infos[5];
                         if (typeJeuReprendre == "G")    //meme systeme que sans l'enregistrement mais on passe la phase d'initialisation
@@ -187,6 +186,8 @@ namespace Mot_Mele
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
+                            tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
+
                                 swJ1.Stop();
                                 swJ1.Reset();
                                 Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
@@ -298,9 +299,10 @@ namespace Mot_Mele
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!"); Console.ResetColor();
-                                swJ2.Stop();
+                            tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
+                            swJ2.Stop();
                                 swJ2.Reset();
                                 Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");//enregistrement de la partie
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -318,6 +320,9 @@ namespace Mot_Mele
                                 #endregion
 
                                 difficulte++;
+                                nbmot++;
+                                taille++;
+                                tempsTimer += 5;
                             } while (difficulte <= 5);
                             #region FinJeu
                             Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
@@ -330,14 +335,18 @@ namespace Mot_Mele
                             {
                                 Console.WriteLine($"Bravo à {j1.GNom} tu as gagné!");
                             }
-                            else
-                            {
-                                Console.WriteLine("Vous êtes tout les deux trop fort! Il y a eu égalité");
-                            }
-
-                            #endregion FinJeu
+                        else if (tempsJ1 > tempsJ2)
+                        {
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
                         }
-                        if (typeJeuReprendre == "A")
+                        else
+                        {
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
+                        }
+
+                        #endregion FinJeu
+                    }
+                        if (typeJeuReprendre == "A") //Jeu récupéré de type Aléatoire
                         {
                             do
                             {
@@ -451,7 +460,8 @@ namespace Mot_Mele
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
-                                swJ1.Stop();
+                            tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
+                            swJ1.Stop();
                                 swJ1.Reset();
                             Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
@@ -562,9 +572,10 @@ namespace Mot_Mele
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");  Console.ResetColor();
-                                swJ2.Stop();
+                            tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
+                            swJ2.Stop();
                                 swJ2.Reset();
                                 Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -580,9 +591,13 @@ namespace Mot_Mele
                             Console.ReadKey();
                             Console.Clear();
                                 #endregion
-
+                                
                                 difficulte++;
-                            } while (difficulte <= 5);
+                                
+                                nbmot++;
+                                taille++;
+                                tempsTimer += 5;
+                        } while (difficulte <= 5);
                             #region FinJeu
                             Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
                             Console.WriteLine($"Les scores sont : {j1.GScore} pour {j1.GNom} et {j2.GScore} pour {j2.GNom}");
@@ -594,13 +609,17 @@ namespace Mot_Mele
                             {
                                 Console.WriteLine($"Bravo à {j1.GNom} tu as gagné!");
                             }
-                            else
-                            {
-                                Console.WriteLine("Vous êtes tout les deux trop fort! Il y a eu égalité");
-                            }
-
-                            #endregion FinJeu
+                        else if (tempsJ1 > tempsJ2)
+                        {
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
                         }
+                        else
+                        {
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
+                        }
+
+                        #endregion FinJeu
+                    }
 
 
 
@@ -754,6 +773,7 @@ namespace Mot_Mele
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
+                            tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
                             swJ1.Stop();
                             swJ1.Reset();
                             Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
@@ -867,8 +887,9 @@ namespace Mot_Mele
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!"); Console.ResetColor();
+                            tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
                             swJ2.Stop();
                             swJ2.Reset();
                             Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");//enregistrement de la partie
@@ -887,6 +908,10 @@ namespace Mot_Mele
                             #endregion
                             
                             difficulte++;
+                            
+                            nbmot++;
+                            taille++;
+                            tempsTimer += 5;
                         } while (difficulte <= 5);
                         #region FinJeu
                         Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
@@ -899,9 +924,13 @@ namespace Mot_Mele
                         {
                             Console.WriteLine($"Bravo à {j1.GNom} tu as gagné!");
                         }
+                        else if (tempsJ1 > tempsJ2)
+                        {
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
+                        }
                         else
                         {
-                            Console.WriteLine("Vous êtes tout les deux trop fort! Il y a eu égalité");
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
                         }
 
                         #endregion FinJeu
@@ -1048,7 +1077,7 @@ namespace Mot_Mele
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                                 Console.WriteLine("Tour terminé!");Console.ResetColor();
-                            
+                            tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
                             swJ1.Stop();
                             swJ1.Reset();
                             Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
@@ -1079,7 +1108,8 @@ namespace Mot_Mele
                                     j2.Add_Score(20);
                                     goto FinJ2;
                                 }
-                                plateau2.AfficherGrille();
+                                Console.ForegroundColor= ConsoleColor.Green;
+                                plateau2.AfficherGrille();Console.ResetColor();
                                 Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
@@ -1160,8 +1190,9 @@ namespace Mot_Mele
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
+                            tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
                             swJ2.Stop();
                             swJ2.Reset();
                             Console.WriteLine("Voulez vous enregistrer la partie?[Y]/[N]");
@@ -1178,8 +1209,11 @@ namespace Mot_Mele
                             Console.ReadKey();
                             Console.Clear();
                             #endregion
-                            
                             difficulte++;
+                            nbmot++;
+                            taille++;
+                            
+                            tempsTimer += 5;
                         } while (difficulte <= 5);
                         #region FinJeu
                         Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
@@ -1192,9 +1226,13 @@ namespace Mot_Mele
                         {
                             Console.WriteLine($"Bravo à {j1.GNom} tu as gagné!");
                         }
+                        else if (tempsJ1>tempsJ2)
+                        {
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
+                        }
                         else
                         {
-                            Console.WriteLine("Vous êtes tout les deux trop fort! Il y a eu égalité");
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
                         }
 
                         #endregion FinJeu

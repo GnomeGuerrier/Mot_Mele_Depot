@@ -118,34 +118,37 @@ namespace Mot_Mele
         /// <param name="mot">mot à checker EN MAJUSCULE</param>
         /// <returns></returns>
         /// 
-        
-       public bool RechDichoRecursif(string mot/*, int Imaxliste, int Iminliste = 0*/)
+        /*public bool RechDichoRecursif(string mot, int Imin = 0, int b = -2, int mot_taille = 0)
+        {
+
+            int milieu = (Imin + b) / 2;
+            if (b == -2)
+            {
+                mot = mot.ToUpper();
+                mot_taille = mot.Length ;
+                return RechDichoRecursif(mot, Imin, this.dico[mot_taille].Length - 1, mot_taille);
+            }
+            else if ((Imin + 1 == b || b < 0) && (Imin != 0 && b != this.dico[mot_taille].Length - 1)) { return false; }
+            else if (this.dico[mot_taille][milieu].CompareTo(mot) < 0)
+            {
+                return RechDichoRecursif(mot, milieu, b, mot_taille);
+            }
+            else if (this.dico[mot_taille][milieu].CompareTo(mot) > 0)
+            {
+                return RechDichoRecursif(mot, Imin, milieu, mot_taille);
+            }
+            else
+            {
+                return true;
+            }
+        }*/
+       public bool RechDichoRecursif(string mot)
         {
              bool r = false;
 
              if (this.dicoList.Contains(mot)) r = true;
              return r;
-            /*dicoList.Sort();
-
-
-
-            ///recherche du mot dans la liste en récursif
-            if (dicoList[(Iminliste + Imaxliste) / 2].CompareTo(mot) > 0 && Convert.ToDouble(Math.Abs(Iminliste - Imaxliste)) / 2 >= 1)
-            {
-                return RechDichoRecursif(mot, Iminliste, (Iminliste + Imaxliste) / 2);
-            }
-             if (dicoList[(Iminliste + Imaxliste) / 2].CompareTo(mot) < 0 && Convert.ToDouble(Math.Abs(Iminliste - Imaxliste)) / 2 >= 1)
-            {
-                return RechDichoRecursif(mot, (Iminliste + Imaxliste) / 2, Imaxliste);
-            }
-             if (dicoList[(Iminliste + Imaxliste) / 2].CompareTo(mot) == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }*/
+            
         }
     }
 }
