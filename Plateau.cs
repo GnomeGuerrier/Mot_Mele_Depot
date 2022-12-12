@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace Mot_Mele
 {
-    class Plateau
+    public class Plateau
     {
         private List<string> motATrouver = new List<string>();
         private Dictionnaire dico;
@@ -39,41 +39,7 @@ namespace Mot_Mele
         public Plateau(Dictionnaire dico,string path)
         {
             this.dico = dico;
-            
-            
-            string[] fichier= File.ReadAllLines(path);
-            string[] lettreSimpleTab ;
-            foreach (string mot in fichier[0].Split(";"))
-            {
-                this.infoSimple.Add(mot);                           //permet d'avoir les infos de difficultée,colonne,ligne et nb de mots à trouver
-            }
-            this.grilleRemplie = new string[Convert.ToInt32(infoSimple[1]), Convert.ToInt32(infoSimple[2])];
-            foreach (string mot in fichier[1].Split(";"))
-            {
-                this.motATrouver.Add(mot);                      //construit la list des mots à trouver
-            }
-            this.motATrouver = this.motATrouver.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
-            for (int i = 2; i < fichier.Length; i++)
-            {
-                lettreSimpleTab=new string[fichier[i].Split(";").Length];
-                lettreSimpleTab = fichier[i].Split(";");
-                for(int k = 0; k < lettreSimpleTab.Length; k++)
-                {
-                    lettreSimple.Add(lettreSimpleTab[k]);               //list avec toutes les lettres
-                }
-                this.lettreSimple = this.lettreSimple.Where(s => !string.IsNullOrWhiteSpace(s)).ToList(); //permet de retirer tous les espaces et lettres vides
-                
-
-            }
-            int count = 0;
-            for (int l = 0; l < Convert.ToInt32(infoSimple[1]); l++)
-            {
-                for (int o = 0; o < Convert.ToInt32(infoSimple[2]); o++)
-                {
-                    this.grilleRemplie[l, o] = lettreSimple[count];         //remplit la grille avec toutes les lettres
-                    count++;
-                }
-            }
+            ToRead(path);
         }
         public Plateau(Dictionnaire dico,int difficulte,int taille,int nbmot)
         {
@@ -92,7 +58,51 @@ namespace Mot_Mele
             //AfficherListePropMot();
 
         }
-        
+        public void ToRead(string path)
+        {
+            
+
+
+            string[] fichier = File.ReadAllLines(path);
+            string[] lettreSimpleTab;
+            foreach (string mot in fichier[0].Split(";"))
+            {
+                this.infoSimple.Add(mot);                           //permet d'avoir les infos de difficultée,colonne,ligne et nb de mots à trouver
+            }
+            this.grilleRemplie = new string[Convert.ToInt32(infoSimple[1]), Convert.ToInt32(infoSimple[2])];
+            foreach (string mot in fichier[1].Split(";"))
+            {
+                this.motATrouver.Add(mot);                      //construit la list des mots à trouver
+            }
+            this.motATrouver = this.motATrouver.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
+            for (int i = 2; i < fichier.Length; i++)
+            {
+                lettreSimpleTab = new string[fichier[i].Split(";").Length];
+                lettreSimpleTab = fichier[i].Split(";");
+                for (int k = 0; k < lettreSimpleTab.Length; k++)
+                {
+                    lettreSimple.Add(lettreSimpleTab[k]);               //list avec toutes les lettres
+                }
+                this.lettreSimple = this.lettreSimple.Where(s => !string.IsNullOrWhiteSpace(s)).ToList(); //permet de retirer tous les espaces et lettres vides
+
+
+            }
+            int count = 0;
+            for (int l = 0; l < Convert.ToInt32(infoSimple[1]); l++)
+            {
+                for (int o = 0; o < Convert.ToInt32(infoSimple[2]); o++)
+                {
+                    this.grilleRemplie[l, o] = lettreSimple[count];         //remplit la grille avec toutes les lettres
+                    count++;
+                }
+            }
+        }
+        public override string ToString()
+        {
+            string r = "Ce tableau est composé de " + this.GGetLength0 + " lignes et de " + this.GGetLength1 + " colones\n";
+            r += "Il est de difficulté " + this.GDifficulte + " et a " + this.GMotATrouver.Count + " mots à trouver\n";
+            return r;
+        }
         public List<PropMot> GListeMotPropMot
         {
             get { return this.listeMot; }
@@ -760,9 +770,37 @@ namespace Mot_Mele
             this.grilleRemplie = grille;
                 return grille;                                                      //A la fin de la boucle de remplissge des mots, on retourne la grille
          }
+         public void ToFile(string path)
+        {
+            List<string> rendu = new List<string>();
+            string[,] grille=this.GGrilleRemplie;
+            DateTime temps = DateTime.Now;
+            rendu.Clear();
+            rendu.Add(this.GDifficulte + ";" + this.GGetLength0 + ";" + this.GGetLength1 + ";" + this.GMotATrouver.Count);
+            string mots = "";
+            string ligne = "";
+            foreach (string i in this.motATrouver)
+            {
+                mots += i + ";";
+            }
+            rendu.Add(mots);
+            for (int i = 0; i < grille.GetLength(0); i++)
+            {
+                for (int j = 0; j < grille.GetLength(1); j++)
+                {
+                    ligne += grille[i, j] + ";";
+
+                }
+                rendu.Add(ligne);
+                ligne = "";
+            }
 
 
-         int NombreAleatoire(int min, int max)        //Fonction qui retourne un entier aléatoire entre min et max
+            File.WriteAllLines(path + "_" + temps.Day + "_" + temps.Month + "_" + temps.Year + "_" + temps.Hour + "_" + "_" + temps.Minute + "_" + temps.Second + ".csv", rendu); //Enregistre le tableau avec comme syntaxe PlateauEnregistreJour_Mois_Anne_Heure_Minute_Seconde
+
+        }
+
+        int NombreAleatoire(int min, int max)        //Fonction qui retourne un entier aléatoire entre min et max
         {
             Random rand = new Random();
             int n = rand.Next(min, max);
@@ -810,18 +848,22 @@ namespace Mot_Mele
         }
          public void AfficherGrille()                        //Fonction pour afficher une grille
         {
-            Console.Write(" ");
+            Console.Write("  ");
             for(int i = 0; i <this.grilleRemplie.GetLength(0); i++)
             {
-                Console.Write(" " + i);
+                 Console.Write(" " + i);
+
             }
             Console.Write("  Y \n");
             for (int i = 0; i < this.grilleRemplie.GetLength(0); i++)                      //On boucle de sorte à afficher les éléments X de la grille tel que: 
-            {                                                                   // |X|X|X|X....|X|X|
-                Console.Write(i+"|");                                             // |X|X|X|X....|X|X|
+            {                    
+                if(i<=9) Console.Write(i + " |");                                                                  // |X|X|X|X....|X|X|
+                else Console.Write(i+"|");                                             // |X|X|X|X....|X|X|
                 for (int j = 0; j < this.grilleRemplie.GetLength(1); j++)                      // ...
-                {                                                               // ...
-                    Console.Write(this.grilleRemplie[i, j] + "|");                          // |X|X|X|X....|X|X|
+                { 
+                     Console.Write(this.grilleRemplie[i, j] + "|"); 
+                      // ...
+                                                                       // |X|X|X|X....|X|X|
                 }
                 Console.WriteLine();
             }

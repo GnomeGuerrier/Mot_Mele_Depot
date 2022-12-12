@@ -17,10 +17,10 @@ namespace Mot_Mele
         {
 
 
-            int taille = 9;
-            int nbmot = 18;
-            int difficulte = 3;
-            int tempsTimer = 600;
+            int taille = 7;
+            int nbmot = 8;
+            int difficulte = 1;
+            int tempsTimer = 40;
             bool recommencerJeu = true;
             
             int tempsJ1 = 0;
@@ -37,7 +37,7 @@ namespace Mot_Mele
             DebutJeu:
                 Console.WriteLine("Bonjour, voulez vous commencer une nouvelle partie [N] ou reprendre un jeu [R] ?");
                 Console.ForegroundColor = ConsoleColor.Red;
-                if (Console.ReadLine() == "R")
+                if (Console.ReadLine().ToUpper() == "R")
                 {
                     Console.ResetColor();
                     if (!File.Exists("JeuEnregistre.csv"))
@@ -119,7 +119,7 @@ namespace Mot_Mele
                                 Direction:
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    directionDonne = Console.ReadLine();
+                                    directionDonne = Console.ReadLine().ToUpper();
                                      Console.ResetColor();
                                     if (directionDonne == "S") directionDonne = "1";
                                     else if (directionDonne == "N") directionDonne = "2";
@@ -236,7 +236,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 
-                                directionDonne2 = Console.ReadLine();Console.ResetColor();
+                                directionDonne2 = Console.ReadLine().ToUpper();Console.ResetColor();
                                     if (directionDonne2 == "S") directionDonne2 = "1";
                                     else if (directionDonne2 == "N") directionDonne2 = "2";
                                     else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -351,11 +351,11 @@ namespace Mot_Mele
                             do
                             {
 
-                            #region TourJ1
-                            TourJ1:
-                                Plateau plateau = new Plateau(dico, difficulte, taille, nbmot);
-                                SystemeEnregistrement sysEnregistrementJ1 = new SystemeEnregistrement(plateau, j1, j2, dico, 1);
-                                sysEnregistrementJ1.EnregistrerTableau();
+                        #region TourJ1
+                        TourJ1:
+                            Plateau plateau = new Plateau(dico, difficulte, taille, nbmot);
+                            
+                                plateau.ToFile("PlateauEnregistre");
                                 List<string> listMotATrouver = plateau.GMotATrouver;
                                 Stopwatch swJ1 = new Stopwatch();
                                 Console.WriteLine();
@@ -395,7 +395,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                 Console.ForegroundColor = ConsoleColor.Red;
                                
-                                directionDonne = Console.ReadLine(); Console.ResetColor();
+                                directionDonne = Console.ReadLine().ToUpper(); Console.ResetColor();
                                     if (directionDonne == "S") directionDonne = "1";
                                     else if (directionDonne == "N") directionDonne = "2";
                                     else if (directionDonne == "O") directionDonne = "4";
@@ -470,8 +470,8 @@ namespace Mot_Mele
                                 #region TourJ2
                                 //TOUR JOUEUR 2
                                 Plateau plateau2 = new Plateau(dico, difficulte, taille, nbmot);
-                                SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau, j1, j2, dico, 0);
-                                sysEnregistrementJ2.EnregistrerTableau();
+                            SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau, j1, j2, dico, 0);
+                            plateau2.ToFile("PlateauEnregistre");
                                 List<string> listMotATrouver2 = plateau2.GMotATrouver;
                                 Stopwatch swJ2 = new Stopwatch();
                                 Console.WriteLine();
@@ -510,7 +510,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                 Console.ForegroundColor = ConsoleColor.Red;
                                
-                                directionDonne2 = Console.ReadLine(); Console.ResetColor();
+                                directionDonne2 = Console.ReadLine().ToUpper(); Console.ResetColor();
                                     if (directionDonne2 == "S") directionDonne2 = "1";
                                     else if (directionDonne2 == "N") directionDonne2 = "2";
                                     else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -637,7 +637,7 @@ namespace Mot_Mele
                     Console.WriteLine("Voulez vous jouez avec des grilles pré-générées [G] ou des grilles générées aléatoirement [A] ?");
                     Console.ForegroundColor = ConsoleColor.Red;
                     
-                    string typeJeu = Console.ReadLine();Console.ResetColor();
+                    string typeJeu = Console.ReadLine().ToUpper();Console.ResetColor();
                     if (typeJeu != "G" && typeJeu != "A")
                     {
                         Console.WriteLine("Veuillez choisir un type de jeu valide");
@@ -648,15 +648,19 @@ namespace Mot_Mele
                         #region IntitialisationJeuSimple
                         Dictionnaire dico = new Dictionnaire("français");
                         string entree;
+                    J1entre:
                         Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
                         Console.ForegroundColor = ConsoleColor.Red;
                         
                         entree = Console.ReadLine();Console.ResetColor();
+                        if (entree == null || entree == "") goto J1entre;
                         Joueur j1 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
+                        J2entre:
                         Console.WriteLine("Veuillez donner le nom du deuxième joueur");
                         Console.ForegroundColor = ConsoleColor.Red;
                         
                         entree = Console.ReadLine();Console.ResetColor();
+                        if (entree == null || entree == "") goto J2entre;
                         Joueur j2 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
                         Console.WriteLine("Parfait tout est prêt, voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
 
@@ -676,8 +680,7 @@ namespace Mot_Mele
                             string posXDonne, posYDonne;
                             string[] dataDonne = new string[4];
                             bool reussi = false;
-                            SystemeEnregistrement sysEnregistrementJ1 = new SystemeEnregistrement(plateau, j1, j2, dico, 1);
-                            sysEnregistrementJ1.EnregistrerTableau();
+                            plateau.ToFile("PlateauEnregistre");
 
                             do
                             {
@@ -708,7 +711,7 @@ namespace Mot_Mele
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 
-                                directionDonne = Console.ReadLine();Console.ResetColor();
+                                directionDonne = Console.ReadLine().ToUpper();Console.ResetColor();
                                 if (directionDonne == "S") directionDonne = "1";
                                 else if (directionDonne == "N") directionDonne = "2";
                                 else if (directionDonne == "O") directionDonne = "4";
@@ -795,7 +798,7 @@ namespace Mot_Mele
                             string posXDonne2, posYDonne2;
                             string[] dataDonne2 = new string[4];
                             bool reussi2 = false;
-
+                            plateau.ToFile("PlateauEnregistre");
                             do
                             {
 
@@ -825,7 +828,7 @@ namespace Mot_Mele
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 
-                                directionDonne2 = Console.ReadLine();Console.ResetColor();
+                                directionDonne2 = Console.ReadLine().ToUpper();Console.ResetColor();
                                 if (directionDonne2 == "S") directionDonne2 = "1";
                                 else if (directionDonne2 == "N") directionDonne2 = "2";
                                 else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -941,15 +944,19 @@ namespace Mot_Mele
                     {
                         #region initialisationDuJeuComplex
                         string entree;
+                    J1entre:
                         Console.WriteLine("D'accord, veuillez nous donner le nom du premier joueur");
                         Console.ForegroundColor = ConsoleColor.Red;
-                        
-                        entree = Console.ReadLine();Console.ResetColor();
+
+                        entree = Console.ReadLine(); Console.ResetColor();
+                        if (entree == null||entree=="") goto J1entre;
                         Joueur j1 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
+                    J2entre:
                         Console.WriteLine("Veuillez donner le nom du deuxième joueur");
                         Console.ForegroundColor = ConsoleColor.Red;
-                        
-                        entree = Console.ReadLine();Console.ResetColor();
+
+                        entree = Console.ReadLine(); Console.ResetColor();
+                        if (entree == null || entree == "") goto J2entre;
                         Joueur j2 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
                         Console.WriteLine("Parfait! Quel dictionnaire voulez vous utiliser? français/anglais");
                         string langage = "";
@@ -1013,7 +1020,7 @@ namespace Mot_Mele
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                 Console.ForegroundColor = ConsoleColor.Red;
                                
-                                directionDonne = Console.ReadLine(); Console.ResetColor();
+                                directionDonne = Console.ReadLine().ToUpper(); Console.ResetColor();
                                 if (directionDonne == "S") directionDonne = "1";
                                 else if (directionDonne == "N") directionDonne = "2";
                                 else if (directionDonne == "O") directionDonne = "4";
@@ -1128,7 +1135,7 @@ namespace Mot_Mele
                                 Console.WriteLine("Puis la direction( Nord [N], Sud [S], Est [E], Ouest [O], Nord_Est [NE], Nord_Ouest [NO], Sud_Est [SE], Sud_Ouest [SO] )");// A VERIFIER AVEC HUGO
                                 Console.ForegroundColor = ConsoleColor.Red;
                                
-                                directionDonne2 = Console.ReadLine(); Console.ResetColor();
+                                directionDonne2 = Console.ReadLine().ToUpper(); Console.ResetColor();
                                 if (directionDonne2 == "S") directionDonne2 = "1";
                                 else if (directionDonne2 == "N") directionDonne2 = "2";
                                 else if (directionDonne2 == "O") directionDonne2 = "4";
@@ -1242,7 +1249,7 @@ namespace Mot_Mele
                 Console.WriteLine("Voulez vous recommencer une partie [Y]/[N] ?");
                 Console.ForegroundColor = ConsoleColor.Red;
                 
-                string r = Console.ReadLine();Console.ResetColor();
+                string r = Console.ReadLine().ToUpper();Console.ResetColor();
                 r.ToUpper();
                 if (r == "N") recommencerJeu = false;
                 else

@@ -8,7 +8,7 @@ using System.Timers;
 
 namespace Mot_Mele
 {
-    class Joueur
+    public class Joueur
     {
         private string nom;                 // Variable nom du joueur
         private string[] motTrouve;         // Variable pour les mots trouvés par le joueur
