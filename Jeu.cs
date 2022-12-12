@@ -185,7 +185,7 @@ namespace Mot_Mele
                                 FinJ1:;
                                 } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                                 swJ1.Stop();
                                 swJ1.Reset();
@@ -298,7 +298,7 @@ namespace Mot_Mele
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                           
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!"); Console.ResetColor();
                                 swJ2.Stop();
                                 swJ2.Reset();
@@ -449,7 +449,7 @@ namespace Mot_Mele
                                 FinJ1:;
                                 } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                                 swJ1.Stop();
                                 swJ1.Reset();
@@ -481,7 +481,8 @@ namespace Mot_Mele
                                         j2.Add_Score(100);
                                         goto FinJ2;
                                     }
-                                    plateau2.AfficherGrille();
+                                    Console.ForegroundColor= ConsoleColor.Green;
+                                    plateau2.AfficherGrille();Console.ResetColor();
                                     Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
@@ -525,7 +526,8 @@ namespace Mot_Mele
                                     }
                                 posY:
                                     Console.WriteLine("Et la postion Y de la première lettre du mot ");
-                                    posYDonne2 = (Console.ReadLine());
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    posYDonne2 = (Console.ReadLine());Console.ResetColor();
                                     if (!int.TryParse(posYDonne2, out int nn))
                                     {
                                         Console.WriteLine("La coordonnée donnée n'est pas un nombre");
@@ -560,7 +562,7 @@ namespace Mot_Mele
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                          
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");  Console.ResetColor();
                                 swJ2.Stop();
                                 swJ2.Reset();
@@ -750,7 +752,7 @@ namespace Mot_Mele
                             FinJ1:;
                             } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ1.Stop();
                             swJ1.Reset();
@@ -865,7 +867,7 @@ namespace Mot_Mele
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                           
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!"); Console.ResetColor();
                             swJ2.Stop();
                             swJ2.Reset();
@@ -1044,8 +1046,9 @@ namespace Mot_Mele
                             FinJ1:;
                             } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                                Console.WriteLine("Tour terminé!");Console.ResetColor();
                             
-                            Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ1.Stop();
                             swJ1.Reset();
                             Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
@@ -1157,7 +1160,7 @@ namespace Mot_Mele
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                             swJ2.Stop();
                             swJ2.Reset();
