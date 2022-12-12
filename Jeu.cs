@@ -99,7 +99,7 @@ namespace Mot_Mele
                                     {
                                         Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                         reussi = true;
-                                        j1.Add_Score(100);
+                                        j1.Add_Score(20);
                                         goto FinJ1;
                                     }
                                 Console.ForegroundColor = ConsoleColor.Green;
@@ -171,7 +171,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                         listMotATrouver.Remove(motDonne);
                                         j1.Add_Mot(motDonne);
-                                        j1.Add_Score(10 + Convert.ToInt32(directionDonne) * 5);
+                                        j1.Add_Score(Convert.ToInt32(directionDonne));
                                     }
                                     else if (listMotATrouver.Contains(motDonne))
                                     {
@@ -216,7 +216,7 @@ namespace Mot_Mele
                                     {
                                         Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                         reussi2 = true;
-                                        j2.Add_Score(100);
+                                        j2.Add_Score(20);
                                         goto FinJ2;
                                     }
                                     plateau2.AfficherGrille();
@@ -284,7 +284,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                         listMotATrouver2.Remove(motDonne2);
                                         j2.Add_Mot(motDonne2);
-                                        j2.Add_Score(10 + Convert.ToInt32(directionDonne2) * 5);
+                                        j2.Add_Score(Convert.ToInt32(directionDonne2));
                                     }
                                     else if (listMotATrouver2.Contains(motDonne2))
                                     {
@@ -363,7 +363,7 @@ namespace Mot_Mele
                                     {
                                         Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                         reussi = true;
-                                        j1.Add_Score(100);
+                                        j1.Add_Score(20);
                                         goto FinJ1;
                                     }
                                 Console.ForegroundColor = ConsoleColor.Green;
@@ -435,7 +435,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                         listMotATrouver.Remove(motDonne);
                                         j1.Add_Mot(motDonne);
-                                        j1.Add_Score(10 + Convert.ToInt32(directionDonne) * 5);
+                                        j1.Add_Score(Convert.ToInt32(directionDonne));
                                     }
                                     else if (listMotATrouver.Contains(motDonne))
                                     {
@@ -478,7 +478,7 @@ namespace Mot_Mele
                                     {
                                         Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                         reussi2 = true;
-                                        j2.Add_Score(100);
+                                        j2.Add_Score(20);
                                         goto FinJ2;
                                     }
                                     Console.ForegroundColor= ConsoleColor.Green;
@@ -548,7 +548,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                         listMotATrouver2.Remove(motDonne2);
                                         j2.Add_Mot(motDonne2);
-                                        j2.Add_Score(10 + Convert.ToInt32(directionDonne2) * 5);
+                                        j2.Add_Score(Convert.ToInt32(directionDonne2));
                                     }
                                     else if (listMotATrouver2.Contains(motDonne2))
                                     {
@@ -666,7 +666,7 @@ namespace Mot_Mele
                                 {
                                     Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                     reussi = true;
-                                    j1.Add_Score(100);
+                                    j1.Add_Score(20);
                                     goto FinJ1;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Green;
@@ -738,7 +738,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                     listMotATrouver.Remove(motDonne);
                                     j1.Add_Mot(motDonne);
-                                    j1.Add_Score(10 + Convert.ToInt32(directionDonne) * 5);
+                                    j1.Add_Score( Convert.ToInt32(directionDonne) );
                                 }
                                 else if (listMotATrouver.Contains(motDonne))
                                 {
@@ -783,7 +783,7 @@ namespace Mot_Mele
                                 {
                                     Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                     reussi2 = true;
-                                    j2.Add_Score(100);
+                                    j2.Add_Score(20);
                                     goto FinJ2;
                                 }
                                 plateau2.AfficherGrille();
@@ -853,7 +853,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                     listMotATrouver2.Remove(motDonne2);
                                     j2.Add_Mot(motDonne2);
-                                    j2.Add_Score(10 + Convert.ToInt32(directionDonne2) * 5);
+                                    j2.Add_Score( Convert.ToInt32(directionDonne2));
                                 }
                                 else if (listMotATrouver2.Contains(motDonne2))
                                 {
@@ -959,7 +959,7 @@ namespace Mot_Mele
                                 {
                                     Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                     reussi = true;
-                                    j1.Add_Score(100);
+                                    j1.Add_Score(20);
                                     goto FinJ1;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Green;
@@ -1032,7 +1032,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                     listMotATrouver.Remove(motDonne);
                                     j1.Add_Mot(motDonne);
-                                    j1.Add_Score(10 + Convert.ToInt32(directionDonne) * 5);
+                                    j1.Add_Score(Convert.ToInt32(directionDonne));
                                 }
                                 else if (listMotATrouver.Contains(motDonne))
                                 {
@@ -1076,7 +1076,7 @@ namespace Mot_Mele
                                 {
                                     Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
                                     reussi2 = true;
-                                    j2.Add_Score(100);
+                                    j2.Add_Score(20);
                                     goto FinJ2;
                                 }
                                 plateau2.AfficherGrille();
@@ -1146,7 +1146,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                     listMotATrouver2.Remove(motDonne2);
                                     j2.Add_Mot(motDonne2);
-                                    j2.Add_Score(10 + Convert.ToInt32(directionDonne2) * 5);
+                                    j2.Add_Score(Convert.ToInt32(directionDonne2));
                                 }
                                 else if (listMotATrouver2.Contains(motDonne2))
                                 {
