@@ -54,7 +54,7 @@ namespace Mot_Mele
             {
                 try
                 {
-                    path = ("MotsPossiblesEN.txt");
+                    path = ("MotsPossiblesEN.txt");                                     // Récupération du fichier
                     dico = File.ReadAllLines(path);
                     dicoList = new List<string>();
                     for (int i = 0; i < dico.Length; i++)
@@ -74,12 +74,11 @@ namespace Mot_Mele
                     }
                     this.Imaxliste = dicoList.Count();
                 }
-                  
-                catch(Exception f)
+                catch (Exception f)                                                     // En cas d'erreur, pour savoir où déboguer
                 {
                     Console.WriteLine(f);
                 }
-                
+
             }
             else Console.WriteLine("Langage non existant");                             // Si le langage n'existe pas
         }
