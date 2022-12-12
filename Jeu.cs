@@ -868,7 +868,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                     goto FinJ2;
                                 }
-                                else if (plateau2.Test_Plateau(dataDonne2) && listMotATrouver2.Contains(motDonne2))
+                                else if (plateau2.VerifData(dataDonne2) && listMotATrouver2.Contains(motDonne2))
                                 {
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                     listMotATrouver2.Remove(motDonne2);
@@ -1087,7 +1087,7 @@ namespace Mot_Mele
                             #region TourJ2
                             //TOUR JOUEUR 2
                             Plateau plateau2 = new Plateau(dico, difficulte, taille, nbmot);
-                            SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau, j1, j2, dico, 0);
+                            SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau2, j1, j2, dico, 0);
                             sysEnregistrementJ2.EnregistrerTableau();
                             List<string> listMotATrouver2 = plateau2.GMotATrouver;
                             Stopwatch swJ2 = new Stopwatch();
