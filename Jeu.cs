@@ -17,9 +17,9 @@ namespace Mot_Mele
         {
             
            
-            int taille = 8; //28
-            int nbmot = 12;
-            int difficulte = 1;
+            int taille = 9; //28
+            int nbmot = 18;
+            int difficulte = 3;
             int tempsTimer = 600;
             bool recommencerJeu = true;
             
