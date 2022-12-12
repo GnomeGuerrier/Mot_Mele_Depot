@@ -12,20 +12,20 @@ namespace Mot_Mele
     {
         private string Langage;             // Langue du dictionnaire
         private string[] dico;              // Tableau pour la création de la liste
-        private List<string> dicoList;      // Variable de list dictionnaire, à utiliser pour accéder à la liste de tout les mots, séparé et en MAJUSCULE
+        private List<string> dicoList=new List<string>();      // Variable de list dictionnaire, à utiliser pour accéder à la liste de tout les mots, séparé et en MAJUSCULE
         private string path;                // Chemin du fichier
         private int Imaxliste;              // Index max du dictionnaire
 
         public Dictionnaire(string Langage)                                             // Constructeur
         {
             this.Langage = Langage;
-            if(Langage == "français")                                                   // En fonction de la langue, on initialise le bon dictionnaire
+            if(this.Langage == "français")                                                   // En fonction de la langue, on initialise le bon dictionnaire
             {
                 try
                 {
                     path = ("MotsPossiblesFR.txt");                                     // Récupération du fichier
                     dico = File.ReadAllLines(path);
-                    dicoList = new List<string>();
+                    
                     for (int i = 0; i < dico.Length; i++)
                     {
                         string[] toutLesMots = dico[i].Split(" ");
@@ -36,12 +36,12 @@ namespace Mot_Mele
                                 string[] motParMot = toutLesMots[j].Split(" ");
                                 for (int l = 0; l < motParMot.Length; l++)              // Sépare mot par mot
                                 {
-                                    dicoList.Add(motParMot[l].Trim());
+                                    this.dicoList.Add(motParMot[l].Trim());
                                 }
                             }
                         }
                     }
-                    this.Imaxliste = dicoList.Count();
+                    this.Imaxliste = this.dicoList.Count();
                 }
                 catch (Exception f)                                                     // En cas d'erreur, pour savoir où déboguer
                 {
@@ -50,13 +50,13 @@ namespace Mot_Mele
                 
 
             }
-            else if (Langage == "anglais")                                              // Idem mais pour le dico anglais
+            else if (this.Langage == "anglais")                                              // Idem mais pour le dico anglais
             {
                 try
                 {
                     path = ("MotsPossiblesEN.txt");                                     // Récupération du fichier
                     dico = File.ReadAllLines(path);
-                    dicoList = new List<string>();
+                    
                     for (int i = 0; i < dico.Length; i++)
                     {
                         string[] toutLesMots = dico[i].Split(" ");
@@ -67,12 +67,12 @@ namespace Mot_Mele
                                 string[] motParMot = toutLesMots[j].Split(" ");
                                 for (int l = 0; l < motParMot.Length; l++)              // Sépare mot par mot
                                 {
-                                    dicoList.Add(motParMot[l].Trim());
+                                    this.dicoList.Add(motParMot[l].Trim());
                                 }
                             }
                         }
                     }
-                    this.Imaxliste = dicoList.Count();
+                    this.Imaxliste = this.dicoList.Count();
                 }
                 catch (Exception f)                                                     // En cas d'erreur, pour savoir où déboguer
                 {
@@ -88,7 +88,7 @@ namespace Mot_Mele
         }
         public List<string> GDicoList
         {
-            get { return dicoList; }
+            get { return this.dicoList; }
         }
         
         /// <summary>
