@@ -10,12 +10,11 @@ namespace Mot_Mele
 {
     class Joueur
     {
-        //CLASSE FINIE SELON L'ENONCE, TEST PUSH3
-        private string nom;
-        private string[] motTrouve;
-        private int score;
-        private bool hasRun = false;
-        public Joueur(string nom)
+        private string nom;                 // Variable nom du joueur
+        private string[] motTrouve;         // Variable pour les mots trouvés par le joueur
+        private int score;                  // Score du joueur
+        private bool hasRun = false;        // Variable booléenne pour savoir si un joueur a joué son tour
+        public Joueur(string nom)           // Constructeur du joueur
         {
             if (nom != null && nom != "")
             {
@@ -24,7 +23,7 @@ namespace Mot_Mele
             this.score = 0;
             this.motTrouve = null;
         }
-        public string GNom{
+        public string GNom{                     // Déclaration de fonctions GET
             get { return this.nom; }
         }
         public string[] GMotTrouve
@@ -35,22 +34,25 @@ namespace Mot_Mele
         {
             get { return this.score; }
         }
+
         /// <summary>
         /// Permet d'ajouter un mot dans la lsite des mots trouvé, la première fois que cette méthode est éxécuté on initialise l'array motTrouve avec une taille
         /// </summary>
         /// <param name="mot">mot à ajouter</param>
         public void Add_Mot(string mot)
         {
-            //check si c'est la première fois que la méthode est appelée
+            // Check si c'est la première fois que la méthode est appelée
             if (!hasRun)
             {
                 motTrouve = new string[0];
                 hasRun = true;
             }
-            //permet d'agrandir l'array motTrouve
+            // Permet d'agrandir l'array motTrouve
             Array.Resize(ref motTrouve, motTrouve.Length + 1);
             motTrouve[motTrouve.Length - 1] = mot;
         }
+
+
         /// <summary>
         /// Donne un string avec toutes les infos du joueur
         /// </summary>
@@ -59,7 +61,7 @@ namespace Mot_Mele
         {
             
             string aRetrouner = "Le nom du joueur est " + nom + "\nIl/Elle a trouvé ces mots : ";
-            //permet d'afficher tout les mots trouvés
+            // Permet d'afficher tout les mots trouvés
              for(int i = 0; i < motTrouve.Length; i++)
              {
                  aRetrouner += motTrouve[i] + "; ";
@@ -68,8 +70,9 @@ namespace Mot_Mele
             
             return aRetrouner;
         }
+
         /// <summary>
-        /// Ajoute des points au score du joueur
+        /// Fonction qui ajoute des points au score du joueur
         /// </summary>
         /// <param name="val">nombre de points à ajouter</param>
         public void Add_Score(int val)
