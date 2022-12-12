@@ -658,7 +658,7 @@ namespace Mot_Mele
                         
                         entree = Console.ReadLine();Console.ResetColor();
                         Joueur j2 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
-                        Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nblaaaaaaablabla\nne pas oublier la regles des points");
+                        Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
 
                         #endregion IntitialisationJeuSimple
                         do
@@ -963,7 +963,7 @@ namespace Mot_Mele
 
                         Dictionnaire dico = new Dictionnaire(langage);
 
-                        Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nblaaaaaaablabla\nne pas oublier la regles des points");
+                        Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
                         #endregion
                         do
                         {
