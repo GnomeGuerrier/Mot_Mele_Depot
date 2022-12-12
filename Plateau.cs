@@ -180,10 +180,19 @@ namespace Mot_Mele
                                     mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                                 }
                             }
-                            if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                            if(mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
+                            
                         } while (verif == false);
 
                         for (int l = 0; l < mot.Length; l++)                                        //Après avoir vérifié que le mot pouvait entrer sur des coordonnées données pour une direction donnée
@@ -235,9 +244,17 @@ namespace Mot_Mele
                                     mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                            if (mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
@@ -290,9 +307,17 @@ namespace Mot_Mele
                                     mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                            if (mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
@@ -345,9 +370,17 @@ namespace Mot_Mele
                                     mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                            if (mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
@@ -410,9 +443,17 @@ namespace Mot_Mele
                                 }
                             }
 
-                            if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                            if (mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
@@ -473,9 +514,17 @@ namespace Mot_Mele
                                     mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                            if (mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
@@ -537,9 +586,17 @@ namespace Mot_Mele
                                     mot = MotAleatoire(dico, grille);
                                 }
                             }
-                            if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                            if (mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
@@ -601,9 +658,17 @@ namespace Mot_Mele
                                 }
 
                             }
-                            if ((grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " "))
+                            if (mot != null && mot.Length >= 1)
+                            {
+                                if (grille[x, y] != Convert.ToString(mot[0]) && grille[x, y] != " ")
+                                {
+                                    verif = false;
+                                }
+                            }
+                            else
                             {
                                 verif = false;
+                                mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                             }
                         } while (verif == false);
 
