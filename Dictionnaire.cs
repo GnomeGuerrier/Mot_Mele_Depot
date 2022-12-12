@@ -10,20 +10,20 @@ namespace Mot_Mele
 {
     class Dictionnaire
     {
-        private string Langage;
-        private string[] dico;//tableau pour la création de la list
-        private List<string> dicoList; // variable de list dictionnaire, à utiliser pour accéder à la liste de tout les mots, séparé et en MAJUSCULE
-        private string path;//chemin du fichier
-        private int Imaxliste;
+        private string Langage;             // Langue du dictionnaire
+        private string[] dico;              // Tableau pour la création de la liste
+        private List<string> dicoList;      // Variable de list dictionnaire, à utiliser pour accéder à la liste de tout les mots, séparé et en MAJUSCULE
+        private string path;                // Chemin du fichier
+        private int Imaxliste;              // Index max du dictionnaire
 
-        public Dictionnaire(string Langage)
+        public Dictionnaire(string Langage)                                             // Constructeur
         {
             this.Langage = Langage;
-            if(Langage == "français")
+            if(Langage == "français")                                                   // En fonction de la langue, on initialise le bon dictionnaire
             {
                 try
                 {
-                    path = ("MotsPossiblesFR.txt");
+                    path = ("MotsPossiblesFR.txt");                                     // Récupération du fichier
                     dico = File.ReadAllLines(path);
                     dicoList = new List<string>();
                     for (int i = 0; i < dico.Length; i++)
@@ -31,25 +31,26 @@ namespace Mot_Mele
                         string[] toutLesMots = dico[i].Split(" ");
                         if (toutLesMots.Length > 1)
                         {
-                            for (int j = 0; j < toutLesMots.Length; j++)//sépare par taille de mots
+                            for (int j = 0; j < toutLesMots.Length; j++)                // Sépare par taille de mots
                             {
                                 string[] motParMot = toutLesMots[j].Split(" ");
-                                for (int l = 0; l < motParMot.Length; l++)//sépare mot par mot
+                                for (int l = 0; l < motParMot.Length; l++)              // Sépare mot par mot
                                 {
                                     dicoList.Add(motParMot[l].Trim());
                                 }
                             }
                         }
                     }
+                    this.Imaxliste = dicoList.Count();
                 }
-                catch (Exception f)
+                catch (Exception f)                                                     // En cas d'erreur, pour savoir où déboguer
                 {
                     Console.WriteLine(f);
                 }
                 
 
             }
-            else if (Langage == "anglais")
+            else if (Langage == "anglais")                                              // Idem mais pour le dico anglais
             {
                 try
                 {
@@ -61,17 +62,17 @@ namespace Mot_Mele
                         string[] toutLesMots = dico[i].Split(" ");
                         if (toutLesMots.Length > 1)
                         {
-                            for (int j = 0; j < toutLesMots.Length; j++)//sépare par taille de mots
+                            for (int j = 0; j < toutLesMots.Length; j++)                // Sépare par taille de mots
                             {
                                 string[] motParMot = toutLesMots[j].Split(" ");
-                                for (int l = 0; l < motParMot.Length; l++)//sépare mot par mot
+                                for (int l = 0; l < motParMot.Length; l++)              // Sépare mot par mot
                                 {
                                     dicoList.Add(motParMot[l].Trim());
                                 }
                             }
                         }
                     }
-                    Imaxliste = dicoList.Count();
+                    this.Imaxliste = dicoList.Count();
                 }
                   
                 catch(Exception f)
@@ -80,9 +81,9 @@ namespace Mot_Mele
                 }
                 
             }
-            else Console.WriteLine("Langage non existant");
+            else Console.WriteLine("Langage non existant");                             // Si le langage n'existe pas
         }
-        public string GLangage
+        public string GLangage                      // Déclaration de fonctions get, pour accéder à certaines variables hors de la classe
         {
             get { return this.Langage; }
         }
@@ -107,12 +108,9 @@ namespace Mot_Mele
                 }
 
             }
-
-
-
-
             return r;
         }
+
 
         /// <summary>
         /// check si le mot existe dans le dictionnaire
@@ -148,10 +146,6 @@ namespace Mot_Mele
             {
                 return false;
             }*/
-
-
-
-
         }
     }
 }
