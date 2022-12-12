@@ -96,7 +96,7 @@ namespace Mot_Mele
                                 {
                                     if (listMotATrouver.Count == 0)
                                     {
-                                        Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                        Console.WriteLine("Bravo tu as trouvé tous les mots de la liste");
                                         reussi = true;
                                         j1.Add_Score(20);
                                         goto FinJ1;
@@ -104,7 +104,7 @@ namespace Mot_Mele
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 
                                     plateau.AfficherGrille();Console.ResetColor();
-                                    Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                                    Console.WriteLine(j1.GNom + " à toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                
                                 foreach (string m in listMotATrouver)
@@ -174,23 +174,23 @@ namespace Mot_Mele
                                     }
                                     else if (listMotATrouver.Contains(motDonne))
                                     {
-                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!");
+                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!");
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                        Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                     }
                                 FinJ1:;
                                 } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
-                            Console.WriteLine("Tour terminé!");Console.ResetColor();
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
+                            Console.WriteLine("Tour terminé !");Console.ResetColor();
                             tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
 
                                 swJ1.Stop();
                                 swJ1.Reset();
-                                Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                                Console.WriteLine("Appuyez sur n'importe quelle touche pour commencer le tour du prochain joueur");
                                 Console.ReadKey();  
                                 Console.Clear();
 
@@ -215,13 +215,13 @@ namespace Mot_Mele
 
                                     if (listMotATrouver2.Count == 0)
                                     {
-                                        Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                        Console.WriteLine("Bravo tu as trouvé tout les mots de la liste");
                                         reussi2 = true;
                                         j2.Add_Score(20);
                                         goto FinJ2;
                                     }
                                     plateau2.AfficherGrille();
-                                    Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                                    Console.WriteLine(j2.GNom + " à toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
                                 foreach (string m in listMotATrouver2)
@@ -289,17 +289,17 @@ namespace Mot_Mele
                                     }
                                     else if (listMotATrouver2.Contains(motDonne2))
                                     {
-                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!"); //DONNE TJRS CE RESULTAT
+                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); //DONNE TJRS CE RESULTAT
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                        Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                     }
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
                             Console.WriteLine("Tour terminé!"); Console.ResetColor();
                             tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
                             swJ2.Stop();
@@ -314,7 +314,7 @@ namespace Mot_Mele
                                     goto FinComplete;
                                 }
                             Console.ResetColor();
-                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.WriteLine("Appuyez sur n'importe quelle touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
                             Console.Clear();
                                 #endregion
@@ -325,7 +325,7 @@ namespace Mot_Mele
                             tempsTimer += 5 * difficulte;
                         } while (difficulte <= 5);
                             #region FinJeu
-                            Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
+                            Console.WriteLine("Tous les tours sont terminés ! Bravo à vous deux");
                             Console.WriteLine($"Les scores sont : {j1.GScore} pour {j1.GNom} et {j2.GScore} pour {j2.GNom}");
                             if (j2.GScore > j1.GScore)
                             {
@@ -337,11 +337,11 @@ namespace Mot_Mele
                             }
                         else if (tempsJ1 > tempsJ2)
                         {
-                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
+                            Console.WriteLine($"Vous êtes tous les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps.");
                         }
                         else
                         {
-                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
+                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps.");
                         }
 
                         #endregion FinJeu
@@ -370,7 +370,7 @@ namespace Mot_Mele
 
                                     if (listMotATrouver.Count == 0)
                                     {
-                                        Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                        Console.WriteLine("Bravo tu as trouvé tous les mots de la liste");
                                         reussi = true;
                                         j1.Add_Score(20);
                                         goto FinJ1;
@@ -378,7 +378,7 @@ namespace Mot_Mele
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 
                                     plateau.AfficherGrille();Console.ResetColor();
-                                    Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                                    Console.WriteLine(j1.GNom + " à toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
                                 foreach (string m in listMotATrouver)
@@ -448,22 +448,22 @@ namespace Mot_Mele
                                     }
                                     else if (listMotATrouver.Contains(motDonne))
                                     {
-                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!"); //DONNE TJRS CE RESULTAT
+                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); //DONNE TJRS CE RESULTAT
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                        Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                     }
                                 FinJ1:;
                                 } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
-                            Console.WriteLine("Tour terminé!");Console.ResetColor();
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
+                            Console.WriteLine("Tour terminé !");Console.ResetColor();
                             tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
                             swJ1.Stop();
                                 swJ1.Reset();
-                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.WriteLine("Appuyez sur n'importe quelle touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
                             Console.Clear();
                                 #endregion TourJ1
@@ -486,14 +486,14 @@ namespace Mot_Mele
 
                                     if (listMotATrouver2.Count == 0)
                                     {
-                                        Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                        Console.WriteLine("Bravo tu as trouvé tous les mots de la liste");
                                         reussi2 = true;
                                         j2.Add_Score(20);
                                         goto FinJ2;
                                     }
                                     Console.ForegroundColor= ConsoleColor.Green;
                                     plateau2.AfficherGrille();Console.ResetColor();
-                                    Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                                    Console.WriteLine(j2.GNom + " à toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
                                 foreach (string m in listMotATrouver2)
@@ -562,17 +562,17 @@ namespace Mot_Mele
                                     }
                                     else if (listMotATrouver2.Contains(motDonne2))
                                     {
-                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!"); //DONNE TJRS CE RESULTAT
+                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); //DONNE TJRS CE RESULTAT
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                        Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                     }
                                 FinJ2:;
                                 } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
                             Console.WriteLine("Tour terminé!");  Console.ResetColor();
                             tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
                             swJ2.Stop();
@@ -587,7 +587,7 @@ namespace Mot_Mele
                                     goto FinComplete;
                                 }
                             Console.ResetColor();
-                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.WriteLine("Appuyez sur n'importe quel touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
                             Console.Clear();
                                 #endregion
@@ -599,7 +599,7 @@ namespace Mot_Mele
                             tempsTimer += 5 * difficulte;
                         } while (difficulte <= 5);
                             #region FinJeu
-                            Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
+                            Console.WriteLine("Tous les tours sont terminés ! Bravo à vous deux");
                             Console.WriteLine($"Les scores sont : {j1.GScore} pour {j1.GNom} et {j2.GScore} pour {j2.GNom}");
                             if (j2.GScore > j1.GScore)
                             {
@@ -611,11 +611,11 @@ namespace Mot_Mele
                             }
                         else if (tempsJ1 > tempsJ2)
                         {
-                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
+                            Console.WriteLine($"Vous êtes tous les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps.");
                         }
                         else
                         {
-                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
+                            Console.WriteLine($"Vous êtes tous les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps.");
                         }
 
                         #endregion FinJeu
@@ -634,7 +634,7 @@ namespace Mot_Mele
                 {
                     Console.ResetColor();
                 typeJeu:
-                    Console.WriteLine("Voulez vous jouez avec des grilles générée avant [G] ou aléatorement [A] ?");
+                    Console.WriteLine("Voulez vous jouez avec des grilles pré-générées [G] ou des grilles générées aléatoirement [A] ?");
                     Console.ForegroundColor = ConsoleColor.Red;
                     
                     string typeJeu = Console.ReadLine();Console.ResetColor();
@@ -653,12 +653,12 @@ namespace Mot_Mele
                         
                         entree = Console.ReadLine();Console.ResetColor();
                         Joueur j1 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
-                        Console.WriteLine("veuillez donner le nom du deuxième joueur");
+                        Console.WriteLine("Veuillez donner le nom du deuxième joueur");
                         Console.ForegroundColor = ConsoleColor.Red;
                         
                         entree = Console.ReadLine();Console.ResetColor();
                         Joueur j2 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
-                        Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
+                        Console.WriteLine("Parfait tout est prêt, voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
 
                         #endregion IntitialisationJeuSimple
                         do
@@ -683,7 +683,7 @@ namespace Mot_Mele
                             {
                                 if (listMotATrouver.Count == 0)
                                 {
-                                    Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                    Console.WriteLine("Bravo tu as trouvé tous les mots de la liste");
                                     reussi = true;
                                     j1.Add_Score(20);
                                     goto FinJ1;
@@ -691,7 +691,7 @@ namespace Mot_Mele
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 
                                 plateau.AfficherGrille();Console.ResetColor();
-                                Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                                Console.WriteLine(j1.GNom + " à toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 foreach (string m in listMotATrouver)
                                 {
@@ -761,22 +761,22 @@ namespace Mot_Mele
                                 }
                                 else if (listMotATrouver.Contains(motDonne))
                                 {
-                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!");
+                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                    Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                 }
                             FinJ1:;
                             } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                             tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
                             swJ1.Stop();
                             swJ1.Reset();
-                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.WriteLine("Appuyez sur n'importe quelle touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
                             Console.Clear();
 
@@ -801,14 +801,14 @@ namespace Mot_Mele
 
                                 if (listMotATrouver2.Count == 0)
                                 {
-                                    Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                    Console.WriteLine("Bravo tu as trouvé tout les mots de la liste");
                                     reussi2 = true;
                                     j2.Add_Score(20);
                                     goto FinJ2;
                                 }
                                 Console.ForegroundColor= ConsoleColor.Green;
                                 plateau2.AfficherGrille();Console.ResetColor();
-                                Console.WriteLine(j2.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                                Console.WriteLine(j2.GNom + " à toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
                                 foreach (string m in listMotATrouver2)
@@ -878,17 +878,17 @@ namespace Mot_Mele
                                 }
                                 else if (listMotATrouver2.Contains(motDonne2))
                                 {
-                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!"); //DONNE TJRS CE RESULTAT
+                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); //DONNE TJRS CE RESULTAT
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                    Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                 }
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
                             Console.WriteLine("Tour terminé!"); Console.ResetColor();
                             tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
                             swJ2.Stop();
@@ -903,7 +903,7 @@ namespace Mot_Mele
                                 goto FinComplete;
                             }
                             Console.ResetColor();
-                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.WriteLine("Appuyez sur n'importe quel touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
                             Console.Clear();
                             #endregion
@@ -915,7 +915,7 @@ namespace Mot_Mele
                             tempsTimer += 5*difficulte;
                         } while (difficulte <= 5);
                         #region FinJeu
-                        Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
+                        Console.WriteLine("Tous les tours sont terminés ! Bravo à vous deux");
                         Console.WriteLine($"Les scores sont : {j1.GScore} pour {j1.GNom} et {j2.GScore} pour {j2.GNom}");
                         if (j2.GScore > j1.GScore)
                         {
@@ -927,11 +927,11 @@ namespace Mot_Mele
                         }
                         else if (tempsJ1 > tempsJ2)
                         {
-                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
+                            Console.WriteLine($"Vous êtes tous les deux trop fort! Il y a eu égalité au niveau des points, mais {j2.GNom} a résolu les plateaux en moins de temps");
                         }
                         else
                         {
-                            Console.WriteLine($"Vous êtes tout les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
+                            Console.WriteLine($"Vous êtes tous les deux trop fort! Il y a eu égalité au niveau des points, mais {j1.GNom} a résolu les plateaux en moins de temps");
                         }
 
                         #endregion FinJeu
@@ -946,7 +946,7 @@ namespace Mot_Mele
                         
                         entree = Console.ReadLine();Console.ResetColor();
                         Joueur j1 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
-                        Console.WriteLine("veuillez donner le nom du deuxième joueur");
+                        Console.WriteLine("Veuillez donner le nom du deuxième joueur");
                         Console.ForegroundColor = ConsoleColor.Red;
                         
                         entree = Console.ReadLine();Console.ResetColor();
@@ -963,7 +963,7 @@ namespace Mot_Mele
 
                         Dictionnaire dico = new Dictionnaire(langage);
 
-                        Console.WriteLine("Parfait tout est prêt,voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
+                        Console.WriteLine("Parfait tout est prêt, voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
                         #endregion
                         do
                         {
@@ -987,7 +987,7 @@ namespace Mot_Mele
 
                                 if (listMotATrouver.Count == 0)
                                 {
-                                    Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                    Console.WriteLine("Bravo tu as trouvé tous les mots de la liste");
                                     reussi = true;
                                     j1.Add_Score(20);
                                     goto FinJ1;
@@ -995,7 +995,7 @@ namespace Mot_Mele
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 
                                 plateau.AfficherGrille();Console.ResetColor();
-                                Console.WriteLine(j1.GNom + " a toi de jouer\nLes mots à trouver sont :");
+                                Console.WriteLine(j1.GNom + " à toi de jouer\nLes mots à trouver sont :");
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 
                                 foreach (string m in listMotATrouver)
@@ -1066,22 +1066,22 @@ namespace Mot_Mele
                                 }
                                 else if (listMotATrouver.Contains(motDonne))
                                 {
-                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!"); //DONNE TJRS CE RESULTAT
+                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); //DONNE TJRS CE RESULTAT
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                    Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                 }
                             FinJ1:;
                             } while (swJ1.ElapsedMilliseconds / 1000 <= tempsTimer && reussi == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ1.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
                                 Console.WriteLine("Tour terminé!");Console.ResetColor();
                             tempsJ1 += (int)(swJ1.ElapsedMilliseconds / 1000);
                             swJ1.Stop();
                             swJ1.Reset();
-                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.WriteLine("Appuyez sur n'importe quel touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
                             Console.Clear();
                             #endregion TourJ1
@@ -1104,7 +1104,7 @@ namespace Mot_Mele
 
                                 if (listMotATrouver2.Count == 0)
                                 {
-                                    Console.WriteLine("Bravo tu a trouvé tout les mots de la liste");
+                                    Console.WriteLine("Bravo tu as trouvé tous les mots de la liste");
                                     reussi2 = true;
                                     j2.Add_Score(20);
                                     goto FinJ2;
@@ -1181,17 +1181,17 @@ namespace Mot_Mele
                                 }
                                 else if (listMotATrouver2.Contains(motDonne2))
                                 {
-                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé,réessaie!"); //DONNE TJRS CE RESULTAT
+                                    Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); //DONNE TJRS CE RESULTAT
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Ce mot n'étais pas à trouver ou tu l'as déja trouvé, réessaie!");
+                                    Console.WriteLine("Ce mot n'étais pas à trouver ou alors tu l'as déja trouvé, réessaie!");
 
                                 }
                             FinJ2:;
                             } while (swJ2.ElapsedMilliseconds / 1000 <= tempsTimer && reussi2 == false); //Crhonomètre et condition de victoire
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps délimité");
+                            if (swJ2.ElapsedMilliseconds / 1000 >= tempsTimer) Console.WriteLine("Vous avez dépassé le temps donné");
                             Console.WriteLine("Tour terminé!");Console.ResetColor();
                             tempsJ2 += (int)(swJ2.ElapsedMilliseconds / 1000);
                             swJ2.Stop();
@@ -1206,7 +1206,7 @@ namespace Mot_Mele
                                 goto FinComplete;
                             }
                             Console.ResetColor();
-                            Console.WriteLine("Appuiez sur n'importe quel touche pour commencer le tour du prochain joueur");
+                            Console.WriteLine("Appuyez sur n'importe quel touche pour commencer le tour du prochain joueur");
                             Console.ReadKey();
                             Console.Clear();
                             #endregion
@@ -1247,14 +1247,14 @@ namespace Mot_Mele
                 if (r == "N") recommencerJeu = false;
                 else
                 {
-                    Console.WriteLine("Super, c'est parti pour une nouvelle partie!!");
+                    Console.WriteLine("Super, c'est parti pour une nouvelle partie !");
                     Console.Clear();
                     goto DebutJeu;
                 }
             } while (recommencerJeu);
         FinComplete:
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Merci d'avoir joué ce jeu crée par Hugo Bonnell et Eliott Coutaz, au plaisir de vous revoir jouer!!!!");Console.ResetColor();
+            Console.WriteLine("Merci d'avoir joué à ce jeu créé par Hugo Bonnell et Eliott Coutaz, au plaisir de vous revoir jouer !");Console.ResetColor();
             
         }
         
