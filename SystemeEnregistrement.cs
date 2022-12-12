@@ -78,34 +78,7 @@ namespace Mot_Mele
        
         public  void EnregisterJeu(Joueur j1, Joueur j2, Dictionnaire dico,int difficulte,string typeJeu)
         {
-            /*string r = j1.GNom + " ";
-            if (j1.GMotTrouve != null)
-            {
-                foreach (string mot in j1.GMotTrouve)
-                {
-                    r += mot + " ";
-                }
-            }
-
-            else r += "null ";
-
-            r += j1.GScore + "\n";
-
-            r += j2.GNom + " ";
-            if (j2.GMotTrouve != null)
-            {
-                foreach (string mot in j2.GMotTrouve)
-                {
-                    r += mot + " ";
-                }
-            }
-            else r += "null";
-            r += j2.GScore + "\n";
-
-            r += dico.GLangage + "\n";
-            //continuer ici pour l'enregistrement
-
-            File.WriteAllText("test.csv", r);*/
+           
             this.rendu.Clear();
 
             string r = j1.GNom + ";";       //enregistrement J1

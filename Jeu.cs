@@ -17,8 +17,8 @@ namespace Mot_Mele
         {
             
            
-            int taille = 7; 
-            int nbmot = 8;
+            int taille = 8; //28
+            int nbmot = 12;
             int difficulte = 1;
             int tempsTimer = 600;
             bool recommencerJeu = true;
@@ -320,10 +320,10 @@ namespace Mot_Mele
                                 #endregion
 
                                 difficulte++;
-                                nbmot++;
+                                nbmot+=5;
                                 taille++;
-                                tempsTimer += 5;
-                            } while (difficulte <= 5);
+                            tempsTimer += 5 * difficulte;
+                        } while (difficulte <= 5);
                             #region FinJeu
                             Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
                             Console.WriteLine($"Les scores sont : {j1.GScore} pour {j1.GNom} et {j2.GScore} pour {j2.GNom}");
@@ -593,10 +593,10 @@ namespace Mot_Mele
                                 #endregion
                                 
                                 difficulte++;
-                                
-                                nbmot++;
-                                taille++;
-                                tempsTimer += 5;
+
+                            nbmot += 5;
+                            taille ++;
+                            tempsTimer += 5 * difficulte;
                         } while (difficulte <= 5);
                             #region FinJeu
                             Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
@@ -909,9 +909,9 @@ namespace Mot_Mele
                             
                             difficulte++;
                             
-                            nbmot++;
-                            taille++;
-                            tempsTimer += 5;
+                            nbmot += 5;
+                            taille ++;
+                            tempsTimer += 5*difficulte;
                         } while (difficulte <= 5);
                         #region FinJeu
                         Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
@@ -1210,10 +1210,10 @@ namespace Mot_Mele
                             Console.Clear();
                             #endregion
                             difficulte++;
-                            nbmot++;
-                            taille++;
-                            
-                            tempsTimer += 5;
+                            nbmot += 5;
+                            taille ++ ;
+
+                            tempsTimer += 5 * difficulte;
                         } while (difficulte <= 5);
                         #region FinJeu
                         Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
