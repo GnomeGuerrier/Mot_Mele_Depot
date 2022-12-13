@@ -17,36 +17,36 @@ namespace Mot_Mele
         {
 
 
-            int taille = 8;
-            int nbmot = 13;
-            int difficulte = 2;
-            int tempsTimer = 120;
-            bool recommencerJeu = true;
+            int taille = 7;             //Choix de la taille de la première manche, le reste de la taille en dépendra
+            int nbmot = 8;             //Choix du nombre de mot de la première manche, le reste des mots en dépendront
+            int difficulte = 1;         // choix de la difficulté du premier niveau, le reste et le nombre de tours en dépendra
+            int tempsTimer = 120;       //choix du temps par manche par joueur, du temps s'ajoutera selon le niveau de difficulté
+            bool recommencerJeu = true; //permet de savor si un joueur veut recommencer un jeu
             
-            int tempsJ1 = 0;
-            int tempsJ2 = 0;
+            int tempsJ1 = 0;            //temps de jeu du joueur1
+            int tempsJ2 = 0;            //temps de jeu du joueur1
 
-            
-          
 
-            
-            
 
-            do
+
+
+
+
+            do                              //Début du jeu
             {
             DebutJeu:
                 Console.WriteLine("Bonjour, voulez vous commencer une nouvelle partie [N] ou reprendre un jeu [R] ?");
                 Console.ForegroundColor = ConsoleColor.Red;
-                if (Console.ReadLine().ToUpper() == "R")
+                if (Console.ReadLine().ToUpper() == "R")  //Début du jeu si on veut reprendre une partie
                 {
                     Console.ResetColor();
-                    if (!File.Exists("JeuEnregistre.csv"))
+                    if (!File.Exists("JeuEnregistre.csv")) //check si une partie a été enregistrée
                     {
                         Console.WriteLine("Vous n'avez pas encore enregistré de jeu");
                         goto DebutJeu;
                     }
-                        string[] infos = File.ReadAllLines("JeuEnregistre.csv");
-                        //Recup et création info Joueur1
+                        string[] infos = File.ReadAllLines("JeuEnregistre.csv"); //partie où on extrait toutes les infos pour recommencer un jeu
+                                                                                 //Recup et création info Joueur1
                         string[] decoupeJ1 = infos[0].Split(";");
                         Joueur j1 = new Joueur(decoupeJ1[0]);
                         for (int i = 1; i < decoupeJ1.Length - 1; i++)
@@ -55,7 +55,7 @@ namespace Mot_Mele
                         }
                         j1.Add_Score(Convert.ToInt32(decoupeJ1[decoupeJ1.Length - 2]));
 
-                        //Recup et création info Joueur2
+                                                                                //Recup et création info Joueur2
                         string[] decoupeJ2 = infos[1].Split(";");
                         Joueur j2 = new Joueur(decoupeJ2[0]);
                         for (int i = 1; i < decoupeJ2.Length - 1; i++)
@@ -64,32 +64,32 @@ namespace Mot_Mele
                         }
                         j2.Add_Score(Convert.ToInt32(decoupeJ2[decoupeJ2.Length - 2]));
 
-                        //création dico
+                                                                                //création dico
                         Dictionnaire dico = new Dictionnaire(infos[2]);
-                        //Savoir à qui est le tour
                         
-                        difficulte = Convert.ToInt32(infos[4]);//connaitre la difficulte où ils etaient
+                        
+                        difficulte = Convert.ToInt32(infos[4]);                 //connaitre la difficulte où ils etaient
                         string typeJeuReprendre = infos[5];
-                        if (typeJeuReprendre == "G")    //meme systeme que sans l'enregistrement mais on passe la phase d'initialisation
+                        if (typeJeuReprendre == "G")                          //meme systeme que sans l'enregistrement mais on passe la phase d'initialisation
                         {
                             
                             
                             do
                             {
 
-                            #region TourJ1
-
+                            #region TourJ1      
+                                                                                //début du tour J1 généré dans le cas où on reprend un jeu
                             TourJ1Simple:
-                                Plateau plateau = new Plateau(dico, "CasJ1" + difficulte + ".csv");
-                                List<string> listMotATrouver = plateau.GMotATrouver;
-                                Stopwatch swJ1 = new Stopwatch();
+                                Plateau plateau = new Plateau(dico, "CasJ1" + difficulte + ".csv"); //création du nouveau plateau
+                                List<string> listMotATrouver = plateau.GMotATrouver; //récupération des mots à trouver
+                                Stopwatch swJ1 = new Stopwatch();                   //création d'un chronomètre
                                 Console.WriteLine();
-                                swJ1.Start();
-                                string motDonne, directionDonne;
-                                string posXDonne, posYDonne;
-                                string[] dataDonne = new string[4];
+                                swJ1.Start();                                       //chrono start
+                                string motDonne, directionDonne;                    //initialisation des variables pour trouver le mot
+                                string posXDonne, posYDonne;                        //initialisation des variables pour trouver le mot
+                                string[] dataDonne = new string[4];                 
                                 bool reussi = false;
-                                SystemeEnregistrement sysEnregistrementJ1 = new SystemeEnregistrement(plateau, j1, j2, dico, 1);
+                                SystemeEnregistrement sysEnregistrementJ1 = new SystemeEnregistrement(plateau, j1, j2, dico, 1);  //Systeme d'enregistremement de tableau et de plateau
                                 sysEnregistrementJ1.EnregistrerTableau();
 
                                 do
@@ -160,19 +160,19 @@ namespace Mot_Mele
                                     dataDonne[2] = posXDonne;
                                     dataDonne[3] = posYDonne;
 
-                                    if (!dico.RechDichoRecursif(motDonne,0,plateau.GDicoListCount))
+                                    if (!dico.RechDichoRecursif(motDonne,0,plateau.GDicoListCount)) //test si le mot est dans le dictionnaire
                                     {
                                         Console.WriteLine("Ce mot n'est pas dans le dictionnaire " + dico.GLangage);
                                         goto FinJ1;
                                     }
-                                    else if (plateau.VerifData(dataDonne) && listMotATrouver.Contains(motDonne))
+                                    else if (plateau.VerifData(dataDonne) && listMotATrouver.Contains(motDonne)) //test si le mot est au bon endroit dans le plateau
                                     {
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                         listMotATrouver.Remove(motDonne);
                                         j1.Add_Mot(motDonne);
                                         j1.Add_Score(motDonne.Length);
                                     }
-                                    else if (listMotATrouver.Contains(motDonne))
+                                    else if (listMotATrouver.Contains(motDonne)) //test si le mot est à trouver
                                     {
                                         Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!");
                                     }
@@ -198,11 +198,11 @@ namespace Mot_Mele
                             #endregion
                             #region TourJ2
                             TourJ2Simple:
-                                //TOUR JOUEUR 2
-                                Plateau plateau2 = new Plateau(dico, "CasJ2" + difficulte + ".csv");
-                                List<string> listMotATrouver2 = plateau2.GMotATrouver;
+                                                                                                         //TOUR JOUEUR 2
+                                Plateau plateau2 = new Plateau(dico, "CasJ2" + difficulte + ".csv");     //Création J2
+                                List<string> listMotATrouver2 = plateau2.GMotATrouver;                  //récupération des mots à chercher
                                 Stopwatch swJ2 = new Stopwatch();
-                                SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau, j1, j2, dico, 0);
+                                SystemeEnregistrement sysEnregistrementJ2 = new SystemeEnregistrement(plateau, j1, j2, dico, 0);//système d'enregistrement
                                 Console.WriteLine();
                                 swJ2.Start();
                                 string motDonne2, directionDonne2;
@@ -289,7 +289,7 @@ namespace Mot_Mele
                                     }
                                     else if (listMotATrouver2.Contains(motDonne2))
                                     {
-                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); //DONNE TJRS CE RESULTAT
+                                        Console.WriteLine("Ce mot est à trouver mais tu l'as mal placé, réessaie!"); 
                                     }
                                     else
                                     {
@@ -319,10 +319,10 @@ namespace Mot_Mele
                             Console.Clear();
                                 #endregion
 
-                                difficulte++;
-                                nbmot+=5;
-                                taille++;
-                            tempsTimer += 5 * difficulte;
+                                difficulte++;//ajout de la difficultée
+                                nbmot+=5;//ajout de plus de mots pour la prochaine manche
+                                taille++;//ajout de la taille en plus pour la prochaine manche
+                            tempsTimer += 5 * difficulte;//ajout de temps pour la prochaine manche
                         } while (difficulte <= 5);
                             #region FinJeu
                             Console.WriteLine("Tous les tours sont terminés ! Bravo à vous deux");
@@ -351,9 +351,9 @@ namespace Mot_Mele
                             do
                             {
 
-                        #region TourJ1
+                             #region TourJ1
                         TourJ1:
-                            Plateau plateau = new Plateau(dico, difficulte, taille, nbmot);
+                            Plateau plateau = new Plateau(dico, difficulte, taille, nbmot);//
                             
                                 plateau.ToFile("PlateauEnregistre");
                                 List<string> listMotATrouver = plateau.GMotATrouver;
@@ -592,11 +592,11 @@ namespace Mot_Mele
                             Console.Clear();
                                 #endregion
                                 
-                                difficulte++;
+                                difficulte++;//ajout de la difficultée
 
-                            nbmot += 5;
-                            taille ++;
-                            tempsTimer += 5 * difficulte;
+                            nbmot += 5;//ajout de mot pour la prochaine manche
+                            taille ++;//ajout de la taille pour la prochaine manche
+                            tempsTimer += 5 * difficulte;//ajout de temps pour la prochaine manche
                         } while (difficulte <= 5);
                             #region FinJeu
                             Console.WriteLine("Tous les tours sont terminés ! Bravo à vous deux");
@@ -630,7 +630,7 @@ namespace Mot_Mele
 
                     
                 }
-                else   //Partie non récupérée
+                else   //Partie non reprise, initialisation de la nouvelle partie
                 {
                     Console.ResetColor();
                 typeJeu:
@@ -645,6 +645,7 @@ namespace Mot_Mele
                     }
                     if (typeJeu == "G")                      //JeuGénérée
                     {
+                                                             //initialisation d'un nouveau jeu généré 
                         #region IntitialisationJeuSimple
                         Dictionnaire dico = new Dictionnaire("français");
                         string entree;
@@ -664,7 +665,7 @@ namespace Mot_Mele
                         Joueur j2 = new Joueur(entree.First().ToString().ToUpper() + entree.Substring(1).ToLower());
                         Console.WriteLine("Parfait tout est prêt, voici les règles du jeu : \nChaque joueur a une grille de mot caché qu’il doit trouver dans le temps imparti d’une minute pour le premier tableau. \r\nLe jouer remporte un bonus s’il trouve tous les mots de sa grille, sinon, il remporte un score égal au nombre de lettres des mots trouvés.\r\nLe joueur suivant fera de même sur une nouvelle grille.\r\nA chaque tour, la dimension de la grille et le nombre de mots cachés augmentent, ainsi que la difficulté et le temps imparti.\r\nLe gagnant est celui qui sera le plus rapide pour trouver tous les mots cachés ou celui qui aura le score le plus élevé.\n Chargement de la grille en cours...");
 
-                        #endregion IntitialisationJeuSimple
+                        #endregion IntitialisationJeuSimple             
                         do
                         {
 
@@ -680,7 +681,7 @@ namespace Mot_Mele
                             string posXDonne, posYDonne;
                             string[] dataDonne = new string[4];
                             bool reussi = false;
-                            plateau.ToFile("PlateauEnregistre");
+                            plateau.ToFile("PlateauEnregistre");                    //enregistrement du plateau
 
                             do
                             {
@@ -911,11 +912,11 @@ namespace Mot_Mele
                             Console.Clear();
                             #endregion
                             
-                            difficulte++;
+                            difficulte++;//nouvelle difficultée pour le tour prochain
                             
-                            nbmot += 5;
-                            taille ++;
-                            tempsTimer += 5*difficulte;
+                            nbmot += 5;//rajout de plus de mot pour la prochaine manche
+                            taille ++;//rajout de taille pour la prochaine partie
+                            tempsTimer += 5*difficulte;//rajout de temps pour la prochaine manche
                         } while (difficulte <= 5);
                         #region FinJeu
                         Console.WriteLine("Tous les tours sont terminés ! Bravo à vous deux");
@@ -1217,11 +1218,11 @@ namespace Mot_Mele
                             Console.ReadKey();
                             Console.Clear();
                             #endregion
-                            difficulte++;
-                            nbmot += 5;
-                            taille ++ ;
+                            difficulte++;//nouvelle difficultée pour le tour prochain
 
-                            tempsTimer += 5 * difficulte;
+                            nbmot += 5;//rajout de plus de mot pour la prochaine manche
+                            taille++;//rajout de taille pour la prochaine partie
+                            tempsTimer += 5 * difficulte;//rajout de temps pour la prochaine manche
                         } while (difficulte <= 5);
                         #region FinJeu
                         Console.WriteLine("Tout les tours sont finis! Bravo à vous deux");
@@ -1246,7 +1247,7 @@ namespace Mot_Mele
                         #endregion FinJeu
                     }
                 }
-                Console.WriteLine("Voulez vous recommencer une partie [Y]/[N] ?");
+                Console.WriteLine("Voulez vous recommencer une partie [Y]/[N] ?");//début de la méthode pour recommencer la partie
                 Console.ForegroundColor = ConsoleColor.Red;
                 
                 string r = Console.ReadLine().ToUpper();Console.ResetColor();
@@ -1259,7 +1260,7 @@ namespace Mot_Mele
                     goto DebutJeu;
                 }
             } while (recommencerJeu);
-        FinComplete:
+        FinComplete:   //fin du jeu
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Merci d'avoir joué à ce jeu créé par Hugo Bonnell et Eliott Coutaz, au plaisir de vous revoir jouer !");Console.ResetColor();
             

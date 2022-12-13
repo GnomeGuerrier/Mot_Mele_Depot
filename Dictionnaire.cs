@@ -137,6 +137,8 @@ namespace Mot_Mele
                     }
                     else
                     {
+
+
                         if (string.Compare(this.dicoList[mid], mot) < 0)
                         {
                             return RechDichoRecursif(mot, mid, IFin);
@@ -147,6 +149,7 @@ namespace Mot_Mele
                         }
                     }
                 }
+
                 else
                 {
                     return true;
