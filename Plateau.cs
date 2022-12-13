@@ -807,25 +807,25 @@ namespace Mot_Mele
         MotAleatoire:
             Random rand = new Random();
             int n;
-            string reee;
+            string motRandom;
             do
             {
                 n = rand.Next(0, dico.GDicoList.Count);
-                reee = dico.GDicoList[n];
+                motRandom = dico.GDicoList[n];
 
-            } while (dico.GDicoList[n].Length >= grille.GetLength(0));
-            if (this.listeMot != null)  //si la liste est vide, il n'est pas dedans
+            } while (dico.GDicoList[n].Length >= grille.GetLength(0));      // On choisit un mot aléatoirement jusqu'à tomber sur un mot pouvant entrer dans le plateau
+            if (this.listeMot != null)                                      // Si la liste est vide, le mot n'est pas dedans
             { 
-                for (int i = 0; i < this.listeMot.Count; i++)
+                for (int i = 0; i < this.listeMot.Count; i++)               // Débogage
                 {
-                    if (reee == this.listeMot[i].mot)
+                    if (motRandom == this.listeMot[i].mot)
                     {
                        
-                        goto MotAleatoire;
+                        goto MotAleatoire;                                  // On relace MotAléatoire si nécessaire...
                     }
                 }
             }
-            return dico.GDicoList[n];
+            return dico.GDicoList[n];                                       // On renvoie le mot aléatoire
 
         }
         public string[,] GenererGrille(int tailleGrille)                    //Fonction générant une grille vide de taille 'tailleGrille'
@@ -856,14 +856,13 @@ namespace Mot_Mele
 
             }
             Console.Write("  Y \n");
-            for (int i = 0; i < this.grilleRemplie.GetLength(0); i++)                      //On boucle de sorte à afficher les éléments X de la grille tel que: 
+            for (int i = 0; i < this.grilleRemplie.GetLength(0); i++)                      
             {                    
                 if(i<=9) Console.Write(" " + i + " |");                                                                  
                 else Console.Write(i+"|");                                             
                 for (int j = 0; j < this.grilleRemplie.GetLength(1); j++)                      
                 { 
                      Console.Write(" "+this.grilleRemplie[i, j] + " |"); 
-                      // ...
                                                                        
                 }
                 Console.WriteLine();
@@ -899,7 +898,7 @@ namespace Mot_Mele
                 Console.WriteLine(p.mot + "\n" + p.orientation + "\n" + p.posX + "\n" + p.posY + "\n--------------");
             }
         }
-        public bool Test_Plateau(string[] data)
+        public bool Test_Plateau(string[] data)         // Vérifie que les données entrées par l'utilisateur correspondent à un mot à trouver
         {
             //Data : data[0] mot | data[1] orientation | data[2] posX | data[3] posY
             bool verif = false;
@@ -915,7 +914,7 @@ namespace Mot_Mele
             return verif;
         }
 
-        public bool VerifData(string[] data)
+        public bool VerifData(string[] data)            // Verifie si des données correspondent à un mot du plateau sans que ce dernier ne soit enregistré dans une structure propMot
         {
             bool verif = true;
             string[,] grille = this.grilleRemplie;
