@@ -848,22 +848,29 @@ namespace Mot_Mele
         }
          public void AfficherGrille()                        //Fonction pour afficher une grille
         {
-            Console.Write("  ");
+            Console.Write("   ");
             for(int i = 0; i <this.grilleRemplie.GetLength(0); i++)
             {
-                 Console.Write(" " + i);
+                if(i <= 9)
+                {
+                    Console.Write("  " + i + " ");
+                }
+                else
+                {
+                    Console.Write("  " + i);
+                } 
 
             }
             Console.Write("  Y \n");
             for (int i = 0; i < this.grilleRemplie.GetLength(0); i++)                      //On boucle de sorte à afficher les éléments X de la grille tel que: 
             {                    
-                if(i<=9) Console.Write(i + " |");                                                                  // |X|X|X|X....|X|X|
-                else Console.Write(i+"|");                                             // |X|X|X|X....|X|X|
-                for (int j = 0; j < this.grilleRemplie.GetLength(1); j++)                      // ...
+                if(i<=9) Console.Write(" " + i + " |");                                                                  
+                else Console.Write(i+"|");                                             
+                for (int j = 0; j < this.grilleRemplie.GetLength(1); j++)                      
                 { 
-                     Console.Write(this.grilleRemplie[i, j] + "|"); 
+                     Console.Write(" "+this.grilleRemplie[i, j] + " |"); 
                       // ...
-                                                                       // |X|X|X|X....|X|X|
+                                                                       
                 }
                 Console.WriteLine();
             }
