@@ -10,15 +10,15 @@ using System.Collections;
 namespace Mot_Mele
 {
     public class Plateau
-    {
-        private List<string> motATrouver = new List<string>();
-        private Dictionnaire dico;
-        private int difficulte;
+    {                                                                        // Déclaration des variables
+        private List<string> motATrouver = new List<string>();               // Liste des mots à trouver (seulement les mots, sans leurs données associées)
+        private Dictionnaire dico;                                     
+        private int difficulte; 
         private int nbmot;
         private int taille;
         private string mot;
         
-        private List<string> lettreSimple = new List<string>();
+        private List<string> lettreSimple = new List<string>();             // Liste servant à la séparation des mots du fichier dictonnaire
         private string[,] grilleVide;
         private string[,] grilleFinieMotSansLettre;
         
@@ -26,53 +26,45 @@ namespace Mot_Mele
         private List<string> infoSimple = new List<string>();
         private List<PropMot> listeMot;
         private PropMot motAjoute;
-        public struct PropMot
+        public struct PropMot                           //Initiation structure PropMot pour garder toutes les données liées aux mots
         {
-            public string mot;
-            public int orientation;
-            public int posX;
+            public string mot;              // Mot
+            public int orientation;         // Orientation [1,8]
+            public int posX;                // Coordonnées
             public int posY;
         }
         
 
         
-        public Plateau(Dictionnaire dico,string path)
+        public Plateau(Dictionnaire dico,string path)       // Constructeur simple (plateau pré-généré)
         {
             this.dico = dico;
             ToRead(path);
         }
-        public Plateau(Dictionnaire dico,int difficulte,int taille,int nbmot)
+        public Plateau(Dictionnaire dico,int difficulte,int taille,int nbmot)       // Constructeur pour un plateau vierge
         {
             
             this.dico = dico;
             this.difficulte=difficulte;
             this.nbmot = nbmot;
             this.taille = taille;
-            this.grilleVide = GenererGrille(this.taille);
+            this.grilleVide = GenererGrille(this.taille);                   // On génère la grille
             this.listeMot = new List<PropMot>();
-           // AfficherGrille(grilleVide);                                                                                                         //Affiche une première fois la grille vide
-            this.grilleFinieMotSansLettre = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);                                                                                                 //On remplit la grille avec 12 mots du dico donné
-            RemplirGrilleRandom(this.grilleFinieMotSansLettre);
-            
-            
-            //AfficherListePropMot();
-
+            this.grilleFinieMotSansLettre = RemplirGrille(this.grilleVide,dico, nbmot,difficulte);      // Grille avec les mots placés                                                                                              //On remplit la grille avec 12 mots du dico donné
+            RemplirGrilleRandom(this.grilleFinieMotSansLettre);                                         // Grille avec mots et lettres aléatoires autour
         }
-        public void ToRead(string path)
+        public void ToRead(string path)                             // Fonction Lecture de fichier plateau de jeu
         {
-            
-
-
-            string[] fichier = File.ReadAllLines(path);
-            string[] lettreSimpleTab;
-            foreach (string mot in fichier[0].Split(";"))
+            string[] fichier = File.ReadAllLines(path);             // Récupération d'un plateau
+            string[] lettreSimpleTab;                           
+            foreach (string mot in fichier[0].Split(";"))           // Découpage des mots ...
             {
-                this.infoSimple.Add(mot);                           //permet d'avoir les infos de difficultée,colonne,ligne et nb de mots à trouver
+                this.infoSimple.Add(mot);                           // Permet d'avoir les infos de difficultée,colonne,ligne et nb de mots à trouver
             }
             this.grilleRemplie = new string[Convert.ToInt32(infoSimple[1]), Convert.ToInt32(infoSimple[2])];
             foreach (string mot in fichier[1].Split(";"))
             {
-                this.motATrouver.Add(mot);                      //construit la list des mots à trouver
+                this.motATrouver.Add(mot);                      // Construit la liste des mots à trouver
             }
             this.motATrouver = this.motATrouver.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
             for (int i = 2; i < fichier.Length; i++)
@@ -81,9 +73,9 @@ namespace Mot_Mele
                 lettreSimpleTab = fichier[i].Split(";");
                 for (int k = 0; k < lettreSimpleTab.Length; k++)
                 {
-                    lettreSimple.Add(lettreSimpleTab[k]);               //list avec toutes les lettres
+                    lettreSimple.Add(lettreSimpleTab[k]);               // List avec toutes les lettres du plateau
                 }
-                this.lettreSimple = this.lettreSimple.Where(s => !string.IsNullOrWhiteSpace(s)).ToList(); //permet de retirer tous les espaces et lettres vides
+                this.lettreSimple = this.lettreSimple.Where(s => !string.IsNullOrWhiteSpace(s)).ToList(); // Permet de retirer tous les espaces et lettres vides
 
 
             }
@@ -92,18 +84,18 @@ namespace Mot_Mele
             {
                 for (int o = 0; o < Convert.ToInt32(infoSimple[2]); o++)
                 {
-                    this.grilleRemplie[l, o] = lettreSimple[count];         //remplit la grille avec toutes les lettres
+                    this.grilleRemplie[l, o] = lettreSimple[count];         // Remplit la grille avec toutes les lettres
                     count++;
                 }
             }
         }
-        public override string ToString()
+        public override string ToString()           // Fonction imposée ToString()
         {
             string r = "Ce tableau est composé de " + this.GGetLength0 + " lignes et de " + this.GGetLength1 + " colones\n";
             r += "Il est de difficulté " + this.GDifficulte + " et a " + this.GMotATrouver.Count + " mots à trouver\n";
             return r;
         }
-        public List<PropMot> GListeMotPropMot
+        public List<PropMot> GListeMotPropMot       // Fonctions d'accès GET
         {
             get { return this.listeMot; }
         }
@@ -174,7 +166,7 @@ namespace Mot_Mele
                                         n++;                                                                                                //On augmente le compteur de mots testés sur cette position
                                         break;                                                                                              //On sort de la boucle for pour la recommencer à 0 avec le nouveau mot
                                     }
-                                    else if (n > dico.GDicoList.Count)                                                                           //Si n devient supérieur à la longueur du dictionnaire (ne signifie pas qu'on a testé tous les mots de ce dernier, car ils sont choisi aléatoirement, mais un certain nombre)
+                                    else if (n > dico.GDicoList.Count)                                                                      //Si n devient supérieur à la longueur du dictionnaire (ne signifie pas qu'on a testé tous les mots de ce dernier, car ils sont choisi aléatoirement, mais un certain nombre)
                                     {                                                                                                       //alors on change les coordonnées d'insertion du mot
                                         x = NombreAleatoire(0, grille.GetLength(0));
                                         y = NombreAleatoire(0, grille.GetLength(1));
@@ -197,7 +189,7 @@ namespace Mot_Mele
                                     this.mot = MotAleatoire(dico, grille);                       //On change de mot aléatoirement
                                 }
                             }
-                            if(this.mot != null && this.mot.Length >= 1)
+                            if(this.mot != null && this.mot.Length >= 1)                                    //Double condition servant à du débogage...
                             {
                                 if (grille[x, y] != Convert.ToString(this.mot[0]) && grille[x, y] != " ")
                                 {
@@ -700,23 +692,20 @@ namespace Mot_Mele
                         Console.WriteLine("Default case in first switch");
                         break;
                 }
-                //Console.WriteLine(this.mot);
-               this. motAjoute.mot = this.mot;
+                this. motAjoute.mot = this.mot;
                 this.motAjoute.orientation = orientation;
                 this.motAjoute.posX = x;
                 this.motAjoute.posY = y;
                 this.listeMot.Add(this.motAjoute);
-                //Une fois le this.mot placé
-                this.mot = MotAleatoire(dico, grille);                                       //On choisit un nouveau this.mot
+                                                                                             // Une fois le this.mot placé
+                this.mot = MotAleatoire(dico, grille);                                       // On choisit un nouveau this.mot
 
-                //Console.WriteLine("------------------");
-                //AfficherGrille(grille);
-                Random RAND = new Random();
+                Random RAND = new Random();                         
                 RendDiff:
-                orientation = RAND.Next(1,9);                                               //On change l'orientation
+                orientation = RAND.Next(1,9);                                               // On change l'orientation
                 switch (difficulte)
                 {
-                    case 1:
+                    case 1:                                                                 // On adapte l'orientation en fonction de la difficulté
                         if (orientation == 2)
                         {
                             orientation = 3;
@@ -769,11 +758,15 @@ namespace Mot_Mele
                 this.motATrouver.Add(a.mot);
             }
             this.grilleRemplie = grille;
-                return grille;                                                      //A la fin de la boucle de remplissge des mots, on retourne la grille
+                return grille;                                                      // A la fin de la boucle de remplissge des mots, on retourne la grille
          }
-         public void ToFile(string path)
+        /// <summary>
+        /// Fonction servant à l'enregistrement d'une partie sous forme d'un fichier CVS
+        /// </summary>
+        /// <param name="path">Nom de tête pour enregistrer le plateat</param>
+         public void ToFile(string path)                                            
         {
-            List<string> rendu = new List<string>();
+            List<string> rendu = new List<string>();                //La liste rendu contient toutes les informations qui seront enregistrées
             string[,] grille=this.GGrilleRemplie;
             DateTime temps = DateTime.Now;
             rendu.Clear();
