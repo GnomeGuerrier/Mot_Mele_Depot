@@ -17,10 +17,10 @@ namespace Mot_Mele
         {
 
 
-            int taille = 7;
-            int nbmot = 8;
-            int difficulte = 1;
-            int tempsTimer = 40;
+            int taille = 8;
+            int nbmot = 13;
+            int difficulte = 2;
+            int tempsTimer = 120;
             bool recommencerJeu = true;
             
             int tempsJ1 = 0;
@@ -170,7 +170,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                         listMotATrouver.Remove(motDonne);
                                         j1.Add_Mot(motDonne);
-                                        j1.Add_Score(Convert.ToInt32(directionDonne));
+                                        j1.Add_Score(motDonne.Length);
                                     }
                                     else if (listMotATrouver.Contains(motDonne))
                                     {
@@ -285,7 +285,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                         listMotATrouver2.Remove(motDonne2);
                                         j2.Add_Mot(motDonne2);
-                                        j2.Add_Score(Convert.ToInt32(directionDonne2));
+                                        j2.Add_Score(motDonne2.Length);
                                     }
                                     else if (listMotATrouver2.Contains(motDonne2))
                                     {
@@ -444,7 +444,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                         listMotATrouver.Remove(motDonne);
                                         j1.Add_Mot(motDonne);
-                                        j1.Add_Score(Convert.ToInt32(directionDonne));
+                                        j1.Add_Score(motDonne.Length);
                                     }
                                     else if (listMotATrouver.Contains(motDonne))
                                     {
@@ -558,7 +558,7 @@ namespace Mot_Mele
                                         Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                         listMotATrouver2.Remove(motDonne2);
                                         j2.Add_Mot(motDonne2);
-                                        j2.Add_Score(Convert.ToInt32(directionDonne2));
+                                        j2.Add_Score(motDonne2.Length);
                                     }
                                     else if (listMotATrouver2.Contains(motDonne2))
                                     {
@@ -760,7 +760,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                     listMotATrouver.Remove(motDonne);
                                     j1.Add_Mot(motDonne);
-                                    j1.Add_Score( Convert.ToInt32(directionDonne) );
+                                    j1.Add_Score( motDonne.Length );
                                 }
                                 else if (listMotATrouver.Contains(motDonne))
                                 {
@@ -877,7 +877,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                     listMotATrouver2.Remove(motDonne2);
                                     j2.Add_Mot(motDonne2);
-                                    j2.Add_Score( Convert.ToInt32(directionDonne2));
+                                    j2.Add_Score( motDonne2.Length);
                                 }
                                 else if (listMotATrouver2.Contains(motDonne2))
                                 {
@@ -1069,7 +1069,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne);
                                     listMotATrouver.Remove(motDonne);
                                     j1.Add_Mot(motDonne);
-                                    j1.Add_Score(Convert.ToInt32(directionDonne));
+                                    j1.Add_Score(motDonne.Length);
                                 }
                                 else if (listMotATrouver.Contains(motDonne))
                                 {
@@ -1184,7 +1184,7 @@ namespace Mot_Mele
                                     Console.WriteLine("Bien joué, tu as bien trouvé le mot " + motDonne2);
                                     listMotATrouver2.Remove(motDonne2);
                                     j2.Add_Mot(motDonne2);
-                                    j2.Add_Score(Convert.ToInt32(directionDonne2));
+                                    j2.Add_Score(motDonne2.Length);
                                 }
                                 else if (listMotATrouver2.Contains(motDonne2))
                                 {

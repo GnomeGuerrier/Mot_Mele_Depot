@@ -712,6 +712,7 @@ namespace Mot_Mele
                 //Console.WriteLine("------------------");
                 //AfficherGrille(grille);
                 Random RAND = new Random();
+                RendDiff:
                 orientation = RAND.Next(1,9);                                               //On change l'orientation
                 switch (difficulte)
                 {
@@ -722,13 +723,13 @@ namespace Mot_Mele
                         }
                         else if (orientation > 3)
                         {
-                            orientation = 1;
+                            goto RendDiff;
                         }
                         break;
                     case 2:
                         if (orientation > 4)
                         {
-                            orientation = 1;
+                            goto RendDiff;
                         }
                         break;
                     case 3:
@@ -738,7 +739,7 @@ namespace Mot_Mele
                         }
                         else if (orientation > 4)
                         {
-                            orientation = 1;
+                            goto RendDiff;
                         }
                         break;
                     case 4:
@@ -748,13 +749,13 @@ namespace Mot_Mele
                         }
                         else if (orientation > 5)
                         {
-                            orientation = 1;
+                            goto RendDiff;
                         }
                         break;
                     case 5:
                         if (orientation > 8)
                         {
-                            orientation = 1;
+                            goto RendDiff;
                         }
                         break;
                 }
